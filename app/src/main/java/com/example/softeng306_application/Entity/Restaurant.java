@@ -5,6 +5,7 @@ import java.util.List;
 public class Restaurant {
     private String restaurantID;
     private String name;
+    private Category category;
     private List<String> imagesURI;
     private List<Review> reviews;
     private String description;
@@ -19,6 +20,10 @@ public class Restaurant {
 
     public String getName() {
         return name;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
     public List<String> getImagesURI() {
