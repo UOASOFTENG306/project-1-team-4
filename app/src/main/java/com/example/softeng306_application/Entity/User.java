@@ -5,6 +5,7 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private Favourites favourites;
 
     public User() {
     }
@@ -25,4 +26,7 @@ public class User {
         return password;
     }
 
+    public Favourites getFavourites() {
+        return favourites;
+    }
 }
