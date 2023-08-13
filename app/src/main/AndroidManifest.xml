@@ -13,6 +13,15 @@
         android:theme="@style/Theme.SOFTENG306_Application"
         tools:targetApi="31">
         <activity
+            android:name=".View.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.ListActivity"
+            android:exported="false" />
+        <activity
             android:name=".View.DetailsActivity"
             android:exported="false" />
         <activity
