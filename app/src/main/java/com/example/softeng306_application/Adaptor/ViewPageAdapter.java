@@ -1,9 +1,12 @@
-package com.example.softeng306_application.View;
+package com.example.softeng306_application.Adaptor;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.softeng306_application.View.DescriptionFragment;
+import com.example.softeng306_application.View.ReviewFragment;
 
 public class ViewPageAdapter extends FragmentStateAdapter
 {
