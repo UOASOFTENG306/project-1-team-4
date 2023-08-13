@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.softeng306_application.R;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity implements Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
