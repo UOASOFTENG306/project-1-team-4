@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "149025215078",
+    "project_id": "softeng306-application",
+    "storage_bucket": "softeng306-application.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149025215078:android:78f3b45c62da25b39c93a7",
+        "android_client_info": {
+          "package_name": "com.example.softeng306_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "149025215078-ha4qjndeqm15fi7ghajo8tc8u8bvnd7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfZO9dmrIY-mj_djtPCNgDL21NDhgojV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "149025215078-ha4qjndeqm15fi7ghajo8tc8u8bvnd7u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
