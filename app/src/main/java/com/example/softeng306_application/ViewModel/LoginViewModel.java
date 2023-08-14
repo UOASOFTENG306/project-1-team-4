@@ -21,8 +21,4 @@ public class LoginViewModel extends AndroidViewModel {
     public Task<AuthResult> signIn(String email, String password){
         return userRepository.signIn(email, password);
     }
-
-    public void register(String email, String password){
-        userRepository.register(email, password);
-    }
 }
