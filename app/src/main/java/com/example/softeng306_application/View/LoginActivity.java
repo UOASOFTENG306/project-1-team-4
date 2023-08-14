@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
 
     private class ViewHolder{
         TextInputEditText editTextEmail, editTextPassword;
-        Button loginButton;
+        Button loginButton, createNewAccountButtton;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +55,21 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
                 });
             }
         });
+        vh.createNewAccountButtton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRegisterActivity(v);
+            }
+        });
     }
 
-    // add this functionality to an abstract class called Activity
-    public void showRegisterActivity(View v) {
+    //TODO: ADD THIS FUNCTIONALITY TO AN ABSTRACT CLASS CALLED ACTIVITY LATER
+    private void showRegisterActivity(View v) {
         Intent registerIntent = new Intent(this, RegisterActivity.class);
         startActivity(registerIntent);
     }
 
-    public void showMainActivity(View v) {
+    private void showMainActivity(View v) {
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
     }
