@@ -25,5 +25,4 @@
         android:text="Categories"
         style="@style/HeaderText"
         />
-
 </LinearLayout>
