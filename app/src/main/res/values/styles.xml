@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <style name="MainLogoText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">@font/dela_gothic_one</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:lineSpacingMultiplier">0.5</item>
+        <item name="android:textSize">48sp</item>
+
+    </style>
+
+    <style name="SmallLogoText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">@font/dela_gothic_one</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:lineSpacingMultiplier">0.5</item>
+    </style>
+
+
 </resources>
