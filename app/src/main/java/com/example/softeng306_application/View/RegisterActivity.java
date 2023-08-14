@@ -1,6 +1,7 @@
 package com.example.softeng306_application.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,25 +14,30 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    RegisterViewModel registerViewModel;
-    TextInputEditText editTextEmail, editTextPassword, editTextUsername;
-    Button registerButton;
+    private class ViewHolder{
+        TextInputEditText editTextEmail, editTextPassword, editTextUsername;
+        Button registerButton;
+    }
+    private RegisterViewModel registerViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
-        editTextUsername = findViewById(R.id.username);
-        registerButton = findViewById(R.id.btn_register);
+        ViewHolder vh = new ViewHolder();
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        vh.editTextEmail = findViewById(R.id.email);
+        vh.editTextPassword = findViewById(R.id.password);
+        vh.editTextUsername = findViewById(R.id.username);
+        vh.registerButton = findViewById(R.id.btn_register);
+
+        vh.registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email, username, password;
-                email = String.valueOf(editTextEmail.getText());
-                username = String.valueOf(editTextUsername.getText());
-                password = String.valueOf(editTextPassword.getText());
+                email = String.valueOf(vh.editTextEmail.getText());
+                username = String.valueOf(vh.editTextUsername.getText());
+                password = String.valueOf(vh.editTextPassword.getText());
 
                 // Not adding in username for now
                 registerViewModel.register(email, password);
