@@ -21,7 +21,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User register(String email, String password, String name) {
+    public User register(String email, String password) {
         return null;
     }
 

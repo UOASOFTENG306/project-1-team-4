@@ -7,7 +7,7 @@ public interface IUserRepository {
     UserRepository getInstance();
     String getCurrentUserById();
     User signIn(String email, String password);
-    User register(String email, String password, String name);
+    User register(String email, String password);
     Favourites getFavourites(String userID);
     Favourites checkFavourite(String userID, String restaurantID);
 };
