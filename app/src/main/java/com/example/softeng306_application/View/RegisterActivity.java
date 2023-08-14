@@ -23,7 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private class ViewHolder{
         TextInputEditText editTextEmail, editTextPassword, editTextUsername;
-        Button registerButton;
+        Button registerButton, backButton;
     }
     private RegisterViewModel registerViewModel;
 
@@ -37,7 +37,17 @@ public class RegisterActivity extends AppCompatActivity {
         vh.editTextPassword = findViewById(R.id.password);
         vh.editTextUsername = findViewById(R.id.username);
         vh.registerButton = findViewById(R.id.btn_register);
+        vh.backButton = findViewById(R.id.btn_back);
+
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+
+        vh.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLoginActivity(v);
+
+            }
+        });
 
         vh.registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,5 +98,9 @@ public class RegisterActivity extends AppCompatActivity {
     private void showMainActivity(View v) {
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
+    }
+    private void showLoginActivity(View v) {
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
     }
 }
