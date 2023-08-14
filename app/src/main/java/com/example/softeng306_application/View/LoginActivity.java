@@ -39,12 +39,12 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Account successfully created.",
+                            Toast.makeText(LoginActivity.this, "Login successful.",
                                     Toast.LENGTH_SHORT).show();
                                     showMainActivity(v);
                         } else {
                             // If sign in fails, display a message to the user
-                            Toast.makeText(LoginActivity.this, "Account failed to be created.",
+                            Toast.makeText(LoginActivity.this, "Login failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
