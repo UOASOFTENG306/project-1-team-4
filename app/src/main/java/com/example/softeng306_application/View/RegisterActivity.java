@@ -61,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Enter Password.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
+
                 //TODO: Add username functionality later
                 registerViewModel.register(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

@@ -19,22 +19,26 @@ import com.google.firebase.auth.AuthResult;
 
 public class LoginActivity extends AppCompatActivity implements Activity  {
     private LoginViewModel loginViewModel;
-    TextInputEditText editTextEmail, editTextPassword;
-    Button loginButton;
+
+    private class ViewHolder{
+        TextInputEditText editTextEmail, editTextPassword;
+        Button loginButton;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
-        loginButton = findViewById(R.id.btn_login);
+        ViewHolder vh = new ViewHolder();
+        vh.editTextEmail = findViewById(R.id.email);
+        vh.editTextPassword = findViewById(R.id.password);
+        vh.loginButton = findViewById(R.id.btn_login);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        vh.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email, password;
-                email = String.valueOf(editTextEmail.getText());
-                password = String.valueOf(editTextPassword.getText());
+                email = String.valueOf(vh.editTextEmail.getText());
+                password = String.valueOf(vh.editTextPassword.getText());
                 loginViewModel.signIn(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
