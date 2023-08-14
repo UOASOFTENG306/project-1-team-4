@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bg">#FFD6B6</color>
+    <color name="btn">#DA1212</color>
+    <color name="category_btn">#51AF5B</color>
+    <color name="restaurant_card">#FCFAEF</color>
 </resources>
