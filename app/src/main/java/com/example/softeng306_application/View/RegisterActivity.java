@@ -1,16 +1,21 @@
 package com.example.softeng306_application.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.LoginViewModel;
 import com.example.softeng306_application.ViewModel.RegisterViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -41,7 +46,20 @@ public class RegisterActivity extends AppCompatActivity {
                 password = String.valueOf(vh.editTextPassword.getText());
 
                 // Not adding in username for now
-                registerViewModel.register(email, password);
+                registerViewModel.register(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(RegisterActivity.this, "Account successfully created.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            // If sign in fails, display a message to the user
+                            Toast.makeText(RegisterActivity.this, "Account failed to be created.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
             }
         });
     }

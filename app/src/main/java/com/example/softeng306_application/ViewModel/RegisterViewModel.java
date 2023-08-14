@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.softeng306_application.Entity.User;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 
 public class RegisterViewModel extends AndroidViewModel {
 
@@ -15,10 +17,9 @@ public class RegisterViewModel extends AndroidViewModel {
     public RegisterViewModel(@NonNull Application application) {
         super(application);
         userRepository = userRepository.getInstance();
-
     }
 
-    public void register(String email, String password){
-        userRepository.register(email, password);
+    public Task<AuthResult> register(String email, String password){
+        return userRepository.register(email, password);
     }
 }

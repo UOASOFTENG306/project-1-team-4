@@ -1,13 +1,22 @@
 package com.example.softeng306_application.Repository;
 
 import com.example.softeng306_application.Entity.Favourites;
-import com.example.softeng306_application.Entity.User;
+import com.example.softeng306_application.View.Activity;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class UserRepository implements IUserRepository {
 
-    @Override
-    public UserRepository getInstance() {
-        return null;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private static UserRepository instance;
+
+    public static UserRepository getInstance(){
+        if (instance == null){
+            instance = new UserRepository();
+        }
+        return instance;
     }
 
     @Override
@@ -16,13 +25,23 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User signIn(String email, String password) {
-        return null;
+    public Task<AuthResult> signIn(String email, String password) {
+        return mAuth.signInWithEmailAndPassword(email, password);
     }
 
     @Override
-    public User register(String email, String password) {
-        return null;
+    public Task<AuthResult> register(String email, String password) {
+        return mAuth.createUserWithEmailAndPassword(email, password);
+    }
+
+    @Override
+    public FirebaseUser getUser() {
+        return mAuth.getCurrentUser();
+    }
+
+    @Override
+    public void logout() {
+        mAuth.signOut();
     }
 
     @Override
@@ -35,3 +54,4 @@ public class UserRepository implements IUserRepository {
         return null;
     }
 }
+
