@@ -37,4 +37,10 @@
         android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_create_new_account"
+        android:onClick="showRegisterActivity"
+        android:text="Create a new account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
