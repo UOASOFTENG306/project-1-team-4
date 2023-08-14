@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 //TODO: Add username functionality later
-                registerViewModel.register(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                registerViewModel.register(email, password, username).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {

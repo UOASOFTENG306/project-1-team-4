@@ -7,7 +7,11 @@ public class User {
     private String password;
     private Favourites favourites;
 
-    public User() {
+    public User(String userID, String email, String password, String username) {
+        this.userID = userID;
+        this.email = email;
+        this.password = password;
+        this.username = username;
     }
 
     public String getUserID() {

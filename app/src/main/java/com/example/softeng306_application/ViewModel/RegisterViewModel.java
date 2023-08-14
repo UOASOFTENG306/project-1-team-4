@@ -19,7 +19,7 @@ public class RegisterViewModel extends AndroidViewModel {
         userRepository = userRepository.getInstance();
     }
 
-    public Task<AuthResult> register(String email, String password){
-        return userRepository.register(email, password);
+    public Task<AuthResult> register(String email, String password, String username){
+        return userRepository.register(email, password, username);
     }
 }
