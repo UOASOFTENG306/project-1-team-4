@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -46,18 +47,31 @@ public class RegisterActivity extends AppCompatActivity {
                 username = String.valueOf(vh.editTextUsername.getText());
                 password = String.valueOf(vh.editTextPassword.getText());
 
-                // Not adding in username for now
+                if(TextUtils.isEmpty(email)){
+                    Toast.makeText(RegisterActivity.this, "Enter Email.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(username)){
+                    Toast.makeText(RegisterActivity.this, "Enter Username.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(password)){
+                    Toast.makeText(RegisterActivity.this, "Enter Password.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                //TODO: Add username functionality later
                 registerViewModel.register(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Account successfully created.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Account successfully created.", Toast.LENGTH_SHORT).show();
                             showMainActivity(v);
                         } else {
                             // If sign in fails, display a message to the user
-                            Toast.makeText(RegisterActivity.this, "Account failed to be created.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Account failed to be created.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
