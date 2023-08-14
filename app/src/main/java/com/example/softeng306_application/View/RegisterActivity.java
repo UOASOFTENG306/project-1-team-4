@@ -62,24 +62,29 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                //TODO: Add username functionality later
-                registerViewModel.register(email, password, username).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Account successfully created.", Toast.LENGTH_SHORT).show();
-                            showMainActivity(v);
-                        } else {
-                            // If sign in fails, display a message to the user
-                            Toast.makeText(RegisterActivity.this, "Account failed to be created.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                //OnClickListeners
+                clickRegister(vh,v,email,password,username);
+
 
             }
         });
     }
-    public void showMainActivity(View v) {
+
+    private void clickRegister(ViewHolder vh, View v, String email, String password, String username){
+        registerViewModel.register(email, password, username).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(RegisterActivity.this, "Account successfully created.", Toast.LENGTH_SHORT).show();
+                    showMainActivity(v);
+                } else {
+                    // If sign in fails, display a message to the user
+                    Toast.makeText(RegisterActivity.this, "Account failed to be created.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    private void showMainActivity(View v) {
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
     }
