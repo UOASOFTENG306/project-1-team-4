@@ -12,6 +12,7 @@ import com.example.softeng306_application.ViewModel.LoginViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity implements Activity  {
+    private LoginViewModel loginViewModel;
     TextInputEditText editTextEmail, editTextPassword;
     Button loginButton;
     @Override
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
         loginButton = findViewById(R.id.btn_login);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
