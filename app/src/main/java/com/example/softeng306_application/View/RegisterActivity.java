@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Account successfully created.",
                                     Toast.LENGTH_SHORT).show();
+                            showMainActivity(v);
                         } else {
                             // If sign in fails, display a message to the user
                             Toast.makeText(RegisterActivity.this, "Account failed to be created.",
@@ -62,5 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void showMainActivity(View v) {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
     }
 }
