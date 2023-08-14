@@ -12,6 +12,8 @@ public class User {
         this.email = email;
         this.password = password;
         this.username = username;
+        //TODO: CLARIFY FAVOURITES FIELD AMBIGUITY LATER
+        this.favourites = new Favourites();
     }
 
     public String getUserID() {
