@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
 
     private class ViewHolder{
         TextInputEditText editTextEmail, editTextPassword;
-        Button loginButton, createNewAccountButtton;
+        Button loginButton, createNewAccountButton;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,25 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
         vh.editTextEmail = findViewById(R.id.email);
         vh.editTextPassword = findViewById(R.id.password);
         vh.loginButton = findViewById(R.id.btn_login);
+        vh.createNewAccountButton = findViewById(R.id.btn_create_new_account);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        //OnClickListeners
+        clickLogin(vh);
+        clickCreateNewButton(vh);
+
+    }
+
+    private void clickCreateNewButton(ViewHolder vh){
+        vh.createNewAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRegisterActivity(v);
+            }
+        });
+    }
+
+    private void clickLogin(ViewHolder vh){
         vh.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Login successful.",
                                     Toast.LENGTH_SHORT).show();
-                                    showMainActivity(v);
+                            showMainActivity(v);
                         } else {
                             // If sign in fails, display a message to the user
                             Toast.makeText(LoginActivity.this, "Login failed.",
@@ -53,12 +71,6 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
                         }
                     }
                 });
-            }
-        });
-        vh.createNewAccountButtton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showRegisterActivity(v);
             }
         });
     }
