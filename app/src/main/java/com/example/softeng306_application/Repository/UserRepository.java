@@ -23,7 +23,11 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public String getCurrentUserById() {
-        return mAuth.getCurrentUser().getUid();
+        FirebaseUser currentUser = this.getUser();
+        if (currentUser != null) {
+            return currentUser.getUid();
+        }
+        return null;
     }
 
     @Override
@@ -34,7 +38,9 @@ public class UserRepository implements IUserRepository {
     @Override
     public Task<AuthResult> register(String email, String password, String username) {
         Task<AuthResult> newUser = mAuth.createUserWithEmailAndPassword(email, password);
-        addUserToDB(email,password, username);
+        if (newUser.isComplete()) {
+            addUserToDB(email,password, username);
+        }
         return newUser;
     }
 
