@@ -11,7 +11,7 @@ public interface IUserRepository {
     Task<AuthResult> signIn(String email, String password);
     Task<AuthResult> register(String email, String password, String username);
 
-    void addUserToDB(String email, String password, String username);
+    void addUserToDb(String email, String password, String username);
 
     FirebaseUser getUser();
 

@@ -22,4 +22,8 @@ public class RegisterViewModel extends AndroidViewModel {
     public Task<AuthResult> register(String email, String password, String username){
         return userRepository.register(email, password, username);
     }
+
+    public void addToDb(String email, String password, String username) {
+        userRepository.addUserToDb(email, password, username);
+    }
 }

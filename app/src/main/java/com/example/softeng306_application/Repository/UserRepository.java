@@ -38,12 +38,11 @@ public class UserRepository implements IUserRepository {
     @Override
     public Task<AuthResult> register(String email, String password, String username) {
         Task<AuthResult> newUser = mAuth.createUserWithEmailAndPassword(email, password);
-        addUserToDB(email,password, username);
         return newUser;
     }
 
     @Override
-    public void addUserToDB(String email, String password, String username) {
+    public void addUserToDb(String email, String password, String username) {
         User user = new User(mAuth.getUid(),email,password,username);
         db.collection("users").add(user);
     }
