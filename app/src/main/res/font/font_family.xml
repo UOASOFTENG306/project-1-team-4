@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:font="@font/dela_gothic_one"
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        />
+    <font/>
+
+    <font
+        android:font="@font/montserrat"
+        android:fontStyle="normal"
+        android:fontWeight="500"
+        />
+
+    <font
+        android:font="@font/inter"
+        android:fontStyle="normal"
+        android:fontWeight="900"/>
+
+</font-family>
