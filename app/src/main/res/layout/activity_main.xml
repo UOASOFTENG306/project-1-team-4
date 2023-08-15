@@ -10,7 +10,6 @@
 
     <TextView
         android:layout_height="wrap_content"
-        android:text="Hungry\nRadar"
         style="@style/SmallLogoText"
         />
 
