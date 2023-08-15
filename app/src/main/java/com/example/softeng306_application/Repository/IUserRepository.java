@@ -1,14 +1,36 @@
+
 package com.example.softeng306_application.Repository;
 
 import com.example.softeng306_application.Entity.Favourites;
-import com.example.softeng306_application.Entity.User;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 
 public interface IUserRepository {
-    UserRepository getInstance();
     String getCurrentUserById();
-    User signIn(String email, String password);
-    User register(String email, String password, String name);
+    Task<AuthResult> signIn(String email, String password);
+    Task<AuthResult> register(String email, String password, String username);
+
+    void addUserToDb(String email, String password, String username);
+
+    FirebaseUser getUser();
+
+    void logout();
     Favourites getFavourites(String userID);
     Favourites checkFavourite(String userID, String restaurantID);
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
