@@ -1,7 +1,10 @@
 package com.example.softeng306_application.Repository;
 
+import androidx.annotation.NonNull;
+
 import com.example.softeng306_application.Entity.Favourites;
 import com.example.softeng306_application.Entity.User;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -29,7 +32,16 @@ public class UserRepository implements IUserRepository {
     }
 
     public String getUserName() {
-        return null;
+        Task<DocumentSnapshot> docRef = this.getAllUserInformation(this.getCurrentUserById());
+        final String[] name = {""};
+        docRef
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Get the value of a specific field
+                        name[0] = documentSnapshot.getString("username");
+                    }
+                });
+        return name[0];
     }
 
     @Override
