@@ -14,7 +14,10 @@ public class MainViewModel extends AndroidViewModel {
         super(application);
         userRepository = userRepository.getInstance();
     }
-    
+    public String getUserName() {
+        return userRepository.getUserName();
+    }
+
     public void logout(){
         userRepository.logout();
     }
