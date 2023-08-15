@@ -14,7 +14,9 @@ import com.example.softeng306_application.Repository.UserRepository;
 import com.example.softeng306_application.ViewModel.LoginViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
 import com.example.softeng306_application.ViewModel.RegisterViewModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
         ViewHolder vh = new ViewHolder();
         vh.logoutButton = findViewById(R.id.btn_logout);
         vh.usernameText = findViewById(R.id.txt_username);
-        vh.usernameText.setText(mainViewModel.getUserName());
+        mainViewModel.getUserInfo().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                vh.usernameText.setText(documentSnapshot.getString("username"));
+            }
+        });
 
         //OnClickListeners
         clickLogout(vh);
