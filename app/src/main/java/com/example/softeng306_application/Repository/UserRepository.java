@@ -28,7 +28,7 @@ public class UserRepository implements IUserRepository {
         return docRef;
     }
 
-    public String getUserName(String userID) {
+    public String getUserName() {
         return null;
     }
 
