@@ -44,7 +44,7 @@ public class UserRepository implements IUserRepository {
     @Override
     public void addUserToDb(String email, String password, String username) {
         User user = new User(mAuth.getUid(),email,password,username);
-        db.collection("users").add(user);
+        db.collection("users").document(mAuth.getUid()).set(user);
     }
 
     @Override
