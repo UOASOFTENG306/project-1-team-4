@@ -1,17 +1,15 @@
 package com.example.softeng306_application.Repository;
 
-import androidx.annotation.NonNull;
-
 import com.example.softeng306_application.Entity.Favourites;
 import com.example.softeng306_application.Entity.User;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class UserRepository implements IUserRepository {
 
@@ -33,15 +31,15 @@ public class UserRepository implements IUserRepository {
 
     public String getUserName() {
         Task<DocumentSnapshot> docRef = this.getAllUserInformation(this.getCurrentUserById());
-        final String[] name = {""};
+        AtomicReference<String> username = new AtomicReference<>("YOLO");
         docRef
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         // Get the value of a specific field
-                        name[0] = documentSnapshot.getString("username");
+                        username.set(documentSnapshot.getString("username"));
                     }
                 });
-        return name[0];
+        return username.get();
     }
 
     @Override
