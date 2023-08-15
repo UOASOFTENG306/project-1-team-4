@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         ViewHolder vh = new ViewHolder();
         vh.logoutButton = findViewById(R.id.btn_logout);
         vh.usernameText = findViewById(R.id.txt_username);
+        vh.usernameText.setText(mainViewModel.getUserName());
 
         //OnClickListeners
         clickLogout(vh);
