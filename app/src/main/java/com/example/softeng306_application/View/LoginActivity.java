@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -57,6 +58,15 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
                 String email, password;
                 email = String.valueOf(vh.editTextEmail.getText());
                 password = String.valueOf(vh.editTextPassword.getText());
+                if(TextUtils.isEmpty(email)){
+                    Toast.makeText(LoginActivity.this, "Enter Email.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(password)){
+                    Toast.makeText(LoginActivity.this, "Enter Password.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 loginViewModel.signIn(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
