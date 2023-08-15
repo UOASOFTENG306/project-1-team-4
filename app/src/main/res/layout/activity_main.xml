@@ -24,4 +24,10 @@
         android:text="Categories"
         style="@style/HeaderText"
         />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log out" />
 </LinearLayout>
