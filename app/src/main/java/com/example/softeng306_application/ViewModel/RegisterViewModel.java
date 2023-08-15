@@ -10,15 +10,20 @@ import com.example.softeng306_application.Repository.UserRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
-public class LoginViewModel extends AndroidViewModel {
+public class RegisterViewModel extends AndroidViewModel {
 
     private UserRepository userRepository;
-    public LoginViewModel(@NonNull Application application) {
+    private User user;
+    public RegisterViewModel(@NonNull Application application) {
         super(application);
         userRepository = userRepository.getInstance();
     }
 
-    public Task<AuthResult> signIn(String email, String password){
-        return userRepository.signIn(email, password);
+    public Task<AuthResult> register(String email, String password, String username){
+        return userRepository.register(email, password, username);
+    }
+
+    public void addToDb(String email, String password, String username) {
+        userRepository.addUserToDb(email, password, username);
     }
 }
