@@ -2,10 +2,12 @@ package com.example.softeng306_application.Repository;
 
 import com.example.softeng306_application.Entity.Favourites;
 import com.example.softeng306_application.Entity.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserRepository implements IUserRepository {
@@ -19,6 +21,15 @@ public class UserRepository implements IUserRepository {
             instance = new UserRepository();
         }
         return instance;
+    }
+
+    public Task<DocumentSnapshot> getAllUserInformation(String userID) {
+        Task<DocumentSnapshot> docRef = db.collection("users").document(userID).get();
+        return docRef;
+    }
+
+    public String getUserName(String userID) {
+        return null;
     }
 
     @Override
