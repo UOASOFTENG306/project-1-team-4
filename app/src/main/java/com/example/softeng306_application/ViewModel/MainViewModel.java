@@ -61,10 +61,29 @@ public class MainViewModel extends AndroidViewModel {
         res2.setLogoImage("toprated 2");
         Restaurant res3 = new Restaurant();
         res3.setLogoImage("toprated 3");
+        Restaurant res4 = new Restaurant();
+        res4.setLogoImage("toprated 1");
+        Restaurant res5 = new Restaurant();
+        res5.setLogoImage("toprated 2");
+        Restaurant res6 = new Restaurant();
+        res6.setLogoImage("toprated 3");
+        Restaurant res7 = new Restaurant();
+        res7.setLogoImage("toprated 1");
+        Restaurant res8 = new Restaurant();
+        res8.setLogoImage("toprated 2");
+        Restaurant res9 = new Restaurant();
+        res9.setLogoImage("toprated 3");
 
         topRatedList.add(res1);
         topRatedList.add(res2);
+        topRatedList.add(res2);
         topRatedList.add(res3);
+        topRatedList.add(res4);
+        topRatedList.add(res5);
+        topRatedList.add(res6);
+        topRatedList.add(res7);
+        topRatedList.add(res8);
+        topRatedList.add(res9);
 
         return topRatedList;
     }

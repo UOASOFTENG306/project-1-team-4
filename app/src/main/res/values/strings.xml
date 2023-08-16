@@ -6,4 +6,5 @@
     <string name="register">Register</string>
     <string name="username">Username</string>
     <string name="default_username">Default Username</string>
+    <string name="logo_description">logo image of restaurant</string>
 </resources>
