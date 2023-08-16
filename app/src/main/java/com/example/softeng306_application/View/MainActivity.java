@@ -13,15 +13,8 @@ import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
 import com.example.softeng306_application.Entity.Restaurant;
-import com.example.softeng306_application.Model.TopRated;
 import com.example.softeng306_application.R;
-import com.example.softeng306_application.Repository.UserRepository;
-import com.example.softeng306_application.ViewModel.LoginViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
-import com.example.softeng306_application.ViewModel.RegisterViewModel;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
