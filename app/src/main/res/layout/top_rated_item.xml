@@ -5,7 +5,8 @@
     android:layout_gravity="center"
    >
     
-    <ImageView
+    <TextView
+        android:id="@+id/textview_top_rated"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_margin="8dp"/>

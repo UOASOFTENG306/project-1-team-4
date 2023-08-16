@@ -2,6 +2,8 @@ package com.example.softeng306_application.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
+import com.example.softeng306_application.Model.TopRated;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.UserRepository;
 import com.example.softeng306_application.ViewModel.LoginViewModel;
@@ -18,12 +22,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private MainViewModel mainViewModel;
     private class ViewHolder{
         TextView usernameText;
         Button logoutButton;
+        RecyclerView topRatedRecyclerView;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,29 @@ public class MainActivity extends AppCompatActivity {
                 vh.usernameText.setText(documentSnapshot.getString("username"));
             }
         });
+
+        // TODO: THIS IS FOR TESTING PURPOSES!!!
+        // Binding TopRatedRecyclerAdapter
+        vh.topRatedRecyclerView = findViewById(R.id.top_rated_recycler_view);
+
+        // Initialize contacts
+        ArrayList<TopRated> topRatedList = new ArrayList<TopRated>();
+        topRatedList.add(new TopRated("Restaurant 1"));
+        topRatedList.add(new TopRated("Restaurant 2"));
+        topRatedList.add(new TopRated("Restaurant 3"));
+        topRatedList.add(new TopRated("Restaurant 4"));
+        topRatedList.add(new TopRated("Restaurant 5"));
+        topRatedList.add(new TopRated("Restaurant 6"));
+        topRatedList.add(new TopRated("Restaurant 7"));
+        topRatedList.add(new TopRated("Restaurant 8"));
+        topRatedList.add(new TopRated("Restaurant 9"));
+
+        // Create adapter passing in the test list
+        TopRatedRecylerAdapter topRatedAdapter = new TopRatedRecylerAdapter(this, topRatedList);
+        // Attach adapter to the recycler view to populate these items
+        vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
+        // Set layout manager to position the items
+        vh.topRatedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //OnClickListeners
         clickLogout(vh);
