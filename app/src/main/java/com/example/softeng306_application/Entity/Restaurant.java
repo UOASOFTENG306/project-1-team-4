@@ -6,7 +6,8 @@ public class Restaurant {
     private String restaurantID;
     private String name;
     private Category category;
-    private List<String> imagesURI;
+    private List<String> backgroundImages;
+    private String logoImage;
     private List<Review> reviews;
     private String description;
     private String location;
@@ -26,9 +27,11 @@ public class Restaurant {
         return category;
     }
 
-    public List<String> getImagesURI() {
-        return imagesURI;
+    public List<String> getBackgroundImages() {
+        return backgroundImages;
     }
+
+    public String LogoImage;
 
     public List<Review> getReviews() {
         return reviews;
