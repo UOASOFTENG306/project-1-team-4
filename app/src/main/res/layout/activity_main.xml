@@ -34,6 +34,14 @@
         style="@style/HeaderText"
         />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recview_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scrollbars="vertical"
+        />
+
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="wrap_content"

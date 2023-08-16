@@ -11,11 +11,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
 import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
+import com.example.softeng306_application.Entity.Category;
+import com.example.softeng306_application.Entity.CategoryType;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.MainViewModel;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         TextView usernameText;
         Button logoutButton;
         RecyclerView topRatedRecyclerView;
+        RecyclerView categoryRecyclerView;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         // Binding TopRatedRecyclerAdapter
         vh.topRatedRecyclerView = findViewById(R.id.recview_top_rated);
 
-        // Initialize contacts
+        // Populate topRatedList
         ArrayList<Restaurant> topRatedList = new ArrayList<Restaurant>();
         Restaurant res1 = new Restaurant();
         res1.setLogoImage("res1");
@@ -57,15 +64,42 @@ public class MainActivity extends AppCompatActivity {
         topRatedList.add(res2);
         topRatedList.add(res3);
 
+        // TODO: THIS IS FOR TESTING PURPOSES!!!
+        // Binding CategoryRecyclerAdapter
+        vh.categoryRecyclerView = findViewById(R.id.recview_categories);
 
-        // Create adapter passing in the test list
+        // Populate categoryList
+        ArrayList<Category> categoryList = new ArrayList<Category>();
+        Category cat1 = new Category();
+        cat1.setCategoryType(CategoryType.CAFE);
+        Category cat2 = new Category();
+        cat2.setCategoryType(CategoryType.ASIAN);
+        Category cat3 = new Category();
+        cat3.setCategoryType(CategoryType.EUROPEAN);
+        Category cat4 = new Category();
+        cat4.setCategoryType(CategoryType.FAST_FOOD);
+
+        categoryList.add(cat1);
+        categoryList.add(cat2);
+        categoryList.add(cat3);
+        categoryList.add(cat4);
+
+        // Create adapters passing in the test lists
         TopRatedRecylerAdapter topRatedAdapter = new TopRatedRecylerAdapter(this, topRatedList);
+        CategoryRecyclerAdapter categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, categoryList);
+
         // Attach adapter to the recycler view to populate these items
         vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
+        vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
+
         // Set layout manager to position the items
-        // Set Horizontal Layout Manager for Recycler view
-        LinearLayoutManager HorizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        vh.topRatedRecyclerView.setLayoutManager(HorizontalLayout);
+        // Set Horizontal Layout Manager for topRatedRecyclerView
+        LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
+
+        // Set Vertical Layout Manager for categoryRecyclerView
+        LinearLayoutManager verticalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+        vh.categoryRecyclerView.setLayoutManager(verticalLayout);
 
         //OnClickListeners
         clickLogout(vh);

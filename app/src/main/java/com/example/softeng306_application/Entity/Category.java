@@ -10,6 +10,9 @@ public class Category {
         return categoryType;
     }
 
+    // TODO DELETE THIS METHOD! For testing purposes
+    public void setCategoryType(CategoryType categoryType) { this.categoryType = categoryType; }
+
     public List<Restaurant> getRestaurants() {
         return restaurants;
     }

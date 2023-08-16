@@ -5,7 +5,8 @@
     style="@style/CategoryCard">
 
     <TextView
-     style="@style/CategoryText"
+        android:id="@+id/txt_category"
+        style="@style/CategoryText"
         android:text="Category"
         />
 
