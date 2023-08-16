@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".View.MainActivity">
 
-
     <TextView
         android:layout_height="wrap_content"
         style="@style/SmallLogoText"
@@ -19,11 +18,12 @@
         style="@style/HeaderText"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/top_rated_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_rated_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal"/>
+
 
     <TextView
         android:layout_height="wrap_content"

@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
         // Attach adapter to the recycler view to populate these items
         vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
         // Set layout manager to position the items
-        vh.topRatedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Set Horizontal Layout Manager for Recycler view
+        LinearLayoutManager HorizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        vh.topRatedRecyclerView.setLayoutManager(HorizontalLayout);
 
         //OnClickListeners
         clickLogout(vh);
