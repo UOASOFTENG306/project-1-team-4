@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: THIS IS FOR TESTING PURPOSES!!!
         // Binding TopRatedRecyclerAdapter
-        vh.topRatedRecyclerView = findViewById(R.id.top_rated_recycler_view);
+        vh.topRatedRecyclerView = findViewById(R.id.recview_top_rated);
 
         // Initialize contacts
         ArrayList<TopRated> topRatedList = new ArrayList<TopRated>();
