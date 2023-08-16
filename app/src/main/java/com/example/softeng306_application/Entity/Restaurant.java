@@ -15,6 +15,15 @@ public class Restaurant {
     public Restaurant() {
     }
 
+    public Restaurant(String restaurantID, String name, String description, String location, Category category) {
+        this.restaurantID = restaurantID;
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.category = category;
+    }
+
+
     public String getRestaurantID() {
         return restaurantID;
     }
