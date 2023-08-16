@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     tools:context=".View.MainActivity">
 
     <TextView
@@ -22,7 +23,8 @@
             android:id="@+id/recview_top_rated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="horizontal"/>
+            android:scrollbars="horizontal"
+           />
 
 
     <TextView

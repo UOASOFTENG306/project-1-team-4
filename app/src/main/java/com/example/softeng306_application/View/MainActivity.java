@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
+import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.Model.TopRated;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.UserRepository;
@@ -51,16 +52,18 @@ public class MainActivity extends AppCompatActivity {
         vh.topRatedRecyclerView = findViewById(R.id.recview_top_rated);
 
         // Initialize contacts
-        ArrayList<TopRated> topRatedList = new ArrayList<TopRated>();
-        topRatedList.add(new TopRated("Restaurant 1"));
-        topRatedList.add(new TopRated("Restaurant 2"));
-        topRatedList.add(new TopRated("Restaurant 3"));
-        topRatedList.add(new TopRated("Restaurant 4"));
-        topRatedList.add(new TopRated("Restaurant 5"));
-        topRatedList.add(new TopRated("Restaurant 6"));
-        topRatedList.add(new TopRated("Restaurant 7"));
-        topRatedList.add(new TopRated("Restaurant 8"));
-        topRatedList.add(new TopRated("Restaurant 9"));
+        ArrayList<Restaurant> topRatedList = new ArrayList<Restaurant>();
+        Restaurant res1 = new Restaurant();
+        res1.setLogoImage("res1");
+        Restaurant res2 = new Restaurant();
+        res2.setLogoImage("res2");
+        Restaurant res3 = new Restaurant();
+        res3.setLogoImage("res3");
+
+        topRatedList.add(res1);
+        topRatedList.add(res2);
+        topRatedList.add(res3);
+
 
         // Create adapter passing in the test list
         TopRatedRecylerAdapter topRatedAdapter = new TopRatedRecylerAdapter(this, topRatedList);

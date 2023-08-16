@@ -31,7 +31,10 @@ public class Restaurant {
         return backgroundImages;
     }
 
-    public String LogoImage;
+    public String getLogoImage() { return logoImage; };
+
+    // TODO DELETE THIS! For testing purposes
+    public void setLogoImage(String someString) { this.logoImage = someString; }
 
     public List<Review> getReviews() {
         return reviews;
