@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="70dp"
-    android:layout_gravity="center_horizontal"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    style="@style/CategoryCard">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+     style="@style/CategoryText"
         android:text="Category"
-        style="@style/HeaderText"
         />
 
 </androidx.cardview.widget.CardView>
