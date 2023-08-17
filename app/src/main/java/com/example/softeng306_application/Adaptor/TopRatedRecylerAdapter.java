@@ -1,9 +1,12 @@
 package com.example.softeng306_application.Adaptor;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,7 +34,8 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
 
     @Override
     public void onBindViewHolder(TopRatedRecylerAdapter.TopRatedViewHolder holder, int position) {
-        holder.topRatedImage.setText(topRatedList.get(position).getLogoImage());
+        holder.restaurantName.setText(topRatedList.get(position).getName());
+        holder.logoImage.setImageResource(topRatedList.get(position).getLogoImageUrl());
     }
 
     @Override
@@ -40,11 +44,13 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     }
 
     public class TopRatedViewHolder extends RecyclerView.ViewHolder {
-        TextView topRatedImage;
+        TextView restaurantName;
+        ImageView logoImage;
 
         public TopRatedViewHolder(@NonNull View itemView) {
             super(itemView);
-            topRatedImage = (TextView) itemView.findViewById(R.id.textview_top_rated);
+            restaurantName = (TextView) itemView.findViewById(R.id.textview_top_rated);
+            logoImage = (ImageView) itemView.findViewById(R.id.imgview_main_logo);
         }
 
     }

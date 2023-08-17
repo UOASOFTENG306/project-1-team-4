@@ -11,6 +11,7 @@ import androidx.lifecycle.AndroidViewModel;
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.CategoryType;
 import com.example.softeng306_application.Entity.Restaurant;
+import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.UserRepository;
 import com.google.android.gms.tasks.Task;
@@ -55,24 +56,16 @@ public class MainViewModel extends AndroidViewModel {
         // TODO: RETRIEVE DATA FROM REPOSITORY
         // Initialize contacts
         ArrayList<Restaurant> topRatedList = new ArrayList<Restaurant>();
-        Restaurant res1 = new Restaurant();
-        res1.setLogoImage("toprated 1");
-        Restaurant res2 = new Restaurant();
-        res2.setLogoImage("toprated 2");
-        Restaurant res3 = new Restaurant();
-        res3.setLogoImage("toprated 3");
-        Restaurant res4 = new Restaurant();
-        res4.setLogoImage("toprated 1");
-        Restaurant res5 = new Restaurant();
-        res5.setLogoImage("toprated 2");
-        Restaurant res6 = new Restaurant();
-        res6.setLogoImage("toprated 3");
-        Restaurant res7 = new Restaurant();
-        res7.setLogoImage("toprated 1");
-        Restaurant res8 = new Restaurant();
-        res8.setLogoImage("toprated 2");
-        Restaurant res9 = new Restaurant();
-        res9.setLogoImage("toprated 3");
+        Restaurant res1 = new Restaurant("toprated 1", R.drawable.test_logo);
+        Restaurant res2 = new Restaurant("toprated 2", R.drawable.test_logo);
+        Restaurant res3 = new Restaurant("toprated 3", R.drawable.test_logo);
+        Restaurant res4 = new Restaurant("toprated 4", R.drawable.test_logo);
+        Restaurant res5 = new Restaurant("toprated 5", R.drawable.test_logo);
+        Restaurant res6 = new Restaurant("toprated 6", R.drawable.test_logo);
+        Restaurant res7 = new Restaurant("toprated 7", R.drawable.test_logo);
+        Restaurant res8 = new Restaurant("toprated 8", R.drawable.test_logo);
+        Restaurant res9 = new Restaurant("toprated 9", R.drawable.test_logo);
+
 
         topRatedList.add(res1);
         topRatedList.add(res2);

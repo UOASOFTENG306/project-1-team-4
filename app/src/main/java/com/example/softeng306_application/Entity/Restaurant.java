@@ -6,13 +6,19 @@ public class Restaurant {
     private String restaurantID;
     private String name;
     private Category category;
-    private List<String> backgroundImages;
-    private String logoImage;
+    private List<Integer> backgroundImageUrls;
+    private Integer logoImageUrl;
     private List<Review> reviews;
     private String description;
     private String location;
 
     public Restaurant() {
+    }
+
+    //TODO TEST CONSTRUCTOR - FOR KAI TO DELETE
+    public Restaurant(String name, Integer logoImageUrl) {
+        this.name = name;
+        this.logoImageUrl = logoImageUrl;
     }
 
     public Restaurant(String restaurantID, String name, String description, String location, Category category) {
@@ -36,14 +42,11 @@ public class Restaurant {
         return category;
     }
 
-    public List<String> getBackgroundImages() {
-        return backgroundImages;
+    public List<Integer> getBackgroundImages() {
+        return backgroundImageUrls;
     }
 
-    public String getLogoImage() { return logoImage; };
-
-    // TODO DELETE THIS! For testing purposes
-    public void setLogoImage(String someString) { this.logoImage = someString; }
+    public Integer getLogoImageUrl() { return logoImageUrl; };
 
     public List<Review> getReviews() {
         return reviews;
