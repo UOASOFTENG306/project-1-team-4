@@ -9,9 +9,8 @@
     tools:context=".View.MainActivity">
 
     <TextView
-        android:layout_height="wrap_content"
         style="@style/SmallLogoText"
-        />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:layout_height="wrap_content"
@@ -52,5 +51,5 @@
         android:id="@+id/txt_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/default_username" />
+        android:text="Loading..." />
 </LinearLayout>
