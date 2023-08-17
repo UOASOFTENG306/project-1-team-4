@@ -39,12 +39,34 @@
     <style name="AdminButton">
         <item name="android:layout_width">300dp</item>
         <item name="android:layout_height">55dp</item>
+        <item name="android:layout_gravity">center</item>
         <item name="cornerRadius">0dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/inter_black</item>
         <item name="android:backgroundTint">@color/btn</item>
+    </style>
+
+    <style name="AdminInputLayout">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="boxCornerRadiusBottomEnd">0dp</item>
+        <item name="boxCornerRadiusBottomStart">0dp</item>
+        <item name="boxCornerRadiusTopEnd">0dp</item>
+        <item name="boxCornerRadiusTopStart">0dp</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@color/white</item>
+        <item name="boxBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="AdminInputText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
     </style>
 
 </resources>

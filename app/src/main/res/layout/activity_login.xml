@@ -15,29 +15,30 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/AdminInputLayout"
+        >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             android:hint="@string/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            style="@style/AdminInputText"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+         style="@style/AdminInputLayout"
+        android:layout_marginBottom="8dp"
+        >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:hint="@string/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            style="@style/AdminInputText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_login"
-        android:text="@string/login"
-        style="@style/AdminButton"/>
+        style="@style/AdminButton"
+        android:text="@string/login" />
+
     <Button
         android:id="@+id/btn_create_new_account"
         android:text="Create a new account"
