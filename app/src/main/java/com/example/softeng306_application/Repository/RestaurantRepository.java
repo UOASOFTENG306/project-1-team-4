@@ -29,4 +29,7 @@ public class RestaurantRepository implements IRestaurantRepository {
     public List<Restaurant> searchRestaurants(String term) {
         return null;
     }
+
+    @Override
+    public List<Restaurant> getRestaurantsByCategory(String categoryType) { return null; }
 }

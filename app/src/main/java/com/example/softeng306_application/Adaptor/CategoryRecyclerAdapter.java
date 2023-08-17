@@ -34,7 +34,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
     @Override
     public void onBindViewHolder(CategoryRecyclerAdapter.CategoryViewHolder holder, int position) {
-        holder.categoryName.setText(categoryList.get(position).getCategoryType().name());
+        holder.categoryName.setText(categoryList.get(position).getCategoryType());
     }
 
     @Override

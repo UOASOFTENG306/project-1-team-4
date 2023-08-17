@@ -8,8 +8,12 @@ import android.util.Base64;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.example.softeng306_application.Entity.Asian;
+import com.example.softeng306_application.Entity.Cafe;
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.CategoryType;
+import com.example.softeng306_application.Entity.European;
+import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.RestaurantRepository;
@@ -35,20 +39,32 @@ public class MainViewModel extends AndroidViewModel {
         // TODO: RETRIEVE DATA FROM REPOSITORY(?)
 
         // Populate categoryList
-        ArrayList<Category> categoryList = new ArrayList<Category>();
-        Category cat1 = new Category();
-        cat1.setCategoryType(CategoryType.CAFE);
-        Category cat2 = new Category();
-        cat2.setCategoryType(CategoryType.ASIAN);
-        Category cat3 = new Category();
-        cat3.setCategoryType(CategoryType.EUROPEAN);
-        Category cat4 = new Category();
-        cat4.setCategoryType(CategoryType.FAST_FOOD);
+//        ArrayList<Category> categoryList = new ArrayList<Category>();
+//        Category cat1 = new Category();
+//        cat1.setCategoryType(CategoryType.CAFE);
+//        Category cat2 = new Category();
+//        cat2.setCategoryType(CategoryType.ASIAN);
+//        Category cat3 = new Category();
+//        cat3.setCategoryType(CategoryType.EUROPEAN);
+//        Category cat4 = new Category();
+//        cat4.setCategoryType(CategoryType.FAST_FOOD);
+//
+//        categoryList.add(cat1);
+//        categoryList.add(cat2);
+//        categoryList.add(cat3);
+//        categoryList.add(cat4);
 
-        categoryList.add(cat1);
-        categoryList.add(cat2);
-        categoryList.add(cat3);
-        categoryList.add(cat4);
+        ArrayList<Category> categoryList = new ArrayList<Category>();
+        Category cafeCategory = new Cafe();
+        Category asianCategory = new Asian();
+        Category europeanCategory = new European();
+        Category fastFoodCategory = new FastFood();
+
+        categoryList.add(cafeCategory);
+        categoryList.add(asianCategory);
+        categoryList.add(europeanCategory);
+        categoryList.add(fastFoodCategory);
+
 
         return categoryList;
     }

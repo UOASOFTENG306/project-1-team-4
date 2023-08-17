@@ -13,4 +13,7 @@ public interface IRestaurantRepository {
     Restaurant getRestaurant(String restaurantID);
 
     List <Restaurant> searchRestaurants(String term);
+
+    List<Restaurant> getRestaurantsByCategory(String categoryType);
+
 }
