@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/MainLogoText"
+        android:layout_marginBottom="20dp"
         />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -31,7 +32,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:hint="@string/password"
-            style="@style/AdminInputText"/>
+            style="@style/AdminInputText"
+
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
