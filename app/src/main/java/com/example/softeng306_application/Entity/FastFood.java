@@ -5,7 +5,7 @@ public class FastFood extends Category {
     // Non-argument constructor to enable auto conversion of the Firebase documents to Asian objects
     public FastFood() {
         this.borderColour = "#FF0000"; //TODO ADD PROPER BORDER COLOUR
-        this.audioFileName = "fastfood_audio";
+        this.audioFileName = "test_audio";//TODO ADD PROPER AUDIO FILE
         this.categoryType =  "FAST-FOOD";
     }
 
