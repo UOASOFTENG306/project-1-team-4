@@ -72,19 +72,23 @@ public class MainViewModel extends AndroidViewModel {
         // TODO: RETRIEVE DATA FROM REPOSITORY
         // Initialize contacts
         ArrayList<Restaurant> topRatedList = new ArrayList<Restaurant>();
-        Restaurant res1 = new Restaurant("toprated 1", R.drawable.test_logo);
-        Restaurant res2 = new Restaurant("toprated 2", R.drawable.test_logo);
-        Restaurant res3 = new Restaurant("toprated 3", R.drawable.test_logo);
-        Restaurant res4 = new Restaurant("toprated 4", R.drawable.test_logo);
-        Restaurant res5 = new Restaurant("toprated 5", R.drawable.test_logo);
-        Restaurant res6 = new Restaurant("toprated 6", R.drawable.test_logo);
-        Restaurant res7 = new Restaurant("toprated 7", R.drawable.test_logo);
-        Restaurant res8 = new Restaurant("toprated 8", R.drawable.test_logo);
-        Restaurant res9 = new Restaurant("toprated 9", R.drawable.test_logo);
+        Category cafeCategory = new Cafe();
+        Category asianCategory = new Asian();
+        Category europeanCategory = new European();
+        Category fastFoodCategory = new FastFood();
+
+        Restaurant res1 = new Restaurant("toprated 1", R.drawable.test_logo, cafeCategory);
+        Restaurant res2 = new Restaurant("toprated 2", R.drawable.test_logo, asianCategory);
+        Restaurant res3 = new Restaurant("toprated 3", R.drawable.test_logo, europeanCategory);
+        Restaurant res4 = new Restaurant("toprated 4", R.drawable.test_logo, fastFoodCategory);
+        Restaurant res5 = new Restaurant("toprated 5", R.drawable.test_logo, fastFoodCategory);
+        Restaurant res6 = new Restaurant("toprated 6", R.drawable.test_logo, fastFoodCategory);
+        Restaurant res7 = new Restaurant("toprated 7", R.drawable.test_logo, fastFoodCategory);
+        Restaurant res8 = new Restaurant("toprated 8", R.drawable.test_logo, fastFoodCategory);
+        Restaurant res9 = new Restaurant("toprated 9", R.drawable.test_logo, fastFoodCategory);
 
 
         topRatedList.add(res1);
-        topRatedList.add(res2);
         topRatedList.add(res2);
         topRatedList.add(res3);
         topRatedList.add(res4);

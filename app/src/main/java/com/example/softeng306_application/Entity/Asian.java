@@ -6,7 +6,7 @@ public class Asian extends Category {
 
     // Non-argument constructor to enable auto conversion of the Firebase documents to Asian objects
     public Asian() {
-        this.borderColour = "asian_colour";
+        this.borderColour = "#FFFF00";//TODO ADD PROPER BORDER COLOUR
         this.audioFileName = "asian_audio";
         this.categoryType =  "ASIAN";
     }

@@ -1,8 +1,7 @@
 package com.example.softeng306_application.Adaptor;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -34,8 +34,10 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
 
     @Override
     public void onBindViewHolder(TopRatedRecylerAdapter.TopRatedViewHolder holder, int position) {
+        String colourHex = topRatedList.get(position).getCategory().getBorderColour();
         holder.restaurantName.setText(topRatedList.get(position).getName());
         holder.logoImage.setImageResource(topRatedList.get(position).getLogoImageUrl());
+        holder.topratedCardview.setStrokeColor(Color.parseColor(colourHex));
     }
 
     @Override
@@ -46,11 +48,12 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     public class TopRatedViewHolder extends RecyclerView.ViewHolder {
         TextView restaurantName;
         ImageView logoImage;
-
+        MaterialCardView topratedCardview;
         public TopRatedViewHolder(@NonNull View itemView) {
             super(itemView);
-            restaurantName = (TextView) itemView.findViewById(R.id.textview_top_rated);
-            logoImage = (ImageView) itemView.findViewById(R.id.imgview_main_logo);
+            restaurantName =  itemView.findViewById(R.id.textview_top_rated);
+            logoImage =  itemView.findViewById(R.id.imgview_main_logo);
+            topratedCardview = itemView.findViewById(R.id.mtrlcardview_toprated);
         }
 
     }

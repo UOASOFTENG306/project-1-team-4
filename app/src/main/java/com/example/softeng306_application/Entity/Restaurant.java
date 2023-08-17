@@ -16,9 +16,10 @@ public class Restaurant {
     }
 
     //TODO TEST CONSTRUCTOR - FOR KAI TO DELETE
-    public Restaurant(String name, Integer logoImageUrl) {
+    public Restaurant(String name, Integer logoImageUrl, Category category) {
         this.name = name;
         this.logoImageUrl = logoImageUrl;
+        this.category = category;
     }
 
     public Restaurant(String restaurantID, String name, String description, String location, Category category) {
