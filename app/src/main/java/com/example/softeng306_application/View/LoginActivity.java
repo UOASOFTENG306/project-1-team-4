@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.LoginViewModel;
-import com.example.softeng306_application.dataprovider.CategoriesFirestoreDataProvider;
-import com.example.softeng306_application.dataprovider.RestaurantFirestoreDataProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -29,10 +27,6 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
-        CategoriesFirestoreDataProvider categoriesFirestoreDataProvider = new CategoriesFirestoreDataProvider();
-        restaurantFirestoreDataProvider.addRestaurantToFirestore();
-        categoriesFirestoreDataProvider.addCategoriesToFirestore();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ViewHolder vh = new ViewHolder();
