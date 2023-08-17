@@ -77,15 +77,14 @@ public class MainViewModel extends AndroidViewModel {
         Category europeanCategory = new European();
         Category fastFoodCategory = new FastFood();
 
-        Restaurant res1 = new Restaurant("toprated 1", R.drawable.test_logo, cafeCategory);
-        Restaurant res2 = new Restaurant("toprated 2", R.drawable.test_logo, asianCategory);
-        Restaurant res3 = new Restaurant("toprated 3", R.drawable.test_logo, europeanCategory);
-        Restaurant res4 = new Restaurant("toprated 4", R.drawable.test_logo, fastFoodCategory);
-        Restaurant res5 = new Restaurant("toprated 5", R.drawable.test_logo, fastFoodCategory);
-        Restaurant res6 = new Restaurant("toprated 6", R.drawable.test_logo, fastFoodCategory);
-        Restaurant res7 = new Restaurant("toprated 7", R.drawable.test_logo, fastFoodCategory);
-        Restaurant res8 = new Restaurant("toprated 8", R.drawable.test_logo, fastFoodCategory);
-        Restaurant res9 = new Restaurant("toprated 9", R.drawable.test_logo, fastFoodCategory);
+        Restaurant res1 = new Restaurant("toprated 1", R.drawable.restaurant0, cafeCategory);
+        Restaurant res2 = new Restaurant("toprated 2", R.drawable.restaurant1, asianCategory);
+        Restaurant res3 = new Restaurant("toprated 3", R.drawable.restaurant2, europeanCategory);
+        Restaurant res4 = new Restaurant("toprated 4", R.drawable.restaurant3, fastFoodCategory);
+        Restaurant res5 = new Restaurant("toprated 5", R.drawable.restaurant4, fastFoodCategory);
+        Restaurant res6 = new Restaurant("toprated 6", R.drawable.restaurant5, fastFoodCategory);
+        Restaurant res7 = new Restaurant("toprated 7", R.drawable.restaurant6, fastFoodCategory);
+        Restaurant res8 = new Restaurant("toprated 8", R.drawable.restaurant7, fastFoodCategory);
 
 
         topRatedList.add(res1);
@@ -96,7 +95,6 @@ public class MainViewModel extends AndroidViewModel {
         topRatedList.add(res6);
         topRatedList.add(res7);
         topRatedList.add(res8);
-        topRatedList.add(res9);
 
         return topRatedList;
     }
