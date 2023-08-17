@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TopRatedRecylerAdapter topRatedAdapter;
     private class ViewHolder{
         TextView usernameText;
-        Button logoutButton;
+        Button logoutButton, favouritesButton;
         RecyclerView topRatedRecyclerView;
         RecyclerView categoryRecyclerView;
     }
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         ViewHolder vh = new ViewHolder();
         vh.logoutButton = findViewById(R.id.btn_logout);
+        vh.favouritesButton = findViewById(R.id.btn_favourites);
         vh.usernameText = findViewById(R.id.txt_username);
         mainViewModel.getUserInfo().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {

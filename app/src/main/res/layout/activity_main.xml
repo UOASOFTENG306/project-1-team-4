@@ -47,6 +47,12 @@
         android:layout_height="wrap_content"
         android:text="Log out" />
 
+    <Button
+        android:id="@+id/btn_favourites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="favourites (replace with heart mark?)" />
+
     <TextView
         android:id="@+id/txt_username"
         android:layout_width="match_parent"
