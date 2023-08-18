@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:id="@+id/cardview_category"
+    style="@style/CategoryCard">
+
+    <TextView
+        android:id="@+id/txt_category"
+        style="@style/CategoryText"
+        android:text="Category"
+        />
+
+</androidx.cardview.widget.CardView>

@@ -1,12 +1,20 @@
 package com.example.softeng306_application.Repository;
 
+import androidx.annotation.NonNull;
+
 import com.example.softeng306_application.Entity.Favourites;
 import com.example.softeng306_application.Entity.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class UserRepository implements IUserRepository {
 
@@ -19,6 +27,11 @@ public class UserRepository implements IUserRepository {
             instance = new UserRepository();
         }
         return instance;
+    }
+
+    public Task<DocumentSnapshot> getAllUserInformation() {
+        Task<DocumentSnapshot> docRef = db.collection("users").document(this.getCurrentUserById()).get();
+        return docRef;
     }
 
     @Override
