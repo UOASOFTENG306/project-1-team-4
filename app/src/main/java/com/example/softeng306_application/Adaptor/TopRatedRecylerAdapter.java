@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.google.android.material.card.MaterialCardView;
@@ -36,8 +37,13 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     public void onBindViewHolder(TopRatedRecylerAdapter.TopRatedViewHolder holder, int position) {
         String colourHex = topRatedList.get(position).getCategory().getBorderColour();
         holder.restaurantName.setText(topRatedList.get(position).getName());
-        holder.logoImage.setImageResource(topRatedList.get(position).getLogoImageUrl());
+        holder.logoImage.setImageResource(showImage(topRatedList.get(position)));
         holder.topratedCardview.setStrokeColor(Color.parseColor(colourHex));
+    }
+
+    private int showImage(Restaurant restaurant) {
+        int i = context.getResources().getIdentifier(restaurant.getLogoImageUrl(), "drawable", context.getPackageName());
+        return i;
     }
 
     @Override
