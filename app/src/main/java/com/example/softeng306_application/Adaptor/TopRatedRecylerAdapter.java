@@ -42,7 +42,7 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     }
 
     private int showImage(Restaurant restaurant) {
-        int i = context.getResources().getIdentifier(restaurant.getLogoImageUrl(), "drawable", context.getPackageName());
+        int i = context.getResources().getIdentifier(restaurant.getLogoImage(), "drawable", context.getPackageName());
         return i;
     }
 

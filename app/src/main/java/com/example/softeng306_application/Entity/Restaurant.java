@@ -7,7 +7,7 @@ public class Restaurant {
     private String name;
     private Category category;
     private List<Integer> backgroundImageUrls;
-    private String logoImageUrl;
+    private String logoImage;
     private List<Review> reviews;
     private String description;
     private String location;
@@ -16,19 +16,19 @@ public class Restaurant {
     }
 
     //TODO TEST CONSTRUCTOR - FOR KAI TO DELETE
-    public Restaurant(String name, String logoImageUrl, Category category) {
+    public Restaurant(String name, String logoImage, Category category) {
         this.name = name;
-        this.logoImageUrl = logoImageUrl;
+        this.logoImage = logoImage;
         this.category = category;
     }
 
-    public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImageUrl) {
+    public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImage) {
         this.restaurantID = restaurantID;
         this.name = name;
         this.description = description;
         this.location = location;
         this.category = category;
-        this.logoImageUrl = logoImageUrl;
+        this.logoImage = logoImage;
     }
 
     public String getRestaurantID() {
@@ -47,7 +47,7 @@ public class Restaurant {
         return backgroundImageUrls;
     }
 
-    public String getLogoImageUrl() { return logoImageUrl; };
+    public String getLogoImage() { return logoImage; };
 
     public List<Review> getReviews() {
         return reviews;
