@@ -12,8 +12,6 @@ public class Restaurant {
     private String description;
     private String location;
 
-    private Boolean isTopRated;
-
     public Restaurant() {
     }
 
@@ -24,13 +22,12 @@ public class Restaurant {
         this.category = category;
     }
 
-    public Restaurant(String restaurantID, String name, String description, String location, Category category, Boolean isTopRated) {
+    public Restaurant(String restaurantID, String name, String description, String location, Category category) {
         this.restaurantID = restaurantID;
         this.name = name;
         this.description = description;
         this.location = location;
         this.category = category;
-        this.isTopRated = isTopRated;
     }
 
 
