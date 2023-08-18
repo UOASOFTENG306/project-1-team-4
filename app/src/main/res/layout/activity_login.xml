@@ -34,7 +34,6 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             style="@style/AdminInputText"
-
             />
     </com.google.android.material.textfield.TextInputLayout>
 
