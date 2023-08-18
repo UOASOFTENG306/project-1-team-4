@@ -26,7 +26,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-         style="@style/AdminInputLayout"
+        style="@style/AdminInputLayout"
         android:layout_marginBottom="8dp"
         >
         <com.google.android.material.textfield.TextInputEditText
