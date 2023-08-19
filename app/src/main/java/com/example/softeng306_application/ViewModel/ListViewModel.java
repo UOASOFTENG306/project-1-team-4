@@ -14,9 +14,12 @@ import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
+import com.example.softeng306_application.R;
+import com.example.softeng306_application.Repository.FirestoreCallback;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -60,35 +63,16 @@ public class ListViewModel extends AndroidViewModel {
             restaurantRepository.getRestaurants();
         }
         for(Category category: getCategory()) {
-            restaurantRepository.getRestaurantsByCategory(category.getCategoryType()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            restaurantRepository.getRestaurantsByCategory(category.getCategoryType(), new FirestoreCallback() {
                 @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d("FirestoreActivity", document.getId() + " => " + document.getData());
-                            Map<String, Object> data = document.getData();
-                            restaurants.add(restaurantBuilder(data));
-                        }
-                    } else {
-                        Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+                public void onCallback(List<DocumentSnapshot> documentList) {
+                    for (DocumentSnapshot document : documentList) {
+                        Log.d("FirestoreActivity", document.getId() + " => " + document.getData());
+                        Map<String, Object> data = document.getData();
+                        restaurants.add(restaurantBuilder(data));
                     }
                 }
             });
-            /**task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Map<String, Object> data = document.getData();
-                            restaurants.add(restaurantBuilder(data));
-                        }
-                    }
-                }
-            })**/
-
-        }
-        if(restaurants.size() == 0) {
-            Log.d("FirestoreActivity", "It did not work ");
         }
         return restaurants;
     }
@@ -113,7 +97,6 @@ public class ListViewModel extends AndroidViewModel {
         else {
             restaurant = new Restaurant(name, logoImage, new FastFood());
         }
-
         return restaurant;
     }
 }
