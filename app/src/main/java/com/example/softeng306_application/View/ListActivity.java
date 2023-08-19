@@ -18,7 +18,11 @@ import android.widget.Toast;
 
 import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
 import com.example.softeng306_application.Adaptor.RestaurantRecyclerAdapter;
+import com.example.softeng306_application.Entity.Asian;
+import com.example.softeng306_application.Entity.Cafe;
 import com.example.softeng306_application.Entity.Category;
+import com.example.softeng306_application.Entity.European;
+import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
@@ -29,7 +33,7 @@ import java.util.List;
 public class ListActivity extends AppCompatActivity implements Activity  {
 
     // TODO: delete; for testing purposes
-    String[] item = {"cat1", "cat2", "cat3"};
+    String[] categories = {"FAST-FOOD", "EUROPEAN", "ASIAN", "CAFE"};
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterItems;
 
@@ -37,6 +41,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
+    private Category category;
 
     private class ViewHolder {
         TextView emptyListText;
@@ -56,7 +61,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         Intent intent = getIntent();
         if (intent != null) {
             List<Category> categoryList = new ArrayList<Category>();
-            Category category = intent.getParcelableExtra("CATEGORY");
+            category = intent.getParcelableExtra("CATEGORY");
             categoryList.add(category);
             listViewModel.setCategory(categoryList);
         }
@@ -81,7 +86,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
 
         // TODO: delete; for testing purposes
         autoCompleteTextView = findViewById(R.id.dropdown_category);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, item);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, categories);
 
         listViewModel.getRestaurantList().observe(this, restaurants -> {
             // Update the adapter with the new list of items
@@ -93,15 +98,31 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         });
 
         autoCompleteTextView.setAdapter(adapterItems);
+        autoCompleteTextView.setText(category.getCategoryType(), false);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String item = adapterView.getItemAtPosition(i).toString();
-                Toast.makeText(ListActivity.this, item, Toast.LENGTH_SHORT).show();
+                String selectedCategory = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(ListActivity.this, "Category: " + selectedCategory, Toast.LENGTH_SHORT).show();
+
+                autoCompleteTextView.setText(selectedCategory, false);
+                // Which category was selected
+                Category category = null;
+                if (selectedCategory.equals("FAST-FOOD")) { category = new FastFood(); }
+                else if (selectedCategory.equals("ASIAN")) { category = new Asian(); }
+                else if (selectedCategory.equals("EUROPEAN")) { category = new European(); }
+                else if (selectedCategory.equals("CAFE")) { category = new Cafe(); }
+
+                List<Category> categoryList = new ArrayList<>();
+                categoryList.add(category);
+
+                listViewModel.setCategory(categoryList);
+                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
             }
         });
 
     }
+
 
     private void showMainActivity(View v) {
         Intent mainIntent = new Intent(this, MainActivity.class);

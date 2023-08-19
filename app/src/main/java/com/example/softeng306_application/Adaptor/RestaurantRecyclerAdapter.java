@@ -29,7 +29,6 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     Context context;
     private ListViewModel listViewModel;
     private List<Restaurant> restaurants;
-    private List<Category> categoryList;
 
     public void setRestaurants(List<Restaurant> restaurants) {
         this.restaurants = restaurants;
