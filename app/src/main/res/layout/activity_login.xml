@@ -24,6 +24,7 @@
         android:textColorHint="@color/black"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeColor="@color/transparent"
+        app:hintEnabled="false"
         app:hintTextAppearance="@color/black"
         app:hintTextColor="@color/black">
 
@@ -43,6 +44,7 @@
         android:textColorHint="@color/black"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeColor="@color/transparent"
+        app:hintEnabled="false"
         app:hintTextAppearance="@color/black"
         app:hintTextColor="@color/black"
        >
