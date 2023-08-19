@@ -1,20 +1,13 @@
 package com.example.softeng306_application.Repository;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
 import com.example.softeng306_application.Entity.Restaurant;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
-import java.util.Map;
 
 public class RestaurantRepository implements IRestaurantRepository {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -50,15 +43,8 @@ public class RestaurantRepository implements IRestaurantRepository {
     }
 
     @Override
-    public void getRestaurantsByCategory(String categoryType, FirestoreCallback callback) {
+    public Task<QuerySnapshot> getRestaurantsByCategory(String categoryType) {
         Task<QuerySnapshot> task = db.collection("restaurants").whereEqualTo("category.categoryType", categoryType).get();
-        task.addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                List<DocumentSnapshot> documentList = task1.getResult().getDocuments();
-                callback.onCallback(documentList); // Call the callback with the document list
-            } else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task1.getException());
-            }
-        });
+        return task;
     }
 }

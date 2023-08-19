@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 
 public class ListViewModel extends AndroidViewModel {
     private List<Category> category;
+    private MutableLiveData<List<Restaurant>> restaurantList =  new MutableLiveData<>();
     private Boolean isAll;
     private Boolean isFavourite;
     private RestaurantRepository restaurantRepository;
@@ -38,6 +39,14 @@ public class ListViewModel extends AndroidViewModel {
     public ListViewModel(@NonNull Application application) {
         super(application);
         restaurantRepository = restaurantRepository.getInstance();
+    }
+
+    public LiveData<List<Restaurant>> getRestaurantList() {
+        return restaurantList;
+    }
+
+    public void updateRestaurantList(List<Restaurant> restaurantList) {
+        this.restaurantList.setValue(restaurantList);
     }
 
     public List<Category> getCategory() {
@@ -59,20 +68,63 @@ public class ListViewModel extends AndroidViewModel {
             }
         };
 
-        if(category.contains(allCategories)) {
-            restaurantRepository.getRestaurants();
-        }
-        for(Category category: getCategory()) {
-            restaurantRepository.getRestaurantsByCategory(category.getCategoryType(), new FirestoreCallback() {
+        if(category.containsAll(allCategories)) {
+            restaurantRepository.getRestaurants().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
-                public void onCallback(List<DocumentSnapshot> documentList) {
-                    for (DocumentSnapshot document : documentList) {
-                        Log.d("FirestoreActivity", document.getId() + " => " + document.getData());
-                        Map<String, Object> data = document.getData();
-                        restaurants.add(restaurantBuilder(data));
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        List<Restaurant> restaurants = new ArrayList<>();
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d("FirestoreActivity", document.getId() + " => " + document.getData());
+                            Map<String, Object> data = document.getData();
+                            restaurants.add(restaurantBuilder(data));
+                        }
+                        updateRestaurantList(restaurants);
+
+                    } else {
+                        Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
                     }
                 }
             });
+        } else {
+
+            for (Category category : getCategory()) {
+                restaurantRepository.getRestaurantsByCategory(category.getCategoryType()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<Restaurant> restaurants = new ArrayList<>();
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("FirestoreActivity", document.getId() + " => " + document.getData());
+                                Map<String, Object> data = document.getData();
+                                restaurants.add(restaurantBuilder(data));
+                            }
+                            updateRestaurantList(restaurants);
+
+                        } else {
+                            Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+            }
+        }
+            /**task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Map<String, Object> data = document.getData();
+                            restaurants.add(restaurantBuilder(data));
+                        }
+                    }
+                }
+            })**/
+
+
+        if(restaurants.size() == 0) {
+            Log.d("FirestoreActivity", "It did not work ");
         }
         return restaurants;
     }

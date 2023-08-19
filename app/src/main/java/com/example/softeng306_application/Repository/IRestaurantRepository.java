@@ -16,6 +16,5 @@ public interface IRestaurantRepository {
 
     List <Restaurant> searchRestaurants(String term);
 
-    void  getRestaurantsByCategory(String categoryType, FirestoreCallback callback);
-
+    Task<QuerySnapshot> getRestaurantsByCategory(String categoryType);
 }

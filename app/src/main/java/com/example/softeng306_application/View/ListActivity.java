@@ -82,6 +82,11 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         autoCompleteTextView = findViewById(R.id.dropdown_category);
         adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, item);
 
+        listViewModel.getRestaurantList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setRestaurants(restaurants);
+        });
+
         autoCompleteTextView.setAdapter(adapterItems);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
