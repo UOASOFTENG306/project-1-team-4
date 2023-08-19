@@ -43,13 +43,12 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     @Override
     public void onBindViewHolder(CategoryRecyclerAdapter.CategoryViewHolder holder, int position) {
         Category category = categoryList.get(position);
-
+        String audio = category.getAudioFileName();
         holder.categoryName.setText(categoryList.get(position).getCategoryType());
-        playSound(categoryList.get(position), holder.cardView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCategoryClick(category);
+                onCategoryClick(category, audio);
             }
         });
 
@@ -60,28 +59,22 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         return categoryList.size();
     }
 
-    private void onCategoryClick(Category category){
+    private void onCategoryClick(Category category, String audio){
+        playSound(audio);
         Intent intent = new Intent(context, ListActivity.class);
         intent.putExtra("CATEGORY", category);
         context.startActivity(intent);
     }
 
-    public void playSound(Category category, View itemView){
-        final String audio = category.getAudioFileName();
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Operations to perform when the play ImageView is clicked
-                int i = context.getResources().getIdentifier(
-                        audio, "raw",
-                        context.getPackageName());
-                //Using MediaPlayer to play the audio file
-                if (mediaPlayer != null)
-                    mediaPlayer.release();
-                mediaPlayer = MediaPlayer.create(context, i);
-                mediaPlayer.start();
-            }
-        });
+    private void playSound(String audio){
+        int i = context.getResources().getIdentifier(
+                audio, "raw",
+                context.getPackageName());
+        //Using MediaPlayer to play the audio file
+        if (mediaPlayer != null)
+            mediaPlayer.release();
+        mediaPlayer = MediaPlayer.create(context, i);
+        mediaPlayer.start();
     }
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder{
