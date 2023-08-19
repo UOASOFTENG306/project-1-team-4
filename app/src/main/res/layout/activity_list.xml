@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".View.ListActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recview_restaurant_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </LinearLayout>

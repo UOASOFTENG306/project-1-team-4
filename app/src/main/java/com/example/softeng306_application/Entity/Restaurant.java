@@ -12,6 +12,8 @@ public class Restaurant {
     private String description;
     private String location;
 
+    private String price;
+
     public Restaurant() {
     }
 
@@ -22,13 +24,14 @@ public class Restaurant {
         this.category = category;
     }
 
-    public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImage) {
+    public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImage, String price) {
         this.restaurantID = restaurantID;
         this.name = name;
         this.description = description;
         this.location = location;
         this.category = category;
         this.logoImage = logoImage;
+        this.price = price;
     }
 
     public String getRestaurantID() {
@@ -60,4 +63,6 @@ public class Restaurant {
     public String getLocation() {
         return location;
     }
+
+    public String getPrice() { return price; }
 }
