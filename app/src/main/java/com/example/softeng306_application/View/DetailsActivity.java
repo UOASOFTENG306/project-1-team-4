@@ -1,9 +1,12 @@
 package com.example.softeng306_application.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.ViewPageAdapter;
@@ -12,22 +15,25 @@ import com.google.android.material.tabs.TabLayout;
 
 public class DetailsActivity extends AppCompatActivity implements Activity {
 
-    TabLayout tabLayout;
-    ViewPager2 viewPager2;
-    ViewPageAdapter viewPageAdapter;
+    private class ViewHolder {
+        TabLayout tabLayout;
+        ViewPager2 viewPager2;
+        ViewPageAdapter viewPageAdapter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        this.tabLayout = findViewById(R.id.tabLayout);
-        this.viewPager2 = findViewById(R.id.viewPager_tab_content);
-        this.viewPageAdapter = new ViewPageAdapter(this);
-        this.viewPager2.setAdapter(this.viewPageAdapter);
-        this.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        ViewHolder vh = new ViewHolder();
+        vh.tabLayout = findViewById(R.id.tabLayout);
+        vh.viewPager2 = findViewById(R.id.viewPager_tab_content);
+        vh.viewPageAdapter = new ViewPageAdapter(this);
+        vh.viewPager2.setAdapter(vh.viewPageAdapter);
+        vh.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
+                vh.viewPager2.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -40,11 +46,11 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
 
             }
         });
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        vh.viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                tabLayout.getTabAt(position).select();
+                vh.tabLayout.getTabAt(position).select();
             }
         });
         
