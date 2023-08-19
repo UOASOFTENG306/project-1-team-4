@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.ViewPageAdapter;
 import com.example.softeng306_application.R;
@@ -14,7 +15,7 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
     ViewPageAdapter viewPageAdapter;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
