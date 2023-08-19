@@ -12,8 +12,8 @@ import java.util.List;
 public class RestaurantRepository implements IRestaurantRepository {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static RestaurantRepository instance;
-    @Override
-    public RestaurantRepository getInstance() {
+
+    public static RestaurantRepository getInstance() {
             if (instance == null){
                 instance = new RestaurantRepository();
             }

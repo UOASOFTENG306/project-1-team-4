@@ -8,7 +8,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.List;
 
 public interface IRestaurantRepository {
-    RestaurantRepository getInstance();
     Task<QuerySnapshot> getTopRatedRestaurants();
 
     Task<QuerySnapshot> getRestaurants();
