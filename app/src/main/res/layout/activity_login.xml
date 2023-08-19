@@ -4,37 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".View.LoginActivity">
 
     <TextView
+        style="@style/MainLogoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/MainLogoText"
-        android:layout_marginBottom="20dp"
-        />
+        android:layout_marginBottom="20dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/AdminInputLayout"
-        >
+        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:padding="0dp"
+        android:textColorHint="@color/black"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/transparent"
+        app:hintTextAppearance="@color/black"
+        app:hintTextColor="@color/black">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
-            android:hint="@string/email"
             style="@style/AdminInputText"
-            />
+            android:hint="@string/email" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/AdminInputLayout"
+        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        >
+        android:padding="0dp"
+        android:textColorHint="@color/black"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/transparent"
+        app:hintTextAppearance="@color/black"
+        app:hintTextColor="@color/black"
+       >
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
+            style="@style/AdminInputText"
             android:hint="@string/password"
             android:inputType="textPassword"
-            style="@style/AdminInputText"
             />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -44,13 +63,12 @@
 
     <Button
         android:id="@+id/btn_create_new_account"
-        android:text="Create a new account"
-        android:fontFamily="@font/montserrat_medium"
-        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/bg"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Create a new account"
         android:textColor="@color/black"
-        />
+        android:textSize="16sp" />
 
 </LinearLayout>
