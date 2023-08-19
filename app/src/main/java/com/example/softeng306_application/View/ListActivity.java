@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
 
     private class ViewHolder {
         RecyclerView restaurantRecyclerView;
+        Button backButton;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,5 +54,20 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
+
+
+        vh.backButton = findViewById(R.id.btn_back);
+        vh.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMainActivity(v);
+            }
+        });
+    }
+
+
+    private void showMainActivity(View v) {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
     }
 }
