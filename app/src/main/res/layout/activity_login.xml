@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".View.LoginActivity">
+    tools:context=".View.LoginActivity"
+    android:id="@+id/linearlayout_login">
 
     <TextView
         style="@style/MainLogoText"

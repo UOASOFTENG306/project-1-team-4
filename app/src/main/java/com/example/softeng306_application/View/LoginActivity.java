@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.softeng306_application.R;
@@ -39,6 +43,8 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
         vh.createNewAccountButton = findViewById(R.id.btn_create_new_account);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
+        setupUI(findViewById(R.id.linearlayout_login));
+
         //OnClickListeners
         clickLogin(vh);
         clickCreateNewButton(vh);
@@ -55,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
     }
 
     private void clickLogin(ViewHolder vh){
+
         vh.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +104,26 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
     private void showMainActivity(View v) {
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
+    }
+
+    private void closeKeyboard() {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if(imm.isAcceptingText()) {
+                imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+            }
+    }
+
+    private void setupUI(View v) {
+        // Setup touch listener for non-text box views to hide keyboard
+        if (!(v instanceof TextInputEditText)) {
+            v.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    closeKeyboard();
+                    return false;
+                }
+            });
+        }
     }
 
 
