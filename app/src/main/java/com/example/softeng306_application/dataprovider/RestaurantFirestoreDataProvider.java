@@ -47,15 +47,15 @@ public class RestaurantFirestoreDataProvider {
 
     private List<Restaurant> getRestaurants() {
         List<Restaurant> restaurantsArrayList = new ArrayList<>();
-        Restaurant r0 = new Restaurant("1", "Chipotle", "Lovely Mexican Food", "Auckland", new European(), "restaurant0");
-        Restaurant r1 = new Restaurant("2", "McDonalds", "Junk Food", "Auckland", new FastFood(), "restaurant1");
-        Restaurant r2 = new Restaurant("3", "Wendy's", "A well-known international fast-food restaurant chain specializing in fresh, high-quality burgers, chicken sandwiches, and salads", "Auckland", new FastFood(), "restaurant2");
-        Restaurant r3 = new Restaurant("4", "Domino's Pizza", "Who does not love pizzas", "Wellington", new FastFood(), "restaurant3");
-        Restaurant r4 = new Restaurant("5", "Pizza Hut", "The better pizza place", "Auckland", new FastFood(), "restaurant4");
-        Restaurant r5 = new Restaurant("6", "Subway", "A global fast-food chain recognized for its made-to-order sandwiches and salads, providing a customizable and healthier dining option.", "Christchurch", new Cafe(), "restaurant5");
-        Restaurant r6 = new Restaurant("7", "Burger King", "The best burgers in town", "Auckland", new FastFood(), "restaurant6");
-        Restaurant r7 = new Restaurant("8", "Paname Social", "combines culinary excellence with a vibrant social atmosphere, offering a diverse menu inspired by global flavors.", "Auckland", new European(), "restaurant7");
-        Restaurant r8 = new Restaurant("9", "Pappa Rich", "A contemporary Malaysian restaurant known for its diverse menu featuring authentic flavors and cultural richness.", "Auckland", new Asian(), "restaurant8");
+        Restaurant r0 = new Restaurant("1", "Chipotle", "Lovely Mexican Food", "Auckland", new European(), "restaurant0", "$");
+        Restaurant r1 = new Restaurant("2", "McDonalds", "Junk Food", "Auckland", new FastFood(), "restaurant1", "$$");
+        Restaurant r2 = new Restaurant("3", "Wendy's", "A well-known international fast-food restaurant chain specializing in fresh, high-quality burgers, chicken sandwiches, and salads", "Auckland", new FastFood(), "restaurant2", "$");
+        Restaurant r3 = new Restaurant("4", "Domino's Pizza", "Who does not love pizzas", "Wellington", new FastFood(), "restaurant3", "$");
+        Restaurant r4 = new Restaurant("5", "Pizza Hut", "The better pizza place", "Auckland", new FastFood(), "restaurant4", "$");
+        Restaurant r5 = new Restaurant("6", "Subway", "A global fast-food chain recognized for its made-to-order sandwiches and salads, providing a customizable and healthier dining option.", "Christchurch", new Cafe(), "restaurant5", "$");
+        Restaurant r6 = new Restaurant("7", "Burger King", "The best burgers in town", "Auckland", new FastFood(), "restaurant6", "$");
+        Restaurant r7 = new Restaurant("8", "Paname Social", "combines culinary excellence with a vibrant social atmosphere, offering a diverse menu inspired by global flavors.", "Auckland", new European(), "restaurant7", "$$$");
+        Restaurant r8 = new Restaurant("9", "Pappa Rich", "A contemporary Malaysian restaurant known for its diverse menu featuring authentic flavors and cultural richness.", "Auckland", new Asian(), "restaurant8", "$$");
         restaurantsArrayList.add(r0);
         restaurantsArrayList.add(r1);
         restaurantsArrayList.add(r2);

@@ -8,7 +8,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.List;
 
 public interface IRestaurantRepository {
-    RestaurantRepository getInstance();
     Task<QuerySnapshot> getTopRatedRestaurants();
 
     Task<QuerySnapshot> getRestaurants();
@@ -18,5 +17,4 @@ public interface IRestaurantRepository {
     List <Restaurant> searchRestaurants(String term);
 
     Task<QuerySnapshot> getRestaurantsByCategory(String categoryType);
-
 }

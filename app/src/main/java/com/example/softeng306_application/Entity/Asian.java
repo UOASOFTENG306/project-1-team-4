@@ -1,5 +1,7 @@
 package com.example.softeng306_application.Entity;
 
+import android.os.Parcel;
+
 import java.util.List;
 
 public class Asian extends Category {
@@ -24,5 +26,22 @@ public class Asian extends Category {
     public String getCategoryType() {
         return categoryType;
     }
+
+    protected Asian(Parcel in) {
+        borderColour = in.readString();
+        audioFileName = in.readString();
+        categoryType = in.readString();
+    }
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Asian createFromParcel(Parcel in) {
+            return new Asian(in);
+        }
+
+        @Override
+        public Asian[] newArray(int size) {
+            return new Asian[size];
+        }
+    };
 
 }

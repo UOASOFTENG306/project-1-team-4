@@ -5,6 +5,7 @@ import com.example.softeng306_application.Entity.Favourites;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public interface IUserRepository {
     String getCurrentUserById();
@@ -16,7 +17,7 @@ public interface IUserRepository {
     FirebaseUser getUser();
 
     void logout();
-    Favourites getFavourites(String userID);
+    Task<DocumentSnapshot> getFavourites(String userID);
     Favourites checkFavourite(String userID, String restaurantID);
 };
 

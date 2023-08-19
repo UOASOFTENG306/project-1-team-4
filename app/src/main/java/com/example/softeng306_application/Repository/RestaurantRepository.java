@@ -12,8 +12,8 @@ import java.util.List;
 public class RestaurantRepository implements IRestaurantRepository {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static RestaurantRepository instance;
-    @Override
-    public RestaurantRepository getInstance() {
+
+    public static RestaurantRepository getInstance() {
             if (instance == null){
                 instance = new RestaurantRepository();
             }
@@ -23,12 +23,13 @@ public class RestaurantRepository implements IRestaurantRepository {
     @Override
     public Task<QuerySnapshot> getTopRatedRestaurants() {
         CollectionReference collectionRef = db.collection("restaurants");
-        return collectionRef.whereEqualTo("isTopRated", true).get();
+        return collectionRef.whereGreaterThan("reviews", 5).get();
     }
 
     @Override
     public Task<QuerySnapshot> getRestaurants() {
-        return db.collection("restaurants").get();
+        Task<QuerySnapshot> task = db.collection("restaurants").get();
+        return task;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class RestaurantRepository implements IRestaurantRepository {
 
     @Override
     public Task<QuerySnapshot> getRestaurantsByCategory(String categoryType) {
-        CollectionReference collectionRef = db.collection("restaurants");
-        return collectionRef.whereEqualTo("categoryType", categoryType).get();
+        Task<QuerySnapshot> task = db.collection("restaurants").whereEqualTo("category.categoryType", categoryType).get();
+        return task;
     }
 }

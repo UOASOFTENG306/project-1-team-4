@@ -18,7 +18,6 @@
         style="@style/HeaderText"
         />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recview_top_rated"
         android:layout_width="match_parent"
@@ -32,6 +31,19 @@
         android:text="Categories"
         style="@style/HeaderText"
         />
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="10dp"
+        android:id="@+id/cardview_favourites"
+        style="@style/CategoryCard"
+        android:backgroundTint="#EA4961"
+        >
+        <TextView
+            style="@style/CategoryText"
+            android:text="Favourites"
+            />
+    </androidx.cardview.widget.CardView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recview_categories"
