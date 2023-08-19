@@ -16,6 +16,7 @@ import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.CategoryType;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -62,14 +63,14 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     public class RestaurantViewHolder extends RecyclerView.ViewHolder{
         ImageView logoImage, favouriteHeart;
         TextView restaurantName, price;
-        CardView restaurantItem;
+        MaterialCardView restaurantItem;
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
             logoImage = itemView.findViewById(R.id.img_logo);
             restaurantName = itemView.findViewById(R.id.txt_restaurant_name);
             price = itemView.findViewById(R.id.txt_price);
             favouriteHeart = itemView.findViewById(R.id.img_favourite);
-            restaurantItem = itemView.findViewById(R.id.cardview_restaurant);
+            restaurantItem = itemView.findViewById(R.id.mtrlcardview_restaurant);
         }
 
     }

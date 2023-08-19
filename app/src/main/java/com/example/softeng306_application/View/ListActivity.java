@@ -65,7 +65,6 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         });
     }
 
-
     private void showMainActivity(View v) {
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
