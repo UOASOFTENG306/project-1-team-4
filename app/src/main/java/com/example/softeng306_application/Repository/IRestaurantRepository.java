@@ -1,16 +1,22 @@
 package com.example.softeng306_application.Repository;
 
 import com.example.softeng306_application.Entity.Restaurant;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
 public interface IRestaurantRepository {
     RestaurantRepository getInstance();
-    List<Restaurant> getTopRatedRestaurants();
+    Task<QuerySnapshot> getTopRatedRestaurants();
 
-    List<Restaurant> getRestaurants();
+    Task<QuerySnapshot> getRestaurants();
 
-    Restaurant getRestaurant(String restaurantID);
+    Task<DocumentSnapshot> getRestaurant(String restaurantID);
 
     List <Restaurant> searchRestaurants(String term);
+
+    Task<QuerySnapshot> getRestaurantsByCategory(String categoryType);
+
 }
