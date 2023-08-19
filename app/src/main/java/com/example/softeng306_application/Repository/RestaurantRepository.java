@@ -23,7 +23,7 @@ public class RestaurantRepository implements IRestaurantRepository {
     @Override
     public Task<QuerySnapshot> getTopRatedRestaurants() {
         CollectionReference collectionRef = db.collection("restaurants");
-        return collectionRef.whereEqualTo("isTopRated", true).get();
+        return collectionRef.whereGreaterThan("reviews", 5).get();
     }
 
     @Override
