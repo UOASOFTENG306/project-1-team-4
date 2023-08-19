@@ -4,48 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".View.RegisterActivity"
     android:id="@+id/linearlayout_register">
 
-    <include layout="@layout/action_bar"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <include layout="@layout/action_bar"
         android:layout_height="wrap_content"
-        style="@style/MainLogoText"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="20dp"
-        />
+        android:layout_width="match_parent"
+        android:layout_weight="1"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/AdminInputLayout">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            android:hint="@string/email"
-            style="@style/AdminInputText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="2">
+        <TextView
+            android:id="@+id/txt_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MainLogoText"
+            android:layout_marginBottom="20dp"
+            />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/AdminInputLayout">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/username"
-            android:hint="@string/username"
-            style="@style/AdminInputText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/AdminInputLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:hint="@string/email"
+                style="@style/AdminInputText"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/AdminInputLayout"
-        android:layout_marginBottom="8dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            style="@style/AdminInputText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/AdminInputLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username"
+                android:hint="@string/username"
+                style="@style/AdminInputText"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_register"
-        android:text="@string/register"
-        style="@style/AdminButton"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/AdminInputLayout"
+            android:layout_marginBottom="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                style="@style/AdminInputText"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:text="@string/register"
+            style="@style/AdminButton"/>
+
+    </LinearLayout>
+
+
 </LinearLayout>

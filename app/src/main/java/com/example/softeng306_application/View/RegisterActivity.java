@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.softeng306_application.R;
@@ -29,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
         TextInputEditText editTextEmail, editTextPassword, editTextUsername;
         Button registerButton;
         ImageButton backButton;
+        TextView mainLogoText;
     }
     private RegisterViewModel registerViewModel;
 
@@ -43,10 +46,11 @@ public class RegisterActivity extends AppCompatActivity {
         vh.editTextUsername = findViewById(R.id.username);
         vh.registerButton = findViewById(R.id.btn_register);
         vh.backButton = findViewById(R.id.btn_back);
+        vh.mainLogoText = findViewById(R.id.txt_logo);
 
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
-        setupUI(findViewById(R.id.linearlayout_register));
+        setupUI(findViewById(R.id.linearlayout_register), vh);
 
         vh.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void setupUI(View v) {
+    private void setupUI(View v, ViewHolder vh) {
         // Setup touch listener for non-text box views to hide keyboard
         if (!(v instanceof TextInputEditText)) {
             v.setOnTouchListener(new View.OnTouchListener() {
