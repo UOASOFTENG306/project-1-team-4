@@ -5,12 +5,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.ViewPageAdapter;
+import com.example.softeng306_application.Entity.Category;
+import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.DetailsViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
@@ -36,6 +39,14 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         vh.viewPager2 = findViewById(R.id.viewPager_tab_content);
         vh.viewPageAdapter = new ViewPageAdapter(this);
         vh.viewPager2.setAdapter(vh.viewPageAdapter);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            if(intent.hasExtra("RESTAURANTS")){
+                Restaurant restaurant = intent.getParcelableExtra("RESTAURANTS");
+                detailsViewModel.setRestaurant(restaurant);
+            }
+        }
         vh.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
