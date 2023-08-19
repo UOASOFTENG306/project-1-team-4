@@ -1,6 +1,7 @@
 package com.example.softeng306_application.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -11,10 +12,13 @@ import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.ViewPageAdapter;
 import com.example.softeng306_application.R;
+import com.example.softeng306_application.ViewModel.DetailsViewModel;
+import com.example.softeng306_application.ViewModel.MainViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 public class DetailsActivity extends AppCompatActivity implements Activity {
 
+    private DetailsViewModel detailsViewModel;
     private class ViewHolder {
         TabLayout tabLayout;
         ViewPager2 viewPager2;
@@ -26,6 +30,8 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ViewHolder vh = new ViewHolder();
+        this.detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
+
         vh.tabLayout = findViewById(R.id.tabLayout);
         vh.viewPager2 = findViewById(R.id.viewPager_tab_content);
         vh.viewPageAdapter = new ViewPageAdapter(this);
