@@ -65,7 +65,7 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public Task<DocumentSnapshot> getFavourites(String userID) {
-        Task <DocumentSnapshot> task = db.collection("users").document("Efq5eCNSHjXkKX8dNZB0DNBL5do1").get();
+        Task <DocumentSnapshot> task = db.collection("users").document(userID).get();
         return task;
     }
 
