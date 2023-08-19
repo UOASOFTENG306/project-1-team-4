@@ -39,6 +39,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
     private RestaurantRecyclerAdapter restaurantAdapter;
 
     private class ViewHolder {
+        TextView emptyListText;
         RecyclerView restaurantRecyclerView;
         Button backButton;
     }
@@ -64,7 +65,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
         restaurantAdapter = new RestaurantRecyclerAdapter(this, listViewModel.getRestaurantsTest());
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
-
+        vh.emptyListText = findViewById(R.id.txt_emptyList);
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
@@ -85,6 +86,10 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         listViewModel.getRestaurantList().observe(this, restaurants -> {
             // Update the adapter with the new list of items
             restaurantAdapter.setRestaurants(restaurants);
+        });
+
+        listViewModel.getEmptyMessageVisibility().observe(this, visibility -> {
+            vh.emptyListText.setVisibility(visibility);
         });
 
         autoCompleteTextView.setAdapter(adapterItems);

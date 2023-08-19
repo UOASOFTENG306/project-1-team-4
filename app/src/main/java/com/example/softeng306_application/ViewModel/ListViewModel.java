@@ -2,11 +2,13 @@ package com.example.softeng306_application.ViewModel;
 
 import android.app.Application;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.example.softeng306_application.Entity.Asian;
 import com.example.softeng306_application.Entity.Cafe;
@@ -56,7 +58,9 @@ public class ListViewModel extends AndroidViewModel {
     public void setCategory(List<Category> category) {
         this.category = category;
     }
-
+    public LiveData<Integer> getEmptyMessageVisibility() {
+        return Transformations.map(restaurantList, restaurant -> restaurant.isEmpty() ? View.VISIBLE : View.GONE);
+    }
     public List<Restaurant> getRestaurantsTest() {
         List<Restaurant> restaurants = new ArrayList<>();
         ArrayList<Category> allCategories = new ArrayList<Category>() {
