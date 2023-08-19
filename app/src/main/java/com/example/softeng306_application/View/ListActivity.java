@@ -82,7 +82,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         vh.autoCompleteTextView.setAdapter(adapterItems);
 
         // Bind RestaurantRecyclerAdapter
-        restaurantAdapter = new RestaurantRecyclerAdapter(this, listViewModel.getRestaurantsTest());
+        restaurantAdapter = new RestaurantRecyclerAdapter(this, listViewModel.getFavouriteRestaurants());
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
 
         // Set Vertical Layout Manager for categoryRecyclerView

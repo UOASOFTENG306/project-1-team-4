@@ -98,21 +98,21 @@ public class ListViewModel extends AndroidViewModel {
     }
     public List<Restaurant> getFavouriteRestaurants() {
         List<Restaurant> restaurants = new ArrayList<>();
-        userRepository.getFavourites(userRepository.getCurrentUserById()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        List<Restaurant> restaurants = new ArrayList<>();
-                        List<Restaurant> arrayField = (List<Restaurant>) document.get("favourites");
-                        for (Restaurant array: arrayField) {
-                            restaurants.add(new Restaurant(array.getName(), array.getLogoImage(), array.getCategory()));
+        Task<DocumentSnapshot> task = userRepository.getFavourites(userRepository.getCurrentUserById());
+        task.addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                DocumentSnapshot document = task1.getResult();
+                if (document.exists()) {
+                    Map<String, Object> restaurantData = document.getData();
+                    if (restaurantData != null) {
+                        List<Map<String, Object>> favouritesArray = (List<Map<String, Object>>) restaurantData.get("favourites");
+                        if (favouritesArray != null) {
+                            for (Map<String, Object> favourites : favouritesArray) {
+                                restaurants.add(restaurantBuilder(favourites));
+                            }
+                            updateRestaurantList(restaurants);
                         }
-                        updateRestaurantList(restaurants);
                     }
-                } else {
-                    Log.d("FirestoreActivity", "get failed with ", task.getException());
                 }
             }
         });
