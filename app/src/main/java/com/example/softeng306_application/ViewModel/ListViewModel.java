@@ -10,17 +10,17 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.softeng306_application.Entity.Category;
 
 public class ListViewModel extends AndroidViewModel {
-    private MutableLiveData<Category> category = new MutableLiveData<>();
+    private Category category;
 
     public ListViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<Category> getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(MutableLiveData<Category> category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }

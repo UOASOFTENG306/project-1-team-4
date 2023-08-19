@@ -19,10 +19,10 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         setContentView(R.layout.activity_list);
 
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
-
         Intent intent = getIntent();
         if (intent != null) {
             Category category = intent.getParcelableExtra("CATEGORY");
+            listViewModel.setCategory(category);
         }
     }
 }
