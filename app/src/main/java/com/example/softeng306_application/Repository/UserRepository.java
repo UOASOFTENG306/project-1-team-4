@@ -1,5 +1,7 @@
 package com.example.softeng306_application.Repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.softeng306_application.Entity.Favourites;
@@ -9,12 +11,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.List;
 
 public class UserRepository implements IUserRepository {
 
@@ -71,8 +71,9 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public Favourites getFavourites(String userID) {
-        return null;
+    public Task<DocumentSnapshot> getFavourites(String userID) {
+        Task <DocumentSnapshot> task = db.collection("users").document(userID).get();
+        return task;
     }
 
     @Override

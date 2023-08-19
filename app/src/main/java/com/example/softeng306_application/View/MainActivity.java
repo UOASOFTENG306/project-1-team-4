@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private TopRatedRecylerAdapter topRatedAdapter;
+
     private class ViewHolder{
         TextView usernameText;
         Button logoutButton, favouritesButton;

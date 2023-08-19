@@ -82,7 +82,6 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
 
 
-
         vh.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
