@@ -1,109 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".View.DetailsActivity">
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.denzcoskun.imageslider.ImageSlider
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/imageSlider"
+        app:iss_period="1000"
+        app:iss_auto_cycle="true"
+        app:iss_delay="1000"
+        android:background="@color/black"/>
+
+    <!--        Info Card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_margin="0dp"
+        android:layout_below="@+id/imageSlider"
+        android:background="@color/restaurant_card"
+        android:gravity="center_vertical"
+        android:id="@+id/linearLayout_infoCard"
+        >
+        <!--            Logo -->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/restaurant0"/>
+
+        <!--        Name, Price -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:text="Name"
+                android:layout_weight="2"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="$"
+                android:layout_weight="1"
+
+                />
+        </LinearLayout>
+
+        <!--        Favourite heart button -->
+        <ImageButton
+            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/heart_notfav"
+            android:layout_marginRight="10dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:orientation="vertical"
+        android:layout_below="@id/linearLayout_infoCard">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItem_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItem_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reviews"/>
+
+        </com.google.android.material.tabs.TabLayout>
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager_images"
+            android:id="@+id/viewPager_tab_content"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="3">
-
-        </androidx.viewpager2.widget.ViewPager2>
-
-        <Button
-            android:id="@+id/btn_details_back"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_below="@id/tabLayout"/>
+    </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imgView_detail_logo"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewpager_images"
-            app:layout_constraintVertical_weight="1">
 
-            <Button
-                android:id="@+id/btn_detail_favourite"
-                android:layout_width="51dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:text="favourite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+</RelativeLayout>
 
-            <TextView
-                android:id="@+id/txt_detail_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:text="moolah"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_detail_favourite" />
-
-            <TextView
-                android:id="@+id/txt_detail_restaurant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
-                android:text="restaurant name"
-                app:layout_constraintBottom_toTopOf="@+id/txt_detail_price"
-                app:layout_constraintEnd_toStartOf="@+id/btn_detail_favourite"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reviews" />
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager_tab_content"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2" />
-
-</LinearLayout>
