@@ -4,43 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
-    tools:context=".View.LoginActivity">
+    android:orientation="vertical"
+    tools:context=".View.LoginActivity"
+    android:id="@+id/linearlayout_login">
 
     <TextView
+        style="@style/MainLogoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/MainLogoText"
-        />
+        android:layout_marginBottom="20dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/AdminInputLayout">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
-            android:hint="@string/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            style="@style/AdminInputText"
+            android:hint="@string/email" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/AdminInputLayout"
+       >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
+            style="@style/AdminInputText"
             android:hint="@string/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:inputType="textPassword"
+            />
     </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/btn_login"
-        android:text="@string/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        style="@style/AdminButton"
+        android:text="@string/login" />
+
     <Button
         android:id="@+id/btn_create_new_account"
-        android:text="Create a new account"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/bg"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Create a new account"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
 </LinearLayout>
