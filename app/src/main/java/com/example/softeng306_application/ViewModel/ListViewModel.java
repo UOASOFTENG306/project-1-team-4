@@ -101,19 +101,20 @@ public class ListViewModel extends AndroidViewModel {
         Task<DocumentSnapshot> task = userRepository.getFavourites(userRepository.getCurrentUserById());
         task.addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
-                DocumentSnapshot document = task1.getResult();
-                if (document.exists()) {
-                    Map<String, Object> restaurantData = document.getData();
-                    if (restaurantData != null) {
-                        List<Map<String, Object>> favouritesArray = (List<Map<String, Object>>) restaurantData.get("favourites");
-                        if (favouritesArray != null) {
-                            for (Map<String, Object> favourites : favouritesArray) {
-                                restaurants.add(restaurantBuilder(favourites));
-                            }
-                            updateRestaurantList(restaurants);
+                try {
+                    List<Map<String, Object>> favouritesArray = (List<Map<String, Object>>) task1.getResult().getData().get("favourites");
+                    if (favouritesArray != null) {
+                        for (Map<String, Object> favourites : favouritesArray) {
+                            restaurants.add(restaurantBuilder(favourites));
                         }
+                        updateRestaurantList(restaurants);
                     }
+                } catch (Exception e) {
+                    Log.d("FirestoreActivity", "Error updating restaurants: ", task.getException());
                 }
+            }
+            else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
             }
         });
         return restaurants;
