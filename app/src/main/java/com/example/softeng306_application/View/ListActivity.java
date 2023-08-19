@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.softeng306_application.Adaptor.CategoryDropdownAdapter;
 import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
 import com.example.softeng306_application.Adaptor.RestaurantRecyclerAdapter;
 import com.example.softeng306_application.Entity.Asian;
@@ -33,17 +34,14 @@ import java.util.List;
 public class ListActivity extends AppCompatActivity implements Activity  {
 
     // TODO: delete; for testing purposes
-    String[] categories = {"FAST-FOOD", "EUROPEAN", "ASIAN", "CAFE"};
-    AutoCompleteTextView autoCompleteTextView;
-    ArrayAdapter<String> adapterItems;
-
-    // TODO: delete; for testing purposes, just to see if restaurant recycler view gets populated.
+//    String[] categories = {"FAST-FOOD", "EUROPEAN", "ASIAN", "CAFE"};
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
-    private Category category;
+    private CategoryDropdownAdapter adapterItems;
 
     private class ViewHolder {
+        AutoCompleteTextView autoCompleteTextView;
         TextView emptyListText;
         RecyclerView restaurantRecyclerView;
         Button backButton;
@@ -55,38 +53,42 @@ public class ListActivity extends AppCompatActivity implements Activity  {
 
         ViewHolder vh = new ViewHolder();
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
-
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
+
+
+        vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
+        vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
+        vh.backButton = findViewById(R.id.btn_back);
+        vh.emptyListText = findViewById(R.id.txt_emptyList);
+        vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
+
         Intent intent = getIntent();
         if (intent != null) {
-            List<Category> categoryList = new ArrayList<Category>();
-            category = intent.getParcelableExtra("CATEGORY");
-            categoryList.add(category);
-            listViewModel.setCategory(categoryList);
+            Category category = intent.getParcelableExtra("CATEGORY");
+            listViewModel.setCategory(category);
+            vh.autoCompleteTextView.setText(category.getCategoryType(), false);
         }
 
+        // Bind RestaurantAdapter
+        adapterItems = new CategoryDropdownAdapter(this, R.layout.dropdown_list_item, listViewModel.getAllCategories());
+        vh.autoCompleteTextView.setAdapter(adapterItems);
+
         // Bind RestaurantRecyclerAdapter
-        vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
         restaurantAdapter = new RestaurantRecyclerAdapter(this, listViewModel.getRestaurantsTest());
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
-        vh.emptyListText = findViewById(R.id.txt_emptyList);
+
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
 
 
-        vh.backButton = findViewById(R.id.btn_back);
+
         vh.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showMainActivity(v);
             }
         });
-
-        // TODO: delete; for testing purposes
-        autoCompleteTextView = findViewById(R.id.dropdown_category);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, categories);
 
         listViewModel.getRestaurantList().observe(this, restaurants -> {
             // Update the adapter with the new list of items
@@ -97,26 +99,13 @@ public class ListActivity extends AppCompatActivity implements Activity  {
             vh.emptyListText.setVisibility(visibility);
         });
 
-        autoCompleteTextView.setAdapter(adapterItems);
-        autoCompleteTextView.setText(category.getCategoryType(), false);
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        vh.autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedCategory = adapterView.getItemAtPosition(i).toString();
-                Toast.makeText(ListActivity.this, "Category: " + selectedCategory, Toast.LENGTH_SHORT).show();
-
-                autoCompleteTextView.setText(selectedCategory, false);
-                // Which category was selected
-                Category category = null;
-                if (selectedCategory.equals("FAST-FOOD")) { category = new FastFood(); }
-                else if (selectedCategory.equals("ASIAN")) { category = new Asian(); }
-                else if (selectedCategory.equals("EUROPEAN")) { category = new European(); }
-                else if (selectedCategory.equals("CAFE")) { category = new Cafe(); }
-
-                List<Category> categoryList = new ArrayList<>();
-                categoryList.add(category);
-
-                listViewModel.setCategory(categoryList);
+                Category selectedCategory = (Category) adapterView.getItemAtPosition(i);
+                vh.autoCompleteTextView.setText(selectedCategory.getCategoryType(), false);
+                // Set selected category
+                listViewModel.setCategory(selectedCategory);
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
             }
         });

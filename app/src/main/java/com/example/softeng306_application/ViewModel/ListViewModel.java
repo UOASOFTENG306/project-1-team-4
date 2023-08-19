@@ -3,6 +3,7 @@ package com.example.softeng306_application.ViewModel;
 import android.app.Application;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,6 +20,7 @@ import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.FirestoreCallback;
 import com.example.softeng306_application.Repository.RestaurantRepository;
+import com.example.softeng306_application.View.ListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -32,8 +34,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ListViewModel extends AndroidViewModel {
-    private List<Category> category;
+    private List<Category> categoryList;
     private MutableLiveData<List<Restaurant>> restaurantList =  new MutableLiveData<>();
+    private List<Category> allCategories = new ArrayList<Category>() {
+        {
+            add(new Asian());
+            add(new European());
+            add(new FastFood());
+            add(new Cafe());
+        }
+    };
     private Boolean isAll;
     private Boolean isFavourite;
     private RestaurantRepository restaurantRepository;
@@ -41,10 +51,15 @@ public class ListViewModel extends AndroidViewModel {
     public ListViewModel(@NonNull Application application) {
         super(application);
         restaurantRepository = restaurantRepository.getInstance();
+        categoryList = allCategories;
     }
 
     public LiveData<List<Restaurant>> getRestaurantList() {
         return restaurantList;
+    }
+
+    public List<Category> getAllCategories() {
+        return allCategories;
     }
 
     public void updateRestaurantList(List<Restaurant> restaurantList) {
@@ -52,27 +67,24 @@ public class ListViewModel extends AndroidViewModel {
     }
 
     public List<Category> getCategory() {
-        return category;
+        return categoryList;
     }
 
-    public void setCategory(List<Category> category) {
-        this.category = category;
+    public void setCategory(Category category) {
+        List<Category> categoryList = new ArrayList<Category>(){
+            {
+                add(category);
+            }
+        };
+        this.categoryList = categoryList;
     }
     public LiveData<Integer> getEmptyMessageVisibility() {
         return Transformations.map(restaurantList, restaurant -> restaurant.isEmpty() ? View.VISIBLE : View.GONE);
     }
     public List<Restaurant> getRestaurantsTest() {
         List<Restaurant> restaurants = new ArrayList<>();
-        ArrayList<Category> allCategories = new ArrayList<Category>() {
-            {
-                add(new Asian());
-                add(new European());
-                add(new FastFood());
-                add(new Cafe());
-            }
-        };
 
-        if(category.containsAll(allCategories)) {
+        if(this.categoryList.containsAll(this.allCategories)) {
             restaurantRepository.getRestaurants().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
