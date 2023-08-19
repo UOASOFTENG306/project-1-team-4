@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="0dp"
+        android:padding="0dp"
         style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu">
 
         <AutoCompleteTextView
@@ -32,7 +33,9 @@
             android:text="CATEGORY"
             android:layout_gravity="start"
             style="@style/DropDownMenuText"
-            android:backgroundTint="@color/transparent"/>
+            android:backgroundTint="@color/transparent"
+
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
