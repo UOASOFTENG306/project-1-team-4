@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 //public class Category {
 //
@@ -46,4 +47,16 @@ public abstract class Category implements ICategory, Parcelable {
 
     public abstract String getCategoryType();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(borderColour, category.borderColour) && Objects.equals(audioFileName, category.audioFileName) && Objects.equals(categoryType, category.categoryType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(borderColour, audioFileName, categoryType);
+    }
 }

@@ -19,6 +19,9 @@ import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListActivity extends AppCompatActivity implements Activity  {
 
     // TODO: delete; for testing purposes, just to see if restaurant recycler view gets populated.
@@ -42,13 +45,15 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
         Intent intent = getIntent();
         if (intent != null) {
+            List<Category> categoryList = new ArrayList<Category>();
             Category category = intent.getParcelableExtra("CATEGORY");
-            listViewModel.setCategory(category);
+            categoryList.add(category);
+            listViewModel.setCategory(categoryList);
         }
 
         // Bind RestaurantRecyclerAdapter
         vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
-        restaurantAdapter = new RestaurantRecyclerAdapter(this, mainViewModel.getTopRatedRestaurants());
+        restaurantAdapter = new RestaurantRecyclerAdapter(this, listViewModel.getRestaurants());
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
 
         // Set Vertical Layout Manager for categoryRecyclerView

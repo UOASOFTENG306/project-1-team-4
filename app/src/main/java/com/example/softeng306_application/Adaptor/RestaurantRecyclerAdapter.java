@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.softeng306_application.Entity.Category;
@@ -17,14 +18,15 @@ import com.example.softeng306_application.Entity.CategoryType;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.google.android.material.card.MaterialCardView;
+import com.example.softeng306_application.ViewModel.ListViewModel;
 
 import java.util.List;
 
 public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRecyclerAdapter.RestaurantViewHolder> {
     Context context;
-
+    private ListViewModel listViewModel;
     private List<Restaurant> restaurants;
-    private Category category;
+    private List<Category> categoryList;
 
     // TODO: instead of a list of restaurants as an argument to the constructor, it should take in a category type THEN populate a list of restaurants belonging to this type.
     public RestaurantRecyclerAdapter(Context context, List<Restaurant> restaurants) {

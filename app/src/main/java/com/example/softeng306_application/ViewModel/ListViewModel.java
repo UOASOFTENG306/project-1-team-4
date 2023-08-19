@@ -16,23 +16,26 @@ import com.example.softeng306_application.Entity.Restaurant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListViewModel extends AndroidViewModel {
-    private Category category;
+    private List<Category> category;
+    private Boolean isAll;
+    private Boolean isFavourite;
 
     public ListViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public Category getCategory() {
+    public List<Category> getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(List<Category> category) {
         this.category = category;
     }
 
-    public List<Restaurant> getRestaurants(Category category){
+    public List<Restaurant> getRestaurants(){
 
         // TODO: RETRIEVE DATA FROM REPOSITORY
         // Initialize contacts
@@ -63,6 +66,10 @@ public class ListViewModel extends AndroidViewModel {
         restaurants.add(res8);
         restaurants.add(res9);
 
-        return restaurants;
+        List<Restaurant> filtered = restaurants.stream()
+                .filter(restaurant -> this.category.contains(restaurant.getCategory()))
+                .collect(Collectors.toList());
+
+        return filtered;
     }
 }
