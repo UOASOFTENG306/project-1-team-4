@@ -7,12 +7,14 @@
     >
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/baseline_arrow_back_ios_24"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/btn_back"
         android:id="@+id/btn_back"
-        android:backgroundTint="@color/bg"
-      />
+        android:backgroundTint="@color/transparent"
+        android:layout_gravity="center"
+        />
 
 <!--    <TextView-->
 <!--        android:layout_width="match_parent"-->
