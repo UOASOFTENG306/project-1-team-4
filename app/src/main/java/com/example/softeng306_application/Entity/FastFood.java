@@ -8,7 +8,7 @@ public class FastFood extends Category {
     public FastFood() {
         this.borderColour = "#FF0000"; //TODO ADD PROPER BORDER COLOUR
         this.audioFileName = "test_audio";//TODO ADD PROPER AUDIO FILE
-        this.categoryType =  "FAST-FOOD";
+        this.categoryType =  "FAST FOOD";
     }
 
     @Override

@@ -38,7 +38,8 @@ public class ListActivity extends AppCompatActivity implements Activity  {
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
-    private CategoryDropdownAdapter adapterItems;
+    private CategoryDropdownAdapter adapterCategoryItems;
+    private ArrayAdapter<String> adapterItems;
 
     private class ViewHolder {
         AutoCompleteTextView autoCompleteTextView;
@@ -62,32 +63,34 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         vh.emptyListText = findViewById(R.id.txt_emptyList);
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
 
+        // Bind RestaurantAdapter
+        adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, listViewModel.getAllCategoryNameOptions());
+        vh.autoCompleteTextView.setAdapter(adapterItems);
+
+        // Bind RestaurantRecyclerAdapter
+        restaurantAdapter = new RestaurantRecyclerAdapter(this);
+        vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
+
+        // Set Vertical Layout Manager for categoryRecyclerView
+        LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
+        vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
+
         Intent intent = getIntent();
         if (intent != null) {
             if(intent.hasExtra("CATEGORY")){
                 Category category = intent.getParcelableExtra("CATEGORY");
                 listViewModel.setCategory(category);
                 vh.autoCompleteTextView.setText(category.getCategoryType(), false);
+                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
 
             }
             if(intent.hasExtra("FAVOURITES")){
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
                 listViewModel.setAllCategories();
                 listViewModel.setFavourite(isFavourite);
+                restaurantAdapter.setRestaurants(listViewModel.getFavouriteRestaurants());
             }
         }
-
-        // Bind RestaurantAdapter
-        adapterItems = new CategoryDropdownAdapter(this, R.layout.dropdown_list_item, listViewModel.getAllCategories());
-        vh.autoCompleteTextView.setAdapter(adapterItems);
-
-        // Bind RestaurantRecyclerAdapter
-        restaurantAdapter = new RestaurantRecyclerAdapter(this, listViewModel.getFavouriteRestaurants());
-        vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
-
-        // Set Vertical Layout Manager for categoryRecyclerView
-        LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
-        vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
 
 
         vh.backButton.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +112,8 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         vh.autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Category selectedCategory = (Category) adapterView.getItemAtPosition(i);
-                vh.autoCompleteTextView.setText(selectedCategory.getCategoryType(), false);
+                String selectedCategory = (String) adapterView.getItemAtPosition(i);
+                vh.autoCompleteTextView.setText(selectedCategory, false);
                 // Set selected category
                 listViewModel.setCategory(selectedCategory);
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());

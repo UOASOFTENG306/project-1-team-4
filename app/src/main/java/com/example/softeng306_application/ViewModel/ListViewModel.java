@@ -65,6 +65,15 @@ public class ListViewModel extends AndroidViewModel {
         return allCategories;
     }
 
+    public List<String> getAllCategoryNameOptions() {
+        List<String> allCategoryNames = new ArrayList<String>();
+        allCategoryNames.add("ALL");
+        for(Category category: this.allCategories){
+            allCategoryNames.add(category.getCategoryType());
+        }
+        return allCategoryNames;
+    }
+
     public void updateRestaurantList(List<Restaurant> restaurantList) {
         this.restaurantList.setValue(restaurantList);
     }
@@ -88,6 +97,37 @@ public class ListViewModel extends AndroidViewModel {
             }
         };
         this.categoryList = categoryList;
+    }
+
+    public void setCategory(String categoryName) {
+        Category category;
+        List<Category> categoryList = new ArrayList<Category>();
+        switch (categoryName){
+            case "ALL":
+                this.categoryList = allCategories;
+                break;
+            case "FAST FOOD":
+                categoryList.clear();
+                categoryList.add(new FastFood());
+                this.categoryList = categoryList;
+                break;
+            case "EUROPEAN":
+                categoryList.clear();
+                categoryList.add(new European());
+                this.categoryList = categoryList;
+                break;
+            case "ASIAN":
+                categoryList.clear();
+                categoryList.add(new Asian());
+                this.categoryList = categoryList;
+                break;
+            case "CAFE":
+                categoryList.clear();
+                categoryList.add(new Cafe());
+                this.categoryList = categoryList;
+                break;
+
+        }
     }
     public LiveData<Integer> getEmptyMessageVisibility() {
         return Transformations.map(restaurantList, restaurant -> restaurant.isEmpty() ? View.VISIBLE : View.GONE);
