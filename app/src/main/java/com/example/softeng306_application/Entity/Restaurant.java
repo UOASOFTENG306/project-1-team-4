@@ -1,8 +1,13 @@
 package com.example.softeng306_application.Entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
-public class Restaurant {
+public class Restaurant implements Parcelable {
     private String restaurantID;
     private String name;
     private Category category;
@@ -33,6 +38,28 @@ public class Restaurant {
         this.logoImage = logoImage;
         this.price = price;
     }
+
+    protected Restaurant(Parcel in) {
+        restaurantID = in.readString();
+        name = in.readString();
+        category = in.readParcelable(Category.class.getClassLoader());
+        logoImage = in.readString();
+        description = in.readString();
+        location = in.readString();
+        price = in.readString();
+    }
+
+    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
 
     public String getRestaurantID() {
         return restaurantID;
@@ -65,4 +92,20 @@ public class Restaurant {
     }
 
     public String getPrice() { return price; }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(restaurantID);
+        dest.writeString(name);
+        dest.writeParcelable(category, flags);
+        dest.writeString(logoImage);
+        dest.writeString(description);
+        dest.writeString(location);
+        dest.writeString(price);
+    }
 }
