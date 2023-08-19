@@ -20,7 +20,7 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         this.tabLayout = findViewById(R.id.tabLayout);
-        this.viewPager2 = findViewById(R.id.viewPager);
+        this.viewPager2 = findViewById(R.id.viewPager_tab_content);
         this.viewPageAdapter = new ViewPageAdapter(this);
         this.viewPager2.setAdapter(this.viewPageAdapter);
         this.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
