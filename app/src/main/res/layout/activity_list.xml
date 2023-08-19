@@ -27,13 +27,23 @@
         android:layout_height="wrap_content"
         android:text="BACK"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recview_restaurant_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recview_restaurant_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/txt_emptyList"
+            android:gravity="center"
+            android:text="No Restaurants to display!"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
-
-    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
