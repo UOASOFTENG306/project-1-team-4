@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -42,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
         vh.backButton = findViewById(R.id.btn_back);
 
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+
+        setupUI(findViewById(R.id.linearlayout_register));
 
         vh.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,5 +109,25 @@ public class RegisterActivity extends AppCompatActivity {
     private void showLoginActivity(View v) {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(imm.isAcceptingText()) {
+            imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    private void setupUI(View v) {
+        // Setup touch listener for non-text box views to hide keyboard
+        if (!(v instanceof TextInputEditText)) {
+            v.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    closeKeyboard();
+                    return false;
+                }
+            });
+        }
     }
 }

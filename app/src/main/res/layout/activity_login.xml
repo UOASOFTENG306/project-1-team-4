@@ -16,19 +16,7 @@
         android:layout_marginBottom="20dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
-        android:layout_width="300dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:padding="0dp"
-        android:textColorHint="@color/black"
-        app:boxBackgroundColor="@color/white"
-        app:boxStrokeColor="@color/transparent"
-        app:hintEnabled="false"
-        app:hintTextAppearance="@color/black"
-        app:hintTextColor="@color/black">
-
+        style="@style/AdminInputLayout">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             style="@style/AdminInputText"
@@ -36,27 +24,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
-        android:layout_width="300dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:padding="0dp"
-        android:textColorHint="@color/black"
-        app:boxBackgroundColor="@color/white"
-        app:boxStrokeColor="@color/transparent"
-        app:hintEnabled="false"
-        app:hintTextAppearance="@color/black"
-        app:hintTextColor="@color/black"
+        style="@style/AdminInputLayout"
        >
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             style="@style/AdminInputText"
             android:hint="@string/password"
             android:inputType="textPassword"
             />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

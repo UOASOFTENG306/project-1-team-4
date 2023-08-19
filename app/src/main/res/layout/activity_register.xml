@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".View.RegisterActivity">
+    tools:context=".View.RegisterActivity"
+    android:id="@+id/linearlayout_register">
 
     <include layout="@layout/action_bar"/>
 
