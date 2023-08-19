@@ -28,7 +28,14 @@ public class Restaurant implements Parcelable {
         this.logoImage = logoImage;
         this.category = category;
     }
-
+    public Restaurant(String restaurantID, String name, String description, String location, String logoImage, String price) {
+        this.restaurantID = restaurantID;
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.logoImage = logoImage;
+        this.price = price;
+    }
     public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImage, String price) {
         this.restaurantID = restaurantID;
         this.name = name;
@@ -71,6 +78,9 @@ public class Restaurant implements Parcelable {
 
     public Category getCategory() {
         return category;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public List<Integer> getBackgroundImages() {

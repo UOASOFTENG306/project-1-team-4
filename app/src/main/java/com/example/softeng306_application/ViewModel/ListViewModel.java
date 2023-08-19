@@ -29,6 +29,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -203,25 +205,34 @@ public class ListViewModel extends AndroidViewModel {
     }
 
     private Restaurant restaurantBuilder(Map<String, Object> data) {
-        Restaurant restaurant;
+        String restaurantID = (String) data.get("restaurantID");
         String name = (String) data.get("name");
-        String logoImage = (String) data.get("logoImage");
+        String description = (String) data.get("description");
+        String location = (String) data.get("location");
+
         Map<String, Object> nestedField = (Map<String, Object>) data.get("category");
+
         String categoryType = (String) nestedField.get("categoryType");
-        if (categoryType == "EUROPEAN") {
-            restaurant = new Restaurant(name, logoImage, new European());
-        }
+        String logoImage = (String) data.get("logoImage");
+        String price = (String) data.get("price");
 
-        else if(categoryType == "ASIAN") {
-            restaurant = new Restaurant(name, logoImage, new Asian());
-        }
+        Restaurant restaurant = new Restaurant(restaurantID,  name,  description,  location, logoImage, price);;
 
-        else if(categoryType == "CAFE") {
-            restaurant = new Restaurant(name, logoImage, new Cafe());
-        }
-        else {
-            restaurant = new Restaurant(name, logoImage, new FastFood());
-        }
+        switch (categoryType){
+            case "EUROPEAN":
+                restaurant.setCategory(new European());
+                break;
+            case "ASIAN":
+                restaurant.setCategory(new Asian());
+                break;
+            case "FAST FOOD":
+                restaurant.setCategory(new FastFood());
+                break;
+            case "CAFE":
+                restaurant.setCategory(new Cafe());
+                break;
+            }
+
         return restaurant;
     }
 }

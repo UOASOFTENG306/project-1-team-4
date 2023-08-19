@@ -1,67 +1,57 @@
 package com.example.softeng306_application.View;
 
+import static android.content.Intent.getIntent;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.softeng306_application.Adaptor.ViewPageAdapter;
+import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
+import com.example.softeng306_application.ViewModel.DetailsViewModel;
+import com.google.android.material.tabs.TabLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DescriptionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DescriptionFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private DetailsViewModel detailsViewModel;
+    private class ViewHolder {
+        TextView descriptionText, categoryNameText;
+    }
     public DescriptionFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DescriptionFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DescriptionFragment newInstance(String param1, String param2) {
-        DescriptionFragment fragment = new DescriptionFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_description, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_description, container, false);
+        ViewHolder vh = new ViewHolder();
+        this.detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
+
+        detailsViewModel.getRestaurant().observe(getViewLifecycleOwner(), restaurant -> {
+            vh.categoryNameText.setText(restaurant.getName());
+            vh.descriptionText.setText(restaurant.getDescription());
+        });
+
+
+
+        return rootView;
     }
 }
