@@ -9,8 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
 import com.example.softeng306_application.Adaptor.RestaurantRecyclerAdapter;
@@ -23,6 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity  {
+
+    // TODO: delete; for testing purposes
+    String[] item = {"cat1", "cat2", "cat3"};
+    AutoCompleteTextView autoCompleteTextView;
+    ArrayAdapter<String> adapterItems;
 
     // TODO: delete; for testing purposes, just to see if restaurant recycler view gets populated.
     private MainViewModel mainViewModel;
@@ -68,6 +77,20 @@ public class ListActivity extends AppCompatActivity implements Activity  {
                 showMainActivity(v);
             }
         });
+
+        // TODO: delete; for testing purposes
+        autoCompleteTextView = findViewById(R.id.dropdown_category);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, item);
+
+        autoCompleteTextView.setAdapter(adapterItems);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(ListActivity.this, item, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void showMainActivity(View v) {

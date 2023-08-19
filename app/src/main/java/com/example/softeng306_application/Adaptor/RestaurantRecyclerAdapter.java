@@ -1,6 +1,7 @@
 package com.example.softeng306_application.Adaptor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.CategoryType;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
+import com.example.softeng306_application.View.DetailsActivity;
+import com.example.softeng306_application.View.ListActivity;
 import com.google.android.material.card.MaterialCardView;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 
@@ -44,12 +47,19 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
 
     @Override
     public void onBindViewHolder(RestaurantRecyclerAdapter.RestaurantViewHolder holder, int position) {
+        Restaurant restaurant = restaurants.get(position);
         holder.restaurantName.setText(restaurants.get(position).getName());
         holder.price.setText(restaurants.get(position).getPrice());
         holder.logoImage.setImageResource(showImage(restaurants.get(position)));
 
         // TODO: handle condition for favourite or not
         holder.favouriteHeart.setVisibility(View.VISIBLE);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRestaurantClick(restaurant);
+            }
+        });
     }
 
     private int showImage(Restaurant restaurant) {
@@ -60,6 +70,12 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     @Override
     public int getItemCount() {
         return restaurants.size();
+    }
+
+    private void onRestaurantClick(Restaurant restaurant){
+        Intent intent = new Intent(context, DetailsActivity.class);
+        intent.putExtra("RESTAURANT", restaurant);
+        context.startActivity(intent);
     }
 
     public class RestaurantViewHolder extends RecyclerView.ViewHolder{
