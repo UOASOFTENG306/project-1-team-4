@@ -1,6 +1,7 @@
 package com.example.softeng306_application.Adaptor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,15 @@ import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.CategoryType;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
+import com.example.softeng306_application.View.ListActivity;
+import com.example.softeng306_application.ViewModel.MainViewModel;
 
 import java.util.List;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryViewHolder> {
     Context context;
     MediaPlayer mediaPlayer;
+    MainViewModel mainViewModel;
 
     private List<Category> categoryList;
 
@@ -38,14 +42,28 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
     @Override
     public void onBindViewHolder(CategoryRecyclerAdapter.CategoryViewHolder holder, int position) {
+        Category category = categoryList.get(position);
+
         holder.categoryName.setText(categoryList.get(position).getCategoryType());
         playSound(categoryList.get(position), holder.cardView);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCategoryClick(category);
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
         return categoryList.size();
+    }
+
+    private void onCategoryClick(Category category){
+        Intent intent = new Intent(context, ListActivity.class);
+        intent.putExtra("CATEGORY", category);
+        context.startActivity(intent);
     }
 
     public void playSound(Category category, View itemView){
