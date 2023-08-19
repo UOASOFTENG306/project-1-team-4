@@ -5,6 +5,14 @@ import java.util.List;
 public class Favourites {
     private List<Restaurant> favouriteRestaurants;
 
+    public Favourites(List<Restaurant> favouriteRestaurants) {
+        this.favouriteRestaurants = favouriteRestaurants;
+    }
+
+    public Favourites() {
+
+    }
+
     public List<Restaurant> getFavouriteRestaurants() {
         return favouriteRestaurants;
     }
