@@ -1,10 +1,16 @@
 package com.example.softeng306_application.Repository;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import com.example.softeng306_application.Entity.Restaurant;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
@@ -28,7 +34,8 @@ public class RestaurantRepository implements IRestaurantRepository {
 
     @Override
     public Task<QuerySnapshot> getRestaurants() {
-        return db.collection("restaurants").get();
+        Task<QuerySnapshot> task = db.collection("restaurants").get();
+        return task;
     }
 
     @Override
@@ -43,7 +50,7 @@ public class RestaurantRepository implements IRestaurantRepository {
 
     @Override
     public Task<QuerySnapshot> getRestaurantsByCategory(String categoryType) {
-        CollectionReference collectionRef = db.collection("restaurants");
-        return collectionRef.whereEqualTo("categoryType", categoryType).get();
+        Task<QuerySnapshot> task = db.collection("restaurants").whereEqualTo("category.categoryType", categoryType).get();
+        return task;
     }
 }

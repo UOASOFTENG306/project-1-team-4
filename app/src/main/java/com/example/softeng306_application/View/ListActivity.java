@@ -53,7 +53,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
 
         // Bind RestaurantRecyclerAdapter
         vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
-        restaurantAdapter = new RestaurantRecyclerAdapter(this, listViewModel.getRestaurants());
+        restaurantAdapter = new RestaurantRecyclerAdapter(this, listViewModel.getRestaurantsTest());
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
 
         // Set Vertical Layout Manager for categoryRecyclerView
@@ -74,4 +74,5 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
     }
+
 }
