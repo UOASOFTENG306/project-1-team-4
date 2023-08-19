@@ -69,6 +69,14 @@ public class ListViewModel extends AndroidViewModel {
         this.restaurantList.setValue(restaurantList);
     }
 
+    public Boolean getFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(Boolean favourite) {
+        isFavourite = favourite;
+    }
+
     public List<Category> getCategory() {
         return categoryList;
     }
@@ -85,6 +93,9 @@ public class ListViewModel extends AndroidViewModel {
         return Transformations.map(restaurantList, restaurant -> restaurant.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
+    public void setAllCategories() {
+        this.categoryList = allCategories;
+    }
     public List<Restaurant> getFavouriteRestaurants() {
         List<Restaurant> restaurants = new ArrayList<>();
         userRepository.getFavourites(userRepository.getCurrentUserById()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

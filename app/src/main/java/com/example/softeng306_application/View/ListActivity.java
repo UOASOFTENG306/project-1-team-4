@@ -64,9 +64,17 @@ public class ListActivity extends AppCompatActivity implements Activity  {
 
         Intent intent = getIntent();
         if (intent != null) {
-            Category category = intent.getParcelableExtra("CATEGORY");
-            listViewModel.setCategory(category);
-            vh.autoCompleteTextView.setText(category.getCategoryType(), false);
+            if(intent.hasExtra("CATEGORY")){
+                Category category = intent.getParcelableExtra("CATEGORY");
+                listViewModel.setCategory(category);
+                vh.autoCompleteTextView.setText(category.getCategoryType(), false);
+
+            }
+            if(intent.hasExtra("FAVOURITES")){
+                Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
+                listViewModel.setAllCategories();
+                listViewModel.setFavourite(isFavourite);
+            }
         }
 
         // Bind RestaurantAdapter

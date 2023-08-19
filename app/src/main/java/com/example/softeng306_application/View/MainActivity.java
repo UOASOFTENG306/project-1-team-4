@@ -2,6 +2,7 @@ package com.example.softeng306_application.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private class ViewHolder{
         TextView usernameText;
         Button logoutButton, favouritesButton;
+        CardView favouriteCardview;
         RecyclerView topRatedRecyclerView;
         RecyclerView categoryRecyclerView;
     }
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         vh.logoutButton = findViewById(R.id.btn_logout);
         vh.favouritesButton = findViewById(R.id.btn_favourites);
         vh.usernameText = findViewById(R.id.txt_username);
+        vh.favouriteCardview = findViewById(R.id.cardview_favourites);
         mainViewModel.getUserInfo().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 vh.usernameText.setText(documentSnapshot.getString("username"));
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         //OnClickListeners
         clickLogout(vh);
+        clickFavourites(vh);
     }
 
     private void clickLogout(ViewHolder vh){
@@ -94,10 +98,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void clickFavourites(ViewHolder vh){
+        vh.favouriteCardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showListActivity(v);
+            }
+        });
+    }
     private void showLoginActivity(View v) {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
+    }
+    private void showListActivity(View v){
+        Intent listIntent = new Intent(this, ListActivity.class);
+        listIntent.putExtra("FAVOURITES", true);
+        startActivity(listIntent);
     }
 
 }
