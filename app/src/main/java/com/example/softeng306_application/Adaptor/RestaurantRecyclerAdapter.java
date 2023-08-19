@@ -23,10 +23,14 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     Context context;
 
     private List<Restaurant> restaurants;
+    private Category category;
 
+    // TODO: instead of a list of restaurants as an argument to the constructor, it should take in a category type THEN populate a list of restaurants belonging to this type.
     public RestaurantRecyclerAdapter(Context context, List<Restaurant> restaurants) {
         this.context = context;
         this.restaurants = restaurants;
+//        this.category = category;
+
     }
 
     @NonNull
