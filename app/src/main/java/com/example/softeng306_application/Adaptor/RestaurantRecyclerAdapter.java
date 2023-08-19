@@ -58,12 +58,14 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     public class RestaurantViewHolder extends RecyclerView.ViewHolder{
         ImageView logoImage, favouriteHeart;
         TextView restaurantName, price;
+        CardView restaurantItem;
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
             logoImage = itemView.findViewById(R.id.img_logo);
             restaurantName = itemView.findViewById(R.id.txt_restaurant_name);
             price = itemView.findViewById(R.id.txt_price);
             favouriteHeart = itemView.findViewById(R.id.img_favourite);
+            restaurantItem = itemView.findViewById(R.id.cardview_restaurant);
         }
 
     }
