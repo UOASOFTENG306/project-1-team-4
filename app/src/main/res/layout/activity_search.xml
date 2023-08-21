@@ -7,23 +7,13 @@
     android:layout_width="match_parent"
     android:gravity="center">
 
-    <com.google.android.material.textfield.TextInputEditText
+    <SearchView
         android:id="@+id/inputText_search"
-        android:hint="Search..."
-        android:layout_height="40dp"
-        android:layout_width="300dp"
+        android:layout_width= "300dp"
+        android:layout_height="50dp"
+        android:queryHint="Search..."
+        android:iconifiedByDefault="false"
         android:background="@color/white"
-        />
-
-    <ImageButton
-        android:id="@+id/imgBtn_search"
-        android:layout_toEndOf="@id/inputText_search"
-        android:layout_height="40dp"
-        android:layout_width="40dp"
-        android:background="@color/btn"
-        android:scaleType="fitXY"
-        android:src="@drawable/search"
-
         />
 </RelativeLayout>
 
