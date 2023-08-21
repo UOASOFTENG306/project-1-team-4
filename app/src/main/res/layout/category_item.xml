@@ -4,7 +4,8 @@
     app:cardCornerRadius="10dp"
     android:layout_gravity="center"
     android:id="@+id/cardview_category"
-    style="@style/CategoryCard">
+    style="@style/CategoryCard"
+    app:cardElevation="5dp">
 
     <TextView
         android:id="@+id/txt_category"

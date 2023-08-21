@@ -49,6 +49,7 @@
                     android:id="@+id/cardview_favourites"
                     style="@style/CategoryCard"
                     android:backgroundTint="#EA4961"
+                    app:cardElevation="5dp"
                     >
                     <TextView
                         style="@style/CategoryText"
