@@ -140,7 +140,7 @@ public class ListViewModel extends AndroidViewModel {
     }
     public List<Restaurant> getFavouriteRestaurants() {
         List<Restaurant> restaurants = new ArrayList<>();
-        Task<DocumentSnapshot> task = userRepository.getFavourites(userRepository.getCurrentUserById());
+        Task<DocumentSnapshot> task = userRepository.getFavourites();
         task.addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
                 try {

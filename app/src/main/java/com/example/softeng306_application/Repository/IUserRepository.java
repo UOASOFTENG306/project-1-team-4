@@ -17,7 +17,7 @@ public interface IUserRepository {
     FirebaseUser getUser();
 
     void logout();
-    Task<DocumentSnapshot> getFavourites(String userID);
+    Task<DocumentSnapshot> getFavourites();
     Favourites checkFavourite(String userID, String restaurantID);
 };
 
