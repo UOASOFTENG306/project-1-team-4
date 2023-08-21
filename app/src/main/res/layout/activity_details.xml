@@ -58,6 +58,7 @@
 
         <!--        Favourite heart button -->
         <ImageButton
+            android:id="@+id/btn_detail_favourite"
             android:layout_height="50dp"
             android:layout_width="50dp"
             android:scaleType="fitXY"

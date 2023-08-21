@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Restaurant implements Parcelable {
     private String restaurantID;
@@ -117,5 +118,18 @@ public class Restaurant implements Parcelable {
         dest.writeString(description);
         dest.writeString(location);
         dest.writeString(price);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Restaurant that = (Restaurant) o;
+        return Objects.equals(restaurantID, that.restaurantID) && Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(backgroundImageUrls, that.backgroundImageUrls) && Objects.equals(logoImage, that.logoImage) && Objects.equals(reviews, that.reviews) && Objects.equals(description, that.description) && Objects.equals(location, that.location) && Objects.equals(price, that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(restaurantID, name, category, backgroundImageUrls, logoImage, reviews, description, location, price);
     }
 }

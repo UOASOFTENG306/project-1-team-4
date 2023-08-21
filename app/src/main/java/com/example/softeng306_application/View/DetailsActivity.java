@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         ViewPageAdapter viewPageAdapter;
         TextView priceText, nameText;
         ImageView logoImage;
+        ImageButton favouriteButton;
     }
 
     @Override
@@ -42,9 +44,14 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         vh.priceText = findViewById(R.id.txt_detail_price);
         vh.nameText = findViewById(R.id.txt_detail_name);
         vh.logoImage = findViewById(R.id.img_detail_logo);
-
+        vh.favouriteButton = findViewById(R.id.btn_detail_favourite);
 
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
+        detailsViewModel.checkIfFavourite();
+        detailsViewModel.isFavourite().observe(this, isFavourite -> {
+            int heartType = isFavourite ? R.drawable.heart_fav : R.drawable.heart_notfav;
+            vh.favouriteButton.setImageResource(heartType);
+        });
 
         Intent intent = getIntent();
         if (intent != null) {
