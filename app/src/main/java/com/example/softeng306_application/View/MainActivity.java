@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         ViewHolder vh = new ViewHolder();
         vh.logoutButton = findViewById(R.id.btn_logout);
-        vh.favouritesButton = findViewById(R.id.btn_favourites);
         vh.usernameText = findViewById(R.id.txt_username);
         vh.favouriteCardview = findViewById(R.id.cardview_favourites);
         mainViewModel.getUserInfo().addOnSuccessListener(documentSnapshot -> {
