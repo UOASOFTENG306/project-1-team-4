@@ -57,7 +57,7 @@ public class ListViewModel extends AndroidViewModel {
         categoryList = allCategories;
     }
 
-    public LiveData<List<Restaurant>> getRestaurantList() {
+    public MutableLiveData<List<Restaurant>> getRestaurantList() {
         return restaurantList;
     }
 

@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.example.softeng306_application.Entity.Cafe;
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
+import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
@@ -46,6 +49,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         TextView emptyListText;
         RecyclerView restaurantRecyclerView;
         Button backButton;
+        SearchView searchView;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,8 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         vh.backButton = findViewById(R.id.btn_back);
         vh.emptyListText = findViewById(R.id.txt_emptyList);
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
+        vh.searchView = findViewById(R.id.inputText_search);
+        vh.searchView.clearFocus();
 
         // Bind RestaurantAdapter
         adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, listViewModel.getAllCategoryNameOptions());
@@ -120,6 +126,38 @@ public class ListActivity extends AppCompatActivity implements Activity  {
             }
         });
 
+        vh.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterList(s);
+                return false;
+            }
+        });
+
+    }
+
+    private void filterList(String s) {
+        List<Restaurant> restaurants = listViewModel.getRestaurantList().getValue();
+        List<Restaurant> filteredRestaurants = new ArrayList<>();
+        for(Restaurant r: restaurants) {
+            if (r.getName().toLowerCase().contains(s)) {
+                Log.d("Restaurant ", r.getName());
+               filteredRestaurants.add(r);
+                listViewModel.updateRestaurantList(restaurants);
+            }
+        }
+
+        if(filteredRestaurants.isEmpty()) {
+            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            listViewModel.updateRestaurantList(filteredRestaurants);
+        }
     }
 
 
