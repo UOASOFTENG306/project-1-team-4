@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -51,6 +52,13 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         detailsViewModel.isFavourite().observe(this, isFavourite -> {
             int heartType = isFavourite ? R.drawable.heart_fav : R.drawable.heart_notfav;
             vh.favouriteButton.setImageResource(heartType);
+        });
+
+        vh.favouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detailsViewModel.setOppositeFavourite();
+            }
         });
 
         Intent intent = getIntent();

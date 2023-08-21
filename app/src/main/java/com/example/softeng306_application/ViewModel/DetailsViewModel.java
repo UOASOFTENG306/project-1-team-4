@@ -115,4 +115,8 @@ public class DetailsViewModel extends AndroidViewModel {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant.setValue(restaurant);
     }
+
+    public void setOppositeFavourite() {
+        setFavourite(!favourite.getValue());
+    }
 }
