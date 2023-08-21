@@ -38,41 +38,56 @@
                 android:text="Categories"
                 style="@style/HeaderText"
                 />
-            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                app:cardCornerRadius="10dp"
-                android:id="@+id/cardview_favourites"
-                style="@style/CategoryCard"
-                android:backgroundTint="#EA4961"
-                >
-                <TextView
-                    style="@style/CategoryText"
-                    android:text="Favourites"
-                    />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recview_categories"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:scrollbars="vertical"
-                android:scrollbarStyle="outsideOverlay"
-                />
+                android:layout_gravity="center">
+
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    app:cardCornerRadius="10dp"
+                    android:id="@+id/cardview_favourites"
+                    style="@style/CategoryCard"
+                    android:backgroundTint="#EA4961"
+                    >
+                    <TextView
+                        style="@style/CategoryText"
+                        android:text="Favourites"
+                        />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recview_categories"
+                    android:layout_below="@id/cardview_favourites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:scrollbars="vertical"
+                    android:scrollbarStyle="outsideOverlay"
+                    />
+            </RelativeLayout>
+
+
+            <ImageButton
+                android:layout_marginTop="50dp"
+                android:backgroundTint="@color/transparent"
+                android:layout_gravity="center"
+                android:id="@+id/btn_logout"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/logout"/>
+
         </LinearLayout>
+
     </ScrollView>
 
 
-
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log out" />
 
     <TextView
         android:id="@+id/txt_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Loading..." />
+
 </LinearLayout>
