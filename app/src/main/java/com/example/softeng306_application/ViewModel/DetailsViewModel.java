@@ -60,9 +60,10 @@ public class DetailsViewModel extends AndroidViewModel {
                             restaurants.add(restaurantBuilder(favourites));
                         }
                         Restaurant restaurant1 = restaurant.getValue();
-                        restaurants.contains(restaurant1);
                         setFavourite(restaurants.contains(restaurant1));
                         updateRestaurantList(restaurants);
+                    } else {
+                        setFavourite(false);
                     }
                 } catch (Exception e) {
                     Log.d("FirestoreActivity", "Error updating restaurants: ", task.getException());

@@ -32,7 +32,7 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         ViewPageAdapter viewPageAdapter;
         TextView priceText, nameText;
         ImageView logoImage;
-        ImageButton favouriteButton;
+        ImageButton favouriteButton, backButton;
     }
 
     @Override
@@ -46,6 +46,7 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         vh.nameText = findViewById(R.id.txt_detail_name);
         vh.logoImage = findViewById(R.id.img_detail_logo);
         vh.favouriteButton = findViewById(R.id.btn_detail_favourite);
+        vh.backButton = findViewById(R.id.btn_back);
 
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         detailsViewModel.checkIfFavourite();
@@ -61,6 +62,13 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
             }
         });
 
+
+        vh.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         Intent intent = getIntent();
         if (intent != null) {
             if(intent.hasExtra("RESTAURANT")){

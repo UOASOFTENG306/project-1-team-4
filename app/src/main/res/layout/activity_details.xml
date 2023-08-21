@@ -5,8 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/action_bar"
+        android:id="@+id/action_bar"/>
+
     <com.denzcoskun.imageslider.ImageSlider
         android:layout_width="match_parent"
+        android:layout_below="@id/action_bar"
         android:layout_height="200dp"
         android:id="@+id/imageSlider"
         app:iss_period="1000"
@@ -64,6 +68,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/heart_notfav"
             android:layout_marginRight="10dp"
+            android:contentDescription="Favourites mark"
             />
     </LinearLayout>
 
@@ -98,6 +103,7 @@
             android:layout_below="@id/tabLayout"/>
     </LinearLayout>
 </RelativeLayout>
+
 
 
 
