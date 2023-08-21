@@ -203,25 +203,33 @@ public class ListViewModel extends AndroidViewModel {
     }
 
     private Restaurant restaurantBuilder(Map<String, Object> data) {
-        Restaurant restaurant;
+        Category category;
+        String restaurantID = (String) data.get("restaurantID");
         String name = (String) data.get("name");
-        String logoImage = (String) data.get("logoImage");
+        String description = (String) data.get("description");
+        String location = (String) data.get("location");
         Map<String, Object> nestedField = (Map<String, Object>) data.get("category");
         String categoryType = (String) nestedField.get("categoryType");
-        if (categoryType == "EUROPEAN") {
-            restaurant = new Restaurant(name, logoImage, new European());
+        String logoImage = (String) data.get("logoImage");
+        String price = (String) data.get("price");
+
+        switch (categoryType){
+            case "FAST FOOD":
+                category = new FastFood();
+                break;
+            case "EUROPEAN":
+                category = new European();
+                break;
+            case "ASIAN":
+                category = new Asian();
+                break;
+            case "CAFE":
+                category = new Cafe();
+                break;
+            default:
+                category = new FastFood();
         }
 
-        else if(categoryType == "ASIAN") {
-            restaurant = new Restaurant(name, logoImage, new Asian());
-        }
-
-        else if(categoryType == "CAFE") {
-            restaurant = new Restaurant(name, logoImage, new Cafe());
-        }
-        else {
-            restaurant = new Restaurant(name, logoImage, new FastFood());
-        }
-        return restaurant;
+        return new Restaurant(restaurantID, name, description, location, category, logoImage, price);
     }
 }

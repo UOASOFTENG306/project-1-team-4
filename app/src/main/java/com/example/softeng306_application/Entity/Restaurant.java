@@ -30,6 +30,7 @@ public class Restaurant implements Parcelable {
     }
 
     public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImage, String price) {
+        //TODO ADD REVIEWS
         this.restaurantID = restaurantID;
         this.name = name;
         this.description = description;
