@@ -5,12 +5,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.ViewPageAdapter;
+import com.example.softeng306_application.Entity.Category;
+import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.DetailsViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
@@ -23,6 +27,8 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         TabLayout tabLayout;
         ViewPager2 viewPager2;
         ViewPageAdapter viewPageAdapter;
+        TextView priceText, nameText;
+        ImageView logoImage;
     }
 
     @Override
@@ -30,11 +36,26 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ViewHolder vh = new ViewHolder();
-        detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
-
-
         vh.tabLayout = findViewById(R.id.tabLayout);
         vh.viewPager2 = findViewById(R.id.viewPager_tab_content);
+        vh.priceText = findViewById(R.id.txt_detail_price);
+        vh.nameText = findViewById(R.id.txt_detail_name);
+        vh.logoImage = findViewById(R.id.img_detail_logo);
+
+
+        detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            if(intent.hasExtra("RESTAURANT")){
+                Restaurant restaurant = intent.getParcelableExtra("RESTAURANT");
+                detailsViewModel.setRestaurant(restaurant);
+                vh.nameText.setText(restaurant.getName());
+                vh.priceText.setText(restaurant.getPrice());
+                vh.logoImage.setImageResource(showImage(restaurant));
+            }
+        }
+
         vh.viewPageAdapter = new ViewPageAdapter(this);
         vh.viewPager2.setAdapter(vh.viewPageAdapter);
         vh.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -61,5 +82,10 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
             }
         });
         
+    }
+
+    private int showImage(Restaurant restaurant) {
+        int i = this.getResources().getIdentifier(restaurant.getLogoImage(), "drawable", this.getPackageName());
+        return i;
     }
 }

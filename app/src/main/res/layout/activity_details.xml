@@ -27,6 +27,7 @@
         >
         <!--            Logo -->
         <ImageView
+            android:id="@+id/img_detail_logo"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:src="@drawable/restaurant0"/>
@@ -39,12 +40,14 @@
             android:layout_weight="1"
             >
             <TextView
+                android:id="@+id/txt_detail_name"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:text="Name"
                 android:layout_weight="2"
                 />
             <TextView
+                android:id="@+id/txt_detail_price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="$"
