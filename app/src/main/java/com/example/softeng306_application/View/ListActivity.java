@@ -141,23 +141,30 @@ public class ListActivity extends AppCompatActivity implements Activity  {
 
     }
 
+    private String prev = "";
+
     private void filterList(String s) {
         List<Restaurant> restaurants = listViewModel.getRestaurantList().getValue();
         List<Restaurant> filteredRestaurants = new ArrayList<>();
         for(Restaurant r: restaurants) {
             if (r.getName().toLowerCase().contains(s)) {
-                Log.d("Restaurant ", r.getName());
                filteredRestaurants.add(r);
-                listViewModel.updateRestaurantList(restaurants);
             }
         }
 
         if(filteredRestaurants.isEmpty()) {
             Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+            listViewModel.getRestaurantsTest();
         }
+        else if(prev.length() >= s.length()) {
+            listViewModel.getRestaurantsTest();
+        }
+
         else {
             listViewModel.updateRestaurantList(filteredRestaurants);
         }
+
+        prev = s;
     }
 
 
