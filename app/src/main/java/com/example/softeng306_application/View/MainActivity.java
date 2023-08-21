@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -97,6 +98,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void clickSearchBar(ViewHolder vh) {
         vh.searchView.setOnClickListener(v -> showListActivity(v));
+    }
+
+    private void showListActivitySearch(CharSequence query) {
+        Intent listIntent = new Intent(this, ListActivity.class);
+        listIntent.putExtra("SEARCH", query);
+        startActivity(listIntent);
     }
 
     private void clickLogout(ViewHolder vh){
