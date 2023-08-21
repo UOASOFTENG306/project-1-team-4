@@ -1,6 +1,7 @@
 package com.example.softeng306_application.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -53,10 +54,10 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
                 vh.nameText.setText(restaurant.getName());
                 vh.priceText.setText(restaurant.getPrice());
                 vh.logoImage.setImageResource(showImage(restaurant));
+                vh.viewPageAdapter = new ViewPageAdapter(this);
             }
         }
 
-        vh.viewPageAdapter = new ViewPageAdapter(this);
         vh.viewPager2.setAdapter(vh.viewPageAdapter);
         vh.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

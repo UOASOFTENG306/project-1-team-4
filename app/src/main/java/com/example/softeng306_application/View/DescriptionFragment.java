@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -31,27 +32,34 @@ public class DescriptionFragment extends Fragment {
     }
 
 
-
+    public static DescriptionFragment newInstance(Restaurant restaurant) {
+        DescriptionFragment fragment = new DescriptionFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("restaurant", restaurant);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View rootView = inflater.inflate(R.layout.fragment_description, container, false);
         ViewHolder vh = new ViewHolder();
-        this.detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
-
-        detailsViewModel.getRestaurant().observe(getViewLifecycleOwner(), restaurant -> {
-            vh.categoryNameText.setText(restaurant.getName());
-            vh.descriptionText.setText(restaurant.getDescription());
+        vh.descriptionText = rootView.findViewById(R.id.txt_description);
+        vh.categoryNameText = rootView.findViewById(R.id.txt_category);
+        detailsViewModel.getRestaurant().observe(getViewLifecycleOwner(), new Observer<Restaurant>() {
+            @Override
+            public void onChanged(Restaurant restaurant) {
+                 vh.descriptionText.setText(restaurant.getDescription());
+                 vh.categoryNameText.setText(restaurant.getCategory().getCategoryType());
+            }
         });
-
-
-
         return rootView;
     }
 }
