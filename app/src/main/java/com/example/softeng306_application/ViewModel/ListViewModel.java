@@ -50,6 +50,8 @@ public class ListViewModel extends AndroidViewModel {
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
 
+    private String prev = "";
+
     public ListViewModel(@NonNull Application application) {
         super(application);
         userRepository = userRepository.getInstance();
@@ -201,6 +203,27 @@ public class ListViewModel extends AndroidViewModel {
         }
         return restaurants;
     }
+
+    public void filterList(String s) {
+        List<Restaurant> restaurants = this.getRestaurantList().getValue();
+        List<Restaurant> filteredRestaurants = new ArrayList<>();
+        for(Restaurant r: restaurants) {
+            if (r.getName().toLowerCase().contains(s)) {
+                filteredRestaurants.add(r);
+            }
+        }
+
+        if(filteredRestaurants.isEmpty() || prev.length() >= s.length()) {
+            this.getRestaurantsTest();
+        }
+
+        else {
+            this.updateRestaurantList(filteredRestaurants);
+        }
+
+        prev = s;
+    }
+
 
     private Restaurant restaurantBuilder(Map<String, Object> data) {
         Restaurant restaurant;
