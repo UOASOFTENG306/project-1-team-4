@@ -47,4 +47,9 @@ public class RestaurantRepository implements IRestaurantRepository {
         Task<QuerySnapshot> task = db.collection("restaurants").whereEqualTo("category.categoryType", categoryType).get();
         return task;
     }
+
+    @Override
+    public Task<QuerySnapshot> getRestaurantBySearch(String text) {
+        return db.collection("restaurants").whereEqualTo("name", text).get();
+    }
 }

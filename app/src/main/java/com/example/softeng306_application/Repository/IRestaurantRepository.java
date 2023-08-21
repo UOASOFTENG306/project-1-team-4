@@ -17,4 +17,6 @@ public interface IRestaurantRepository {
     List <Restaurant> searchRestaurants(String term);
 
     Task<QuerySnapshot> getRestaurantsByCategory(String categoryType);
+
+    Task<QuerySnapshot> getRestaurantBySearch(String text);
 }
