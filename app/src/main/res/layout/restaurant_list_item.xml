@@ -7,6 +7,8 @@
     app:cardCornerRadius="10dp"
     android:layout_margin="8dp"
     android:id="@+id/mtrlcardview_restaurant"
+    app:strokeColor="@color/black"
+    app:strokeWidth="3dp"
     >
 
     <LinearLayout
