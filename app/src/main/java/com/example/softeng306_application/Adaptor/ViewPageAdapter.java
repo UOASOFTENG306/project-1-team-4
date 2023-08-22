@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.View.DescriptionFragment;
 import com.example.softeng306_application.View.ReviewFragment;
 
 public class ViewPageAdapter extends FragmentStateAdapter
 {
+    private Restaurant restaurant;
     public ViewPageAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -24,8 +26,9 @@ public class ViewPageAdapter extends FragmentStateAdapter
         }
     }
 
+
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

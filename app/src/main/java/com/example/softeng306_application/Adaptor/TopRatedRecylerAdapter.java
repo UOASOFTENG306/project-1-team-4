@@ -1,6 +1,7 @@
 package com.example.softeng306_application.Adaptor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
+import com.example.softeng306_application.View.DetailsActivity;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
@@ -27,6 +29,10 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
         this.topRatedList = topRatedList;
     }
 
+    public void setTopRatedList(List<Restaurant> topRatedList) {
+        this.topRatedList = topRatedList;
+    }
+
     @NonNull
     @Override
     public TopRatedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,10 +41,17 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
 
     @Override
     public void onBindViewHolder(TopRatedRecylerAdapter.TopRatedViewHolder holder, int position) {
+        Restaurant restaurant = topRatedList.get(position);
         String colourHex = topRatedList.get(position).getCategory().getBorderColour();
 //        holder.restaurantName.setText(topRatedList.get(position).getName());
         holder.logoImage.setImageResource(showImage(topRatedList.get(position)));
         holder.topratedCardview.setStrokeColor(Color.parseColor(colourHex));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRestaurantClick(restaurant);
+            }
+        });
     }
 
     private int showImage(Restaurant restaurant) {
@@ -49,6 +62,12 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     @Override
     public int getItemCount() {
         return topRatedList.size();
+    }
+
+    private void onRestaurantClick(Restaurant restaurant){
+        Intent intent = new Intent(context, DetailsActivity.class);
+        intent.putExtra("RESTAURANT", restaurant);
+        context.startActivity(intent);
     }
 
     public class TopRatedViewHolder extends RecyclerView.ViewHolder {

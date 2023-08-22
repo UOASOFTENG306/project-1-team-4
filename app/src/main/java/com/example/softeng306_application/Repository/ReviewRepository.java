@@ -1,18 +1,23 @@
 package com.example.softeng306_application.Repository;
 
-import com.example.softeng306_application.Entity.Review;
-
-import java.util.List;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ReviewRepository implements IReviewRepository {
-    @Override
-    public ReviewRepository getInstance() {
-        return null;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static ReviewRepository instance;
+
+    public static ReviewRepository getInstance() {
+        if (instance == null){
+            instance = new ReviewRepository();
+        }
+        return instance;
     }
 
     @Override
-    public List<Review> getReviews(String restaurantID) {
-        return null;
+    public Task<DocumentSnapshot> getReviews(String restaurantID) {
+        return db.collection("restaurants").document("restaurant " + restaurantID).get();
     }
 
     @Override

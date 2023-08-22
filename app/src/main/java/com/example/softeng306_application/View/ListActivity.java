@@ -35,7 +35,7 @@ import com.example.softeng306_application.ViewModel.MainViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity implements Activity  {
+public class ListActivity extends AppCompatActivity implements Activity {
 
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
@@ -50,6 +50,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         SearchView searchView;
         ImageButton backButton;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,23 +93,27 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
+        listViewModel.setFavourite(false);
         listViewModel.setAllCategories();
 
         Intent intent = getIntent();
         if (intent != null) {
-            if(intent.hasExtra("CATEGORY")){
+            if (intent.hasExtra("CATEGORY")) {
                 Category category = intent.getParcelableExtra("CATEGORY");
                 listViewModel.setCategory(category);
                 vh.autoCompleteTextView.setText(category.getCategoryType(), false);
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
 
             }
-            if(intent.hasExtra("FAVOURITES")){
+            if (intent.hasExtra("FAVOURITES")) {
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
-                listViewModel.setFavourite(isFavourite);
+
+                listViewModel.setAllCategories();
+                listViewModel.setFavourite(true);
+
                 restaurantAdapter.setRestaurants(listViewModel.getFavouriteRestaurants());
             }
-            if(intent.hasExtra("SEARCH")){
+            if (intent.hasExtra("SEARCH")) {
                 String searchQuery = intent.getStringExtra("SEARCH");
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
                 vh.searchView.setQuery(searchQuery, false);
@@ -142,13 +147,22 @@ public class ListActivity extends AppCompatActivity implements Activity  {
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
             }
         });
-
-
     }
 
-    private void showMainActivity(View v) {
-        Intent mainIntent = new Intent(this, MainActivity.class);
-        startActivity(mainIntent);
-    }
+        @Override
+        protected void onResume() {
+            super.onResume();
+            if (listViewModel.getFavourite()) {
+                listViewModel.getFavouriteRestaurants();
+            } else {
+                listViewModel.getRestaurantsTest();
+            }
 
-}
+
+        }
+
+        private void showMainActivity(View v){
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            startActivity(mainIntent);
+        }
+    }

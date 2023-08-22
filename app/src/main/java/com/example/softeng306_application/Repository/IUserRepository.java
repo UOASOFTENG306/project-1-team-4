@@ -2,6 +2,7 @@
 package com.example.softeng306_application.Repository;
 
 import com.example.softeng306_application.Entity.Favourites;
+import com.example.softeng306_application.Entity.Restaurant;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,8 +18,12 @@ public interface IUserRepository {
     FirebaseUser getUser();
 
     void logout();
-    Task<DocumentSnapshot> getFavourites(String userID);
+    Task<DocumentSnapshot> getFavourites();
     Favourites checkFavourite(String userID, String restaurantID);
+
+    void addFavourite(Restaurant restaurant);
+
+    void deleteFavourite(Restaurant restaurant);
 };
 
 

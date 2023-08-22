@@ -28,7 +28,6 @@ import java.util.List;
 
 public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRecyclerAdapter.RestaurantViewHolder> {
     Context context;
-    private ListViewModel listViewModel;
     private List<Restaurant> restaurants;
 
     public void setRestaurants(List<Restaurant> restaurants) {

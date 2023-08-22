@@ -1,13 +1,11 @@
 package com.example.softeng306_application.Repository;
 
-import com.example.softeng306_application.Entity.Review;
-
-import java.util.List;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public interface IReviewRepository {
-    ReviewRepository getInstance();
 
-    List<Review> getReviews(String restaurantID);
+    Task<DocumentSnapshot> getReviews(String restaurantID);
 
     void addReview(String restaurantID, String userID);
 

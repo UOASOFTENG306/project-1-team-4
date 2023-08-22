@@ -1,12 +1,15 @@
 package com.example.softeng306_application.Repository;
 
 import com.example.softeng306_application.Entity.Favourites;
+import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.Entity.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserRepository implements IUserRepository {
@@ -64,7 +67,8 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public Task<DocumentSnapshot> getFavourites(String userID) {
+    public Task<DocumentSnapshot> getFavourites() {
+        String userID = getCurrentUserById();
         Task <DocumentSnapshot> task = db.collection("users").document(userID).get();
         return task;
     }
@@ -72,6 +76,18 @@ public class UserRepository implements IUserRepository {
     @Override
     public Favourites checkFavourite(String userID, String restaurantID) {
         return null;
+    }
+
+    @Override
+    public void addFavourite(Restaurant restaurant) {
+        DocumentReference documentRef  = db.collection("users").document(this.getCurrentUserById());
+        documentRef.update("favourites.favouriteRestaurants", FieldValue.arrayUnion(restaurant));
+    }
+
+    @Override
+    public void deleteFavourite(Restaurant restaurant) {
+        DocumentReference documentRef = db.collection("users").document(this.getCurrentUserById());
+        documentRef.update("favourites.favouriteRestaurants", FieldValue.arrayRemove(restaurant));
     }
 }
 

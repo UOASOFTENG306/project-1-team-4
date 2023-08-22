@@ -6,6 +6,13 @@ public class Review {
     private String description;
     private int reviewScore;
 
+    // TODO: refactor; for testing purposes
+    public Review(String username, String comment) {
+        this.userID = username;
+        this.description = comment;
+    }
+    public String getUserID() { return userID; }
+
     public String getReviewID() {
         return reviewID;
     }
@@ -17,5 +24,7 @@ public class Review {
     public int getReviewScore() {
         return reviewScore;
     }
+
+
 
 }
