@@ -1,3 +1,4 @@
+
 package com.example.softeng306_application.Repository;
 
 import com.example.softeng306_application.Entity.Restaurant;
@@ -18,3 +19,5 @@ public interface IRestaurantRepository {
 
     Task<QuerySnapshot> getRestaurantsByCategory(String categoryType);
 }
+
+

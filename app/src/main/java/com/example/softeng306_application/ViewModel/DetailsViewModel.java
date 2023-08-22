@@ -13,7 +13,9 @@ import com.example.softeng306_application.Entity.Cafe;
 import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
+import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.Repository.RestaurantRepository;
+import com.example.softeng306_application.Repository.ReviewRepository;
 import com.example.softeng306_application.Repository.UserRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,7 +27,10 @@ import java.util.Map;
 public class DetailsViewModel extends AndroidViewModel {
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
+
+    private ReviewRepository reviewRepository;
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
+    private MutableLiveData<List<Review>> reviewsList =  new MutableLiveData<>();
     private MutableLiveData<Boolean> favourite  = new MutableLiveData<>();;
     private MutableLiveData<Restaurant> restaurant  = new MutableLiveData<>();;
 
@@ -33,6 +38,7 @@ public class DetailsViewModel extends AndroidViewModel {
         super(application);
         userRepository = userRepository.getInstance();
         restaurantRepository = restaurantRepository.getInstance();
+        reviewRepository = reviewRepository.getInstance();
     }
 
     public LiveData<Restaurant> getRestaurant() {
@@ -108,6 +114,36 @@ public class DetailsViewModel extends AndroidViewModel {
 
         return restaurant;
     }
+
+    public List<Review> getReviewsByRestaurant(String restaurantId) {
+        List<Review> reviews = new ArrayList<>();
+        Task<DocumentSnapshot> task = reviewRepository.getReviews(restaurantId);
+        task.addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                try {
+                    List<Map<String, Object>> reviewsArray = (List<Map<String, Object>>) task1.getResult().getData().get("reviews");
+                    if (reviewsArray != null) {
+                        for (Map<String, Object> review : reviewsArray) {
+                            Log.d("FirestoreActivity", (String) review.get("description"));
+                            reviews.add(new Review((String) review.get("userID"), (String) review.get("description")));
+                        }
+                        updateReviewsList(reviews);
+                    }
+                } catch (Exception e) {
+                    Log.d("FirestoreActivity", "Error getting the reviews: ", task.getException());
+                }
+            }
+            else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+            }
+        });
+        return reviews;
+    }
+
+    private void updateReviewsList(List<Review> reviews) {
+        this.reviewsList.setValue(reviews);
+    }
+
 
     public void updateRestaurantList(List<Restaurant> restaurantList) {
         //TODO IDENTICAL CODE WITH LISTVIEWMODEL
