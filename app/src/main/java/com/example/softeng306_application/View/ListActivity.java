@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +37,6 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity  {
 
-    // TODO: delete; for testing purposes
-//    String[] categories = {"FAST-FOOD", "EUROPEAN", "ASIAN", "CAFE"};
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
@@ -50,6 +49,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         RecyclerView restaurantRecyclerView;
         Button backButton;
         SearchView searchView;
+        ImageButton backButton;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
