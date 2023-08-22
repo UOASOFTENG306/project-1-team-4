@@ -36,7 +36,7 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     @Override
     public void onBindViewHolder(TopRatedRecylerAdapter.TopRatedViewHolder holder, int position) {
         String colourHex = topRatedList.get(position).getCategory().getBorderColour();
-        holder.restaurantName.setText(topRatedList.get(position).getName());
+//        holder.restaurantName.setText(topRatedList.get(position).getName());
         holder.logoImage.setImageResource(showImage(topRatedList.get(position)));
         holder.topratedCardview.setStrokeColor(Color.parseColor(colourHex));
     }
@@ -52,12 +52,12 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     }
 
     public class TopRatedViewHolder extends RecyclerView.ViewHolder {
-        TextView restaurantName;
+//        TextView restaurantName;
         ImageView logoImage;
         MaterialCardView topratedCardview;
         public TopRatedViewHolder(@NonNull View itemView) {
             super(itemView);
-            restaurantName =  itemView.findViewById(R.id.textview_top_rated);
+//            restaurantName =  itemView.findViewById(R.id.textview_top_rated);
             logoImage =  itemView.findViewById(R.id.imgview_main_logo);
             topratedCardview = itemView.findViewById(R.id.mtrlcardview_toprated);
         }

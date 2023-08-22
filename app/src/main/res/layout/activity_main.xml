@@ -12,62 +12,86 @@
         style="@style/SmallLogoText"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Top Rated"
-        style="@style/HeaderText"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recview_top_rated"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:scrollbars="horizontal"
-        />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_height="wrap_content"
+                android:text="Top Rated"
+                style="@style/HeaderText"
+                />
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Categories"
-        style="@style/HeaderText"
-        />
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardCornerRadius="10dp"
-        android:id="@+id/cardview_favourites"
-        style="@style/CategoryCard"
-        android:backgroundTint="#EA4961"
-        >
-        <TextView
-            style="@style/CategoryText"
-            android:text="Favourites"
-            />
-    </androidx.cardview.widget.CardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recview_top_rated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scrollbars="horizontal"
+                android:layoutAnimation="@anim/main_recview_anim"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:text="Categories"
+                style="@style/HeaderText"
+                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    app:cardCornerRadius="10dp"
+                    android:id="@+id/cardview_favourites"
+                    style="@style/CategoryCard"
+                    android:backgroundTint="#EA4961"
+                    app:cardElevation="5dp"
+                    android:stateListAnimator="@anim/scale_up"
+                    >
+                    <TextView
+                        style="@style/CategoryText"
+                        android:text="Favourites"
+                        />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recview_categories"
+                    android:layout_below="@id/cardview_favourites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:scrollbars="vertical"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:layoutAnimation="@anim/main_recview_anim"
+                    />
+            </RelativeLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recview_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:scrollbars="vertical"
-        />
+            <ImageButton
+                android:layout_marginTop="50dp"
+                android:backgroundTint="@color/transparent"
+                android:layout_gravity="center"
+                android:id="@+id/btn_logout"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/logout"/>
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log out" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_favourites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="favourites (replace with heart mark?)" />
+    </ScrollView>
+
+
 
     <TextView
         android:id="@+id/txt_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Loading..." />
+
 </LinearLayout>

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class ViewHolder{
         TextView usernameText;
-        Button logoutButton, favouritesButton;
+        ImageButton logoutButton;
         CardView favouriteCardview;
         RecyclerView topRatedRecyclerView;
         RecyclerView categoryRecyclerView;
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         ViewHolder vh = new ViewHolder();
         vh.logoutButton = findViewById(R.id.btn_logout);
-        vh.favouritesButton = findViewById(R.id.btn_favourites);
         vh.usernameText = findViewById(R.id.txt_username);
         vh.favouriteCardview = findViewById(R.id.cardview_favourites);
         mainViewModel.getUserInfo().addOnSuccessListener(documentSnapshot -> {
