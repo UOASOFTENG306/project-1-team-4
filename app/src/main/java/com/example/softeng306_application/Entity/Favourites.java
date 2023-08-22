@@ -1,5 +1,6 @@
 package com.example.softeng306_application.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Favourites {
@@ -10,7 +11,7 @@ public class Favourites {
     }
 
     public Favourites() {
-
+        this.favouriteRestaurants = new ArrayList<>();
     }
 
     public List<Restaurant> getFavouriteRestaurants() {
