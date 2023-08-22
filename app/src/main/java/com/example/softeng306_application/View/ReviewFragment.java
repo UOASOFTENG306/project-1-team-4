@@ -48,10 +48,21 @@ public class ReviewFragment extends Fragment {
         Review rev1 = new Review("luke", "this place is great");
         Review rev2 = new Review("kai", "this place is ok");
         Review rev3 = new Review("naren", "this place is rank");
-
+        Review rev4 = new Review("luke", "this place is great");
+        Review rev5 = new Review("kai", "this place is ok");
+        Review rev6 = new Review("naren", "this place is rank");
+        Review rev7 = new Review("luke", "this place is great");
+        Review rev8 = new Review("kai", "this place is ok");
+        Review rev9 = new Review("naren", "this place is rank");
         reviewList = new ArrayList<Review>();
         reviewList.add(rev1);
         reviewList.add(rev2);
         reviewList.add(rev3);
+        reviewList.add(rev4);
+        reviewList.add(rev5);
+        reviewList.add(rev6);
+        reviewList.add(rev7);
+        reviewList.add(rev8);
+        reviewList.add(rev9);
     }
 }

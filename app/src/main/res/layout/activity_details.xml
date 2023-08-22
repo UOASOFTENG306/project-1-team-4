@@ -34,7 +34,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:cardCornerRadius="10dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_gravity="center"
             app:cardElevation="3dp">
             <ImageView
@@ -84,7 +84,8 @@
             android:layout_height="50dp"
             android:layout_width="50dp"
             android:scaleType="fitXY"
-            android:src="@drawable/heart_notfav"
+            android:src="@drawable/heart"
+            android:backgroundTint="@color/transparent"
             android:layout_marginRight="10dp"
             android:contentDescription="Favourites mark"
             />
