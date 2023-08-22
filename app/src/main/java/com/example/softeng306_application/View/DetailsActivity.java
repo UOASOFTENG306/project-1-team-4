@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -17,18 +18,27 @@ import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.example.softeng306_application.Adaptor.SliderAdapter;
 import com.example.softeng306_application.Adaptor.ViewPageAdapter;
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.DetailsViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
+import com.google.android.material.slider.Slider;
 import com.google.android.material.tabs.TabLayout;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 public class DetailsActivity extends AppCompatActivity implements Activity {
 
     private DetailsViewModel detailsViewModel;
+
+    int[] chipotleImages = {R.drawable.back0_1, R.drawable.back0_2, R.drawable.back0_3};
     private class ViewHolder {
+
+        SliderView sliderView;
         TabLayout tabLayout;
         ViewPager2 viewPager2;
         ViewPageAdapter viewPageAdapter;
@@ -62,17 +72,8 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         detailsViewModel.checkIfFavourite();
         detailsViewModel.isFavourite().observe(this, isFavourite -> {
-            int heartType;
-
-            if(isFavourite){
-                heartType = R.drawable.heart_fav;
-                detailsViewModel.addFavourite();
-            } else {
-                heartType = R.drawable.heart;
-                detailsViewModel.removeFavourite();
-            }
+            int heartType = isFavourite ? R.drawable.heart_fav : R.drawable.heart;
             vh.favouriteButton.setImageResource(heartType);
-
         });
 
         vh.favouriteButton.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +126,14 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
                 vh.tabLayout.getTabAt(position).select();
             }
         });
-        
+
+        vh.sliderView = findViewById(R.id.imageSlider);
+        SliderAdapter sliderAdapter = new SliderAdapter(chipotleImages);
+        vh.sliderView.setSliderAdapter(sliderAdapter);
+        vh.sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
+        vh.sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        vh.sliderView.startAutoCycle();
+
     }
 
     private int showImage(Restaurant restaurant) {

@@ -5,16 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.denzcoskun.imageslider.ImageSlider
+    <com.smarteist.autoimageslider.SliderView
         android:layout_width="match_parent"
         android:layout_height="245dp"
-        android:layout_alignParentTop="true"
-        android:id="@+id/imageSlider"
-        app:iss_period="1000"
-        app:iss_auto_cycle="true"
-        app:iss_delay="1000"
-        android:background="@color/grey_font"
-        />
+        android:id="@id/imageSlider"
+        app:sliderAnimationDuration="600"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="600"
+        app:sliderIndicatorGravity="center_horizontal|bottom"/>
 
     <ImageButton
         android:layout_width="40dp"
@@ -137,6 +136,7 @@
             android:layout_below="@id/tabLayout"/>
     </LinearLayout>
 </RelativeLayout>
+
 
 
 
