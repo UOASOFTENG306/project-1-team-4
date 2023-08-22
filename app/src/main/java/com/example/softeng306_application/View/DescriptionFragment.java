@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.softeng306_application.Adaptor.ViewPageAdapter;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
@@ -52,7 +54,10 @@ public class DescriptionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_description, container, false);
         ViewHolder vh = new ViewHolder();
         vh.descriptionText = rootView.findViewById(R.id.txt_description);
+        YoYo.with(Techniques.BounceInLeft).duration(700).playOn(vh.descriptionText);
+
         vh.categoryNameText = rootView.findViewById(R.id.txt_category);
+        YoYo.with(Techniques.FadeInDown).duration(700).playOn(vh.categoryNameText);
         detailsViewModel.getRestaurant().observe(getViewLifecycleOwner(), new Observer<Restaurant>() {
             @Override
             public void onChanged(Restaurant restaurant) {

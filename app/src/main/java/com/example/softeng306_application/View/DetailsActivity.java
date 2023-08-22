@@ -52,7 +52,7 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         YoYo.with(Techniques.ZoomIn).duration(300).playOn(vh.nameText);
 
         vh.logoImage = findViewById(R.id.img_detail_logo);
-        YoYo.with(Techniques.FadeInUp).duration(700).playOn(vh.logoImage);
+        YoYo.with(Techniques.StandUp).duration(700).playOn(vh.logoImage);
 
         vh.favouriteButton = findViewById(R.id.btn_detail_favourite);
         YoYo.with(Techniques.Bounce).duration(200).playOn(vh.favouriteButton);
