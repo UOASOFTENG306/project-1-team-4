@@ -9,10 +9,13 @@
 
     <SearchView
         android:id="@+id/inputText_search"
-        android:layout_width="300dp"
+        android:searchIcon="@drawable/search"
+        android:layout_width="330dp"
         android:layout_height="50dp"
         android:background="@color/white"
         android:iconifiedByDefault="false"
-        android:queryHint="Search..." />
+        android:queryHint="Search..."/>
+
+
 </RelativeLayout>
 
