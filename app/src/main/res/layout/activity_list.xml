@@ -9,10 +9,7 @@
 
     <include layout="@layout/action_bar"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ADD SEARCH BAR HERE"/>
+    <include layout="@layout/activity_search"/>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/DropDownLayout">

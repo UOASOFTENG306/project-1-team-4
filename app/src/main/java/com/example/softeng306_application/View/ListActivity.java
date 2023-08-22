@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import com.example.softeng306_application.Entity.Cafe;
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
+import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
@@ -44,6 +47,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         AutoCompleteTextView autoCompleteTextView;
         TextView emptyListText;
         RecyclerView restaurantRecyclerView;
+        SearchView searchView;
         ImageButton backButton;
     }
     @Override
@@ -55,12 +59,27 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
 
-
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
         vh.backButton = findViewById(R.id.btn_back);
         vh.emptyListText = findViewById(R.id.txt_emptyList);
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
+        vh.searchView = findViewById(R.id.inputText_search);
+        vh.searchView.clearFocus();
+
+        vh.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                listViewModel.filterList(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                listViewModel.filterList(s);
+                return false;
+            }
+        });
 
         // Bind RestaurantAdapter
         adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, listViewModel.getAllCategoryNameOptions());
@@ -73,6 +92,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
+        listViewModel.setAllCategories();
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -85,9 +105,13 @@ public class ListActivity extends AppCompatActivity implements Activity  {
             }
             if(intent.hasExtra("FAVOURITES")){
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
-                listViewModel.setAllCategories();
                 listViewModel.setFavourite(isFavourite);
                 restaurantAdapter.setRestaurants(listViewModel.getFavouriteRestaurants());
+            }
+            if(intent.hasExtra("SEARCH")){
+                String searchQuery = intent.getStringExtra("SEARCH");
+                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
+                vh.searchView.setQuery(searchQuery, false);
             }
         }
 
@@ -119,8 +143,8 @@ public class ListActivity extends AppCompatActivity implements Activity  {
             }
         });
 
-    }
 
+    }
 
     private void showMainActivity(View v) {
         Intent mainIntent = new Intent(this, MainActivity.class);
