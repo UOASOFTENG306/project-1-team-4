@@ -14,14 +14,6 @@
 
     <include layout="@layout/activity_search"/>
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:text="Top Rated"
-        style="@style/HeaderText"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recview_top_rated"
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

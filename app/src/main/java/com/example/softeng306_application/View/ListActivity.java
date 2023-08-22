@@ -47,7 +47,6 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         AutoCompleteTextView autoCompleteTextView;
         TextView emptyListText;
         RecyclerView restaurantRecyclerView;
-        Button backButton;
         SearchView searchView;
         ImageButton backButton;
     }
