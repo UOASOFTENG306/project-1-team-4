@@ -34,8 +34,6 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity  {
 
-    // TODO: delete; for testing purposes
-//    String[] categories = {"FAST-FOOD", "EUROPEAN", "ASIAN", "CAFE"};
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
