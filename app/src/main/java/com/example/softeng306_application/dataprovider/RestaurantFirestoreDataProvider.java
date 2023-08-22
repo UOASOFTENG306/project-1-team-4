@@ -60,6 +60,7 @@ public class RestaurantFirestoreDataProvider {
     private List<Restaurant> getRestaurants() {
         List<Restaurant> restaurantsArrayList = new ArrayList<>();
 
+
         List<Review> chipotleReviews = new ArrayList<>();
         chipotleReviews.add(new Review("user1", "Delicious flavors, great atmosphere, a must-visit for food enthusiasts!"));
         chipotleReviews.add(new Review("user2", "Exquisite presentation, impeccable service, left me craving for more."));
@@ -167,9 +168,3 @@ public class RestaurantFirestoreDataProvider {
     }
 
 }
-
-
-
-
-
-

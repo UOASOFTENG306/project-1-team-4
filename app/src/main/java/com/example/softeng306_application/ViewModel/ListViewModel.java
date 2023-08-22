@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
 import com.example.softeng306_application.Entity.Asian;
@@ -38,6 +39,8 @@ import java.util.stream.Collectors;
 
 public class ListViewModel extends AndroidViewModel {
     private List<Category> categoryList;
+    private List<Restaurant> searchList;
+
     private MutableLiveData<List<Restaurant>> restaurantList =  new MutableLiveData<>();
     private List<Category> allCategories = new ArrayList<Category>() {
         {
@@ -52,6 +55,8 @@ public class ListViewModel extends AndroidViewModel {
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
 
+    private String prev = "";
+
     public ListViewModel(@NonNull Application application) {
         super(application);
         userRepository = userRepository.getInstance();
@@ -59,7 +64,7 @@ public class ListViewModel extends AndroidViewModel {
         categoryList = allCategories;
     }
 
-    public LiveData<List<Restaurant>> getRestaurantList() {
+    public MutableLiveData<List<Restaurant>> getRestaurantList() {
         return restaurantList;
     }
 
@@ -78,6 +83,14 @@ public class ListViewModel extends AndroidViewModel {
 
     public void updateRestaurantList(List<Restaurant> restaurantList) {
         this.restaurantList.setValue(restaurantList);
+    }
+
+    public List<Restaurant> getSearchList() {
+        return searchList;
+    }
+
+    public void setSearchList(List<Restaurant> searchList) {
+        this.searchList = searchList;
     }
 
     public Boolean getFavourite() {
@@ -153,6 +166,7 @@ public class ListViewModel extends AndroidViewModel {
                         for (Map<String, Object> itemMap : array) {
                             restaurants.add(restaurantBuilder(itemMap));
                         }
+                        setSearchList(restaurants);
                         updateRestaurantList(restaurants);
                     }
                 }
@@ -177,8 +191,8 @@ public class ListViewModel extends AndroidViewModel {
                         Map<String, Object> data = document.getData();
                         restaurants12.add(restaurantBuilder(data));
                     }
+                    setSearchList(restaurants12);
                     updateRestaurantList(restaurants12);
-
                 } else {
                     Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
                 }
@@ -195,6 +209,7 @@ public class ListViewModel extends AndroidViewModel {
                             Map<String, Object> data = document.getData();
                             restaurants1.add(restaurantBuilder(data));
                         }
+                        setSearchList(restaurants1);
                         updateRestaurantList(restaurants1);
 
                     } else {
@@ -206,7 +221,47 @@ public class ListViewModel extends AndroidViewModel {
         return restaurants;
     }
 
+    public void filterList(String s) {
+        if (this.getRestaurantList().getValue() == null) {
+            this.restaurantList.observeForever(new Observer<List<Restaurant>>() {
+                @Override
+                public void onChanged(List<Restaurant> restaurants) {
+                    if(restaurants != null){
+                        filterList(s);
+                    }
+                    restaurantList.removeObserver(this);
+                }
+            });
+            return;
+        }
+
+        List<Restaurant> restaurants = this.getRestaurantList().getValue();
+
+        List<Restaurant> filteredRestaurants = new ArrayList<>();
+
+        if(prev.length() >= s.length()) {
+            for(Restaurant r: this.searchList) {
+                if (r.getName().toLowerCase().contains(s)) {
+                    filteredRestaurants.add(r);
+                }
+            }
+        } else {
+            for(Restaurant r: restaurants) {
+                if (r.getName().toLowerCase().contains(s)) {
+                    filteredRestaurants.add(r);
+                }
+            }
+        }
+        this.updateRestaurantList(filteredRestaurants);
+
+
+        prev = s;
+    }
+
     private Restaurant restaurantBuilder(Map<String, Object> data) {
+
+        Category category;
+
         String restaurantID = (String) data.get("restaurantID");
         String name = (String) data.get("name");
         String description = (String) data.get("description");
@@ -218,23 +273,24 @@ public class ListViewModel extends AndroidViewModel {
         String logoImage = (String) data.get("logoImage");
         String price = (String) data.get("price");
 
-        Restaurant restaurant = new Restaurant(restaurantID,  name,  description,  location, logoImage, price);;
 
         switch (categoryType){
+            case "FAST FOOD":
+                category = new FastFood();
+                break;
             case "EUROPEAN":
-                restaurant.setCategory(new European());
+                category = new European();
                 break;
             case "ASIAN":
-                restaurant.setCategory(new Asian());
-                break;
-            case "FAST FOOD":
-                restaurant.setCategory(new FastFood());
+                category = new Asian();
                 break;
             case "CAFE":
-                restaurant.setCategory(new Cafe());
+                category = new Cafe();
                 break;
-            }
+            default:
+                category = new FastFood();
+        }
 
-        return restaurant;
+        return new Restaurant(restaurantID, name, description, location, category, logoImage, price);
     }
 }

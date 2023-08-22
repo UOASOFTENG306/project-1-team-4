@@ -2,6 +2,7 @@ package com.example.softeng306_application.Adaptor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,10 +50,11 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     @Override
     public void onBindViewHolder(RestaurantRecyclerAdapter.RestaurantViewHolder holder, int position) {
         Restaurant restaurant = restaurants.get(position);
-        holder.restaurantName.setText(restaurants.get(position).getName());
-        holder.price.setText(restaurants.get(position).getPrice());
-        holder.logoImage.setImageResource(showImage(restaurants.get(position)));
-
+        String colourHex = restaurant.getCategory().getBorderColour();
+        holder.restaurantName.setText(restaurant.getName());
+        holder.price.setText(restaurant.getPrice());
+        holder.logoImage.setImageResource(showImage(restaurant));
+        holder.restaurantItem.setStrokeColor(Color.parseColor(colourHex));
         // TODO: handle condition for favourite or not
         holder.favouriteHeart.setVisibility(View.VISIBLE);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
