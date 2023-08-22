@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.softeng306_application.Adaptor.ViewPageAdapter;
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.Restaurant;
@@ -42,10 +44,19 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         ViewHolder vh = new ViewHolder();
         vh.tabLayout = findViewById(R.id.tabLayout);
         vh.viewPager2 = findViewById(R.id.viewPager_tab_content);
+
         vh.priceText = findViewById(R.id.txt_detail_price);
+        YoYo.with(Techniques.FadeInUp).duration(300).playOn(vh.priceText);
+
         vh.nameText = findViewById(R.id.txt_detail_name);
+        YoYo.with(Techniques.ZoomIn).duration(300).playOn(vh.nameText);
+
         vh.logoImage = findViewById(R.id.img_detail_logo);
+        YoYo.with(Techniques.FadeInUp).duration(700).playOn(vh.logoImage);
+
         vh.favouriteButton = findViewById(R.id.btn_detail_favourite);
+        YoYo.with(Techniques.Bounce).duration(200).playOn(vh.favouriteButton);
+
         vh.backButton = findViewById(R.id.btn_back);
 
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
