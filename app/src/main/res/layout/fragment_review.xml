@@ -48,7 +48,8 @@
                         android:id="@+id/recview_reviews"
                         android:layout_width="match_parent"
                         android:layout_height="320dp"
-                        android:layout_below="@id/linearLayout_overall_rating"/>
+                        android:layout_below="@id/linearLayout_overall_rating"
+                        android:layoutAnimation="@anim/reviews_animation"/>
 
                     <Button
                         android:id="@+id/btn_add_review"
