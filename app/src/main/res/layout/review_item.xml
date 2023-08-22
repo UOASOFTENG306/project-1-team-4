@@ -30,29 +30,29 @@
             />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/heart_fav"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/review_star"
             />
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/heart_fav"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/review_star"
             />
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/heart_fav"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/review_star"
             />
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/heart_fav"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/review_star"
             />
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/heart_fav"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/review_star"
             />
 
     </LinearLayout>
