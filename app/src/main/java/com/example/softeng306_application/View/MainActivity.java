@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -44,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         CardView favouriteCardview;
         RecyclerView topRatedRecyclerView;
         RecyclerView categoryRecyclerView;
-
         SearchView searchView;
     }
     @Override
@@ -97,7 +97,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clickSearchBar(ViewHolder vh) {
-        vh.searchView.setOnClickListener(v -> showListActivity(v));
+        vh.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                showListActivitySearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void showListActivitySearch(CharSequence query) {
@@ -122,6 +133,12 @@ public class MainActivity extends AppCompatActivity {
     private void showListActivity(View v){
         Intent listIntent = new Intent(this, ListActivity.class);
         listIntent.putExtra("FAVOURITES", true);
+        startActivity(listIntent);
+    }
+
+    private void showListActivityFromSearch(View v){
+        Intent listIntent = new Intent(this, ListActivity.class);
+        listIntent.putExtra("SEARCH", true);
         startActivity(listIntent);
     }
 }

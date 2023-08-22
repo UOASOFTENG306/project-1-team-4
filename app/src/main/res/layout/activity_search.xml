@@ -2,18 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".View.SearchActivity"
-    android:layout_height="50dp"
     android:layout_width="match_parent"
-    android:gravity="center">
+    android:layout_height="50dp"
+    android:gravity="center"
+    tools:context=".View.SearchActivity">
 
     <SearchView
         android:id="@+id/inputText_search"
-        android:layout_width= "300dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
-        android:queryHint="Search..."
-        android:iconifiedByDefault="false"
         android:background="@color/white"
-        />
+        android:iconifiedByDefault="false"
+        android:queryHint="Search..." />
 </RelativeLayout>
 

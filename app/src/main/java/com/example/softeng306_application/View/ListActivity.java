@@ -60,7 +60,6 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
 
-
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
         vh.backButton = findViewById(R.id.btn_back);
@@ -68,6 +67,20 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.searchView = findViewById(R.id.inputText_search);
         vh.searchView.clearFocus();
+
+        vh.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                listViewModel.filterList(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                listViewModel.filterList(s);
+                return false;
+            }
+        });
 
         // Bind RestaurantAdapter
         adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, listViewModel.getAllCategoryNameOptions());
@@ -80,6 +93,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
+        listViewModel.setAllCategories();
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -92,9 +106,13 @@ public class ListActivity extends AppCompatActivity implements Activity  {
             }
             if(intent.hasExtra("FAVOURITES")){
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
-                listViewModel.setAllCategories();
                 listViewModel.setFavourite(isFavourite);
                 restaurantAdapter.setRestaurants(listViewModel.getFavouriteRestaurants());
+            }
+            if(intent.hasExtra("SEARCH")){
+                String searchQuery = intent.getStringExtra("SEARCH");
+                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
+                vh.searchView.setQuery(searchQuery, false);
             }
         }
 
@@ -126,18 +144,6 @@ public class ListActivity extends AppCompatActivity implements Activity  {
             }
         });
 
-        vh.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                listViewModel.filterList(s);
-                return false;
-            }
-        });
 
     }
 
