@@ -45,6 +45,10 @@ public class DetailsViewModel extends AndroidViewModel {
         return restaurant;
     }
 
+    public LiveData<List<Review>> getReviewsList() {
+        return reviewsList;
+    }
+
     public void setFavourite(Boolean value) {
         this.favourite.setValue(value);
     }
@@ -140,7 +144,7 @@ public class DetailsViewModel extends AndroidViewModel {
         return reviews;
     }
 
-    private void updateReviewsList(List<Review> reviews) {
+    public void updateReviewsList(List<Review> reviews) {
         this.reviewsList.setValue(reviews);
     }
 

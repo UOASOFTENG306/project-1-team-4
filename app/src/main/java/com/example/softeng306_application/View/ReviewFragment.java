@@ -45,10 +45,11 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onChanged(Restaurant restaurant) {
                 reviewList = detailsViewModel.getReviewsByRestaurant(restaurant.getRestaurantID());
-                reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext(), reviewList);
-                reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
-                reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+                detailsViewModel.getReviewsList().observe(getViewLifecycleOwner(), reviews -> {
+                    reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext(), reviewList);
+                    reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
+                    reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                });
             }
         });
 
