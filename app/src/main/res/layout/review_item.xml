@@ -3,24 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="10dp"
+    android:layout_margin="8dp"
+    app:cardElevation="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/linearLayout_username_and_rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="2dp">
         <TextView
             android:id="@+id/txt_username"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:text="username"
             android:layout_weight="1"
+            android:fontFamily="@font/montserrat_bold"
             />
 
         <ImageView
@@ -56,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="some review comment"
+        android:fontFamily="@font/montserrat_medium"
         />
     </LinearLayout>
 

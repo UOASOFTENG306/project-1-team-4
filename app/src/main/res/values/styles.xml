@@ -48,6 +48,9 @@
         <item name="android:backgroundTint">@color/btn</item>
     </style>
 
+    <style name="AddReviewButton">
+        <item name="cornerRadius">5dp</item>
+    </style>
     <style name="AdminInputText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
