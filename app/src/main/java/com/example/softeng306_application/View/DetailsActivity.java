@@ -62,8 +62,17 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         detailsViewModel.checkIfFavourite();
         detailsViewModel.isFavourite().observe(this, isFavourite -> {
-            int heartType = isFavourite ? R.drawable.heart_fav : R.drawable.heart;
+            int heartType;
+
+            if(isFavourite){
+                heartType = R.drawable.heart_fav;
+                detailsViewModel.addFavourite();
+            } else {
+                heartType = R.drawable.heart;
+                detailsViewModel.removeFavourite();
+            }
             vh.favouriteButton.setImageResource(heartType);
+
         });
 
         vh.favouriteButton.setOnClickListener(new View.OnClickListener() {

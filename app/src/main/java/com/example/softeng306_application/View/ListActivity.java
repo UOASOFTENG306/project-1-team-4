@@ -74,6 +74,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
+        listViewModel.setFavourite(false);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -87,7 +88,7 @@ public class ListActivity extends AppCompatActivity implements Activity  {
             if(intent.hasExtra("FAVOURITES")){
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
                 listViewModel.setAllCategories();
-                listViewModel.setFavourite(isFavourite);
+                listViewModel.setFavourite(true);
                 restaurantAdapter.setRestaurants(listViewModel.getFavouriteRestaurants());
             }
         }
@@ -122,6 +123,16 @@ public class ListActivity extends AppCompatActivity implements Activity  {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(listViewModel.getFavourite()){
+            listViewModel.getFavouriteRestaurants();
+        } else {
+            listViewModel.getRestaurantsTest();
+        }
+
+    }
 
     private void showMainActivity(View v) {
         Intent mainIntent = new Intent(this, MainActivity.class);

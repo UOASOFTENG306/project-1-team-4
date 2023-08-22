@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.softeng306_application.Entity.Asian;
 import com.example.softeng306_application.Entity.Cafe;
@@ -27,7 +28,6 @@ import java.util.Map;
 public class DetailsViewModel extends AndroidViewModel {
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
-
     private ReviewRepository reviewRepository;
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
     private MutableLiveData<List<Review>> reviewsList =  new MutableLiveData<>();
@@ -57,6 +57,7 @@ public class DetailsViewModel extends AndroidViewModel {
         return favourite;
     }
 
+
     public void checkIfFavourite() {
         //TODO IDENTICAL CODE WITH LISTVIEWMODEL
         List<Restaurant> restaurants = new ArrayList<>();
@@ -69,12 +70,10 @@ public class DetailsViewModel extends AndroidViewModel {
                         for (Map<String, Object> favourites : favouritesArray) {
                             restaurants.add(restaurantBuilder(favourites));
                         }
-                        Restaurant restaurant1 = restaurant.getValue();
-                        setFavourite(restaurants.contains(restaurant1));
-                        updateRestaurantList(restaurants);
-                    } else {
-                        setFavourite(false);
+                        updateFavouriteList(restaurants);
                     }
+                    setFavourite(restaurants.contains(restaurant.getValue()));
+
                 } catch (Exception e) {
                     Log.d("FirestoreActivity", "Error updating restaurants: ", task.getException());
                 }
@@ -149,7 +148,7 @@ public class DetailsViewModel extends AndroidViewModel {
     }
 
 
-    public void updateRestaurantList(List<Restaurant> restaurantList) {
+    public void updateFavouriteList(List<Restaurant> restaurantList) {
         //TODO IDENTICAL CODE WITH LISTVIEWMODEL
         this.favouritesList.setValue(restaurantList);
     }
@@ -158,14 +157,55 @@ public class DetailsViewModel extends AndroidViewModel {
     }
 
     public void setOppositeFavourite() {
+        if (this.favourite.getValue() == null) {
+            this.favourite.observeForever(new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean isFav) {
+                    if (isFav != null) {
+                        setFavourite(!favourite.getValue());
+                    }
+                    favourite.removeObserver(this);
+                }
+
+            });
+            return;
+        }
         setFavourite(!favourite.getValue());
     }
 
-    private void addFavourite(Restaurant restaurant) {
-        userRepository.addFavourite(restaurant);
+    public void addFavourite() {
+        if (this.restaurant.getValue() == null) {
+            this.restaurant.observeForever(new Observer<Restaurant>() {
+                @Override
+                public void onChanged(Restaurant res) {
+                    if (res != null) {
+                        userRepository.addFavourite(restaurant.getValue());
+                    }
+                    restaurant.removeObserver(this);
+                }
+
+
+            });
+            return;
+        }
+        userRepository.addFavourite(restaurant.getValue());
     }
 
-    private void removeFavourite(Restaurant restaurant) {
-        userRepository.deleteFavourite(restaurant);
+    public void removeFavourite() {
+        if (this.restaurant.getValue() == null) {
+            this.restaurant.observeForever(new Observer<Restaurant>() {
+                @Override
+                public void onChanged(Restaurant res) {
+                    if (res != null) {
+                        userRepository.deleteFavourite(restaurant.getValue());
+                    }
+                    restaurant.removeObserver(this);
+                }
+
+
+            });
+            return;
+        }
+        userRepository.deleteFavourite(restaurant.getValue());
     }
 }
