@@ -60,7 +60,27 @@ public class RestaurantFirestoreDataProvider {
     private List<Restaurant> getRestaurants() {
         List<Restaurant> restaurantsArrayList = new ArrayList<>();
 
-        Restaurant r0 = new Restaurant("1", "Chipotle", "Lovely Mexican Food", "Auckland", new FastFood(), "restaurant0", "$", this.getReviews());
+        List<Review> chipotleReviews = new ArrayList<>();
+        chipotleReviews.add(new Review("user1", "Delicious flavors, great atmosphere, a must-visit for food enthusiasts!"));
+        chipotleReviews.add(new Review("user2", "Exquisite presentation, impeccable service, left me craving for more."));
+        chipotleReviews.add(new Review("user3", "Innovative menu, bold combinations, a culinary adventure in every bite."));
+        chipotleReviews.add(new Review("user4", "Cozy ambiance, comfort food that feels like a warm embrace."));
+        chipotleReviews.add(new Review("user5", "Authentic tastes, genuine hospitality, a hidden gem worth discovering."));
+
+
+        List<Review> seoulNightReviews = new ArrayList<>();
+        seoulNightReviews.add(new Review("user1", "Fresh ingredients, creative twists, a feast for the senses here."));
+        seoulNightReviews.add(new Review("user2", "Exceptional service, diverse menu, an experience that truly satisfies."));
+        seoulNightReviews.add(new Review("user3", "Mouthwatering dishes, exceeded expectations, a taste of perfection."));
+        seoulNightReviews.add(new Review("user4", "Charming decor, vibrant vibes, a delightful fusion of flavors and cultures."));
+        seoulNightReviews.add(new Review("user5", "Impeccable attention to detail, made each dish a masterpiece."));
+
+        List<Review> bestieCafeReviews = new ArrayList<>();
+        bestieCafeReviews.add(new Review("user1", "Simple elegance, farm-to-table ethos, a breath of fresh culinary air."));
+        bestieCafeReviews.add(new Review("user2", "Unpretentious charm, indulgent treats, a haven for food lovers."));
+        bestieCafeReviews.add(new Review("user3", "Exemplary service, unforgettable dishes, raised the bar for dining out."));
+
+        Restaurant r0 = new Restaurant("1", "Chipotle", "Lovely Mexican Food", "Auckland", new FastFood(), "restaurant0", "$", chipotleReviews);
         Restaurant r1 = new Restaurant("2", "McDonalds", "Junk Food", "Auckland", new FastFood(), "restaurant1", "$$");
         Restaurant r2 = new Restaurant("3", "Wendy's", "A well-known international fast-food restaurant chain specializing in fresh, high-quality burgers, chicken sandwiches, and salads", "Auckland", new FastFood(), "restaurant2", "$");
         Restaurant r3 = new Restaurant("4", "Domino's Pizza", "Who does not love pizzas", "Wellington", new FastFood(), "restaurant3", "$");
@@ -88,9 +108,9 @@ public class RestaurantFirestoreDataProvider {
         Restaurant r25 = new Restaurant("26", "Hawker Roll", "Explore the vibrant tastes of Southeast Asia at Hawker Roll, where bold flavors and fresh ingredients come together in delightful rolls", "Auckland", new Asian(), "restaurant25", "$");
         Restaurant r26 = new Restaurant("27", "Mr Hao", "Experience modern Asian delights at Mr Hao, where traditional recipes are reimagined, delivering a fusion of tastes that captivate the senses.", "Auckland", new Asian(), "restaurant26", "$$");
         Restaurant r27 = new Restaurant("28", "Obar", "Immerse yourself in Korean nightlife at Obar, where pulsating beats, savory bites, and lively atmosphere merge for an unforgettable dining and entertainment experience.", "Auckland", new Asian(), "restaurant27", "$$");
-        Restaurant r28 = new Restaurant("29", "Seoul Night", "Step into the heart of Korea at Seoul Night, a vibrant spot where Korean cuisine and culture come alive in every dish.", "Auckland", new Asian(), "restaurant28", "$$");
+        Restaurant r28 = new Restaurant("29", "Seoul Night", "Step into the heart of Korea at Seoul Night, a vibrant spot where Korean cuisine and culture come alive in every dish.", "Auckland", new Asian(), "restaurant28", "$$",seoulNightReviews);
         Restaurant r29 = new Restaurant("30", "Yoshizawa", "Savor authentic Japanese cuisine at Yoshizawa, where meticulous craftsmanship and the finest ingredients create an unforgettable dining experience.", "Auckland", new Asian(), "restaurant29", "$$");
-        Restaurant r30 = new Restaurant("31", "Bestie Cafe", "Find comfort at Bestie Cafe, a cozy haven where every cup of coffee and bite of food feels like a warm embrace.", "Auckland", new Cafe(), "restaurant30", "$");
+        Restaurant r30 = new Restaurant("31", "Bestie Cafe", "Find comfort at Bestie Cafe, a cozy haven where every cup of coffee and bite of food feels like a warm embrace.", "Auckland", new Cafe(), "restaurant30", "$", bestieCafeReviews);
         Restaurant r31 = new Restaurant("32", "Catroux", "Discover culinary artistry at Catroux, a charming cafe where gourmet offerings and creative flavors create a delightful sensory experience.", "Auckland", new Cafe(), "restaurant31", "$");
         Restaurant r32 = new Restaurant("33", "Circus Circus", "Step into a whimsical world at Circus Circus, a vibrant cafe where playful dishes and a carnival atmosphere enchant both young and old.", "Auckland", new Cafe(), "restaurant32", "$");
         Restaurant r33 = new Restaurant("34", "EightThirty", "Elevate your coffee journey at EightThirty, where each sip is a masterpiece, carefully brewed to awaken your senses and delight your palate.", "Auckland", new Cafe(), "restaurant33", "$");
