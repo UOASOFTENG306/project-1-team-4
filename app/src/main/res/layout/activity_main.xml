@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:scrollbars="horizontal"
+                android:layoutAnimation="@anim/main_recview_anim"
                 />
 
             <TextView
@@ -50,6 +51,7 @@
                     style="@style/CategoryCard"
                     android:backgroundTint="#EA4961"
                     app:cardElevation="5dp"
+                    android:stateListAnimator="@anim/scale_up"
                     >
                     <TextView
                         style="@style/CategoryText"
@@ -65,6 +67,7 @@
                     android:layout_gravity="center_horizontal"
                     android:scrollbars="vertical"
                     android:scrollbarStyle="outsideOverlay"
+                    android:layoutAnimation="@anim/main_recview_anim"
                     />
             </RelativeLayout>
 
