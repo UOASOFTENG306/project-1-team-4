@@ -34,13 +34,18 @@
                 android:id="@+id/txt_restaurant_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/dela_gothic_one"
+                android:textSize="16sp"
+                android:textAllCaps="true"
                 android:text="Name"/>
 
             <TextView
                 android:id="@+id/txt_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$"/>
+                android:textSize="16sp"
+                android:text="$"
+                android:fontFamily="@font/montserrat_semibold"/>
 
         </LinearLayout>
 
