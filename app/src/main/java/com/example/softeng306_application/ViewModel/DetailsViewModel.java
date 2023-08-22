@@ -208,4 +208,14 @@ public class DetailsViewModel extends AndroidViewModel {
         }
         userRepository.deleteFavourite(restaurant.getValue());
     }
+
+    public String getRestaurantIDMinusOne() {
+        Restaurant currentRestaurant = restaurant.getValue();
+        String id = currentRestaurant.getRestaurantID();
+        int restaurantId = Integer.parseInt(id) - 1;
+        String resId = String.valueOf(restaurantId);
+
+        return resId;
+
+    }
 }

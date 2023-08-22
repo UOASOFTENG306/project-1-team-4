@@ -35,7 +35,8 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
 
     private DetailsViewModel detailsViewModel;
 
-    int[] chipotleImages = {R.drawable.back0_1, R.drawable.back0_2, R.drawable.back0_3};
+    int[] images;
+
     private class ViewHolder {
 
         SliderView sliderView;
@@ -128,7 +129,17 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
         });
 
         vh.sliderView = findViewById(R.id.imageSlider);
-        SliderAdapter sliderAdapter = new SliderAdapter(chipotleImages);
+
+
+        String id = detailsViewModel.getRestaurantIDMinusOne();
+
+        images = new int[3];
+        images[0] = getResources().getIdentifier("back" + id + "_1", "drawable", this.getPackageName());
+        images[1] = getResources().getIdentifier("back" + id + "_2", "drawable", this.getPackageName());
+        images[2] = getResources().getIdentifier("back" + id + "_3", "drawable", this.getPackageName());
+
+        SliderAdapter sliderAdapter = new SliderAdapter(images);
+
         vh.sliderView.setSliderAdapter(sliderAdapter);
         vh.sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         vh.sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
