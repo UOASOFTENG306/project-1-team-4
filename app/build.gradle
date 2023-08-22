@@ -44,6 +44,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'com.daimajia.androidanimations:library:2.4@aar'
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
-
-
 }

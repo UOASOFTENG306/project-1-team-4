@@ -134,29 +134,31 @@ public class ListViewModel extends AndroidViewModel {
     public LiveData<Integer> getEmptyMessageVisibility() {
         return Transformations.map(restaurantList, restaurant -> restaurant.isEmpty() ? View.VISIBLE : View.GONE);
     }
-
     public void setAllCategories() {
         this.categoryList = allCategories;
     }
+
     public List<Restaurant> getFavouriteRestaurants() {
         List<Restaurant> restaurants = new ArrayList<>();
-        Task<DocumentSnapshot> task = userRepository.getFavourites();
-        task.addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                try {
-                    List<Map<String, Object>> favouritesArray = (List<Map<String, Object>>) task1.getResult().getData().get("favourites");
-                    if (favouritesArray != null) {
-                        for (Map<String, Object> favourites : favouritesArray) {
-                            restaurants.add(restaurantBuilder(favourites));
+        Task<DocumentSnapshot> task1 = userRepository.getFavourites();
+        Task<DocumentSnapshot> documentSnapshotTask = task1.addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Map<String, Object> map = documentSnapshot.getData();
+                if (map != null && map.containsKey("favourites")) {
+                    Map<String, Object> innerMap = (Map<String, Object>) map.get("favourites");
+                    if (innerMap != null && innerMap.containsKey("favouriteRestaurants")) {
+                        List<Map<String, Object>> array = (List<Map<String, Object>>) innerMap.get("favouriteRestaurants");
+
+                        // Now 'array' contains your list of maps
+                        for (Map<String, Object> itemMap : array) {
+                            restaurants.add(restaurantBuilder(itemMap));
                         }
                         updateRestaurantList(restaurants);
                     }
-                } catch (Exception e) {
-                    Log.d("FirestoreActivity", "Error updating restaurants: ", task.getException());
                 }
             }
             else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+                Log.d("FirestoreActivity", "Error getting documents: ", task1.getException());
             }
         });
         return restaurants;

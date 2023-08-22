@@ -29,6 +29,10 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
         this.topRatedList = topRatedList;
     }
 
+    public void setTopRatedList(List<Restaurant> topRatedList) {
+        this.topRatedList = topRatedList;
+    }
+
     @NonNull
     @Override
     public TopRatedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

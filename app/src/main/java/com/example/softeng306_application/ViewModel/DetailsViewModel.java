@@ -65,7 +65,7 @@ public class DetailsViewModel extends AndroidViewModel {
         task.addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
                 try {
-                    List<Map<String, Object>> favouritesArray = (List<Map<String, Object>>) task1.getResult().getData().get("favourites");
+                    List<Map<String, Object>> favouritesArray = (List<Map<String, Object>>) task1.getResult().getData().get("favourites.favouriteRestaurants");
                     if (favouritesArray != null) {
                         for (Map<String, Object> favourites : favouritesArray) {
                             restaurants.add(restaurantBuilder(favourites));
@@ -83,7 +83,32 @@ public class DetailsViewModel extends AndroidViewModel {
             }
         });
     }
+    public void getFavouriteRestaurants() {
+        List<Restaurant> restaurants = new ArrayList<>();
+        Task<DocumentSnapshot> task1 = userRepository.getFavourites();
+        Task<DocumentSnapshot> documentSnapshotTask = task1.addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Map<String, Object> map = documentSnapshot.getData();
+                if (map != null && map.containsKey("favourites")) {
+                    Map<String, Object> innerMap = (Map<String, Object>) map.get("favourites");
+                    if (innerMap != null && innerMap.containsKey("favouriteRestaurants")) {
+                        List<Map<String, Object>> array = (List<Map<String, Object>>) innerMap.get("favouriteRestaurants");
 
+                        // Now 'array' contains your list of maps
+                        for (Map<String, Object> itemMap : array) {
+                            restaurants.add(restaurantBuilder(itemMap));
+                        }
+                        updateFavouriteList(restaurants);
+                        setFavourite(restaurants.contains(restaurant.getValue()));
+
+                    }
+                }
+            }
+            else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task1.getException());
+            }
+        });
+    }
     private Restaurant restaurantBuilder(Map<String, Object> data) {
         //TODO IDENTICAL CODE WITH LISTVIEWMODEL
 

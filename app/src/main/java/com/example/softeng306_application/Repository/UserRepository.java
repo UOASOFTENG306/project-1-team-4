@@ -81,13 +81,13 @@ public class UserRepository implements IUserRepository {
     @Override
     public void addFavourite(Restaurant restaurant) {
         DocumentReference documentRef  = db.collection("users").document(this.getCurrentUserById());
-        documentRef.update("favourites", FieldValue.arrayUnion(restaurant));
+        documentRef.update("favourites.favouriteRestaurants", FieldValue.arrayUnion(restaurant));
     }
 
     @Override
     public void deleteFavourite(Restaurant restaurant) {
         DocumentReference documentRef = db.collection("users").document(this.getCurrentUserById());
-        documentRef.update("favourites", FieldValue.arrayRemove(restaurant));
+        documentRef.update("favourites.favouriteRestaurants", FieldValue.arrayRemove(restaurant));
     }
 }
 
