@@ -3,6 +3,7 @@ package com.example.softeng306_application.Adaptor;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,15 +37,16 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     @NonNull
     @Override
     public TopRatedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TopRatedViewHolder(LayoutInflater.from(context).inflate(R.layout.top_rated_item, parent, false));
+        return new TopRatedViewHolder(LayoutInflater.from(context).inflate(R.layout.top_rated_item_mockup, parent, false));
     }
 
     @Override
     public void onBindViewHolder(TopRatedRecylerAdapter.TopRatedViewHolder holder, int position) {
         Restaurant restaurant = topRatedList.get(position);
         String colourHex = topRatedList.get(position).getCategory().getBorderColour();
-//        holder.restaurantName.setText(topRatedList.get(position).getName());
+        holder.restaurantName.setText(topRatedList.get(position).getName());
         holder.logoImage.setImageResource(showImage(topRatedList.get(position)));
+        holder.bgImage.setImageResource(showImage(topRatedList.get(position)));
         holder.topratedCardview.setStrokeColor(Color.parseColor(colourHex));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,14 +73,17 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     }
 
     public class TopRatedViewHolder extends RecyclerView.ViewHolder {
-//        TextView restaurantName;
+        TextView restaurantName;
         ImageView logoImage;
         MaterialCardView topratedCardview;
+
+        ImageView bgImage;
         public TopRatedViewHolder(@NonNull View itemView) {
             super(itemView);
-//            restaurantName =  itemView.findViewById(R.id.textview_top_rated);
+            restaurantName =  itemView.findViewById(R.id.textview_top_rated);
             logoImage =  itemView.findViewById(R.id.imgview_main_logo);
             topratedCardview = itemView.findViewById(R.id.mtrlcardview_toprated);
+            bgImage = itemView.findViewById(R.id.img_bg);
         }
 
     }
