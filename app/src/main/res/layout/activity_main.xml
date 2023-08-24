@@ -8,25 +8,37 @@
     android:layout_gravity="center"
     tools:context=".View.MainActivity">
 
-    <TextView
-        android:id="@+id/txt_logo"
-        style="@style/SmallLogoText"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/smallLogoHeader"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:background="@color/btn">
+        <TextView
+            android:id="@+id/txt_logo"
+            style="@style/SmallLogoHeader"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
 
     <include layout="@layout/activity_search"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@id/txt_logo"
+        android:layout_below="@id/smallLogoHeader"
         android:id="@+id/layout_searchbar"/>
 
     <ScrollView
         android:layout_below="@id/layout_searchbar"
+        android:id="@+id/scrollview_contents"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_height="wrap_content"
                 android:text="Top Rated"
@@ -42,40 +54,15 @@
                 android:layoutAnimation="@anim/main_recview_anim"
                 />
 
-            <TextView
-                android:layout_height="wrap_content"
-                android:text="Categories"
-                style="@style/HeaderText"
-                />
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    style="@style/CategoryLayout"
-                    android:id="@+id/cardview_favourites"
-                    android:stateListAnimator="@anim/scale_up"
-                    >
-                    <TextView
-                        style="@style/CategoryText"
-                        android:text="Favourites"
-                        />
-                </androidx.cardview.widget.CardView>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recview_categories"
-                    android:layout_below="@id/cardview_favourites"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:scrollbars="vertical"
                     android:scrollbarStyle="outsideOverlay"
                     android:layoutAnimation="@anim/main_recview_anim"
                     />
-            </RelativeLayout>
-
 
         </LinearLayout>
 

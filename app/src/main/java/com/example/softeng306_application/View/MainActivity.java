@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         ViewHolder vh = new ViewHolder();
         vh.logoutButton = findViewById(R.id.btn_logout);
         vh.usernameText = findViewById(R.id.txt_username);
-        vh.favouriteCardview = findViewById(R.id.cardview_favourites);
         vh.logoutButton = findViewById(R.id.btn_logout);
         vh.listButton = findViewById(R.id.btn_list);
         vh.mainButton = findViewById(R.id.btn_main);
