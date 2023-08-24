@@ -46,7 +46,7 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
         String colourHex = topRatedList.get(position).getCategory().getBorderColour();
         holder.restaurantName.setText(topRatedList.get(position).getName());
         holder.logoImage.setImageResource(showImage(topRatedList.get(position)));
-        holder.bgImage.setImageResource(showImage(topRatedList.get(position)));
+        holder.bgImage.setImageResource(showBackgroundImage(topRatedList.get(position)));
         holder.topratedCardview.setStrokeColor(Color.parseColor(colourHex));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +58,14 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
 
     private int showImage(Restaurant restaurant) {
         int i = context.getResources().getIdentifier(restaurant.getLogoImage(), "drawable", context.getPackageName());
+        return i;
+    }
+
+    private int showBackgroundImage(Restaurant restaurant) {
+        String id = restaurant.getRestaurantID();
+        int restaurantId = Integer.parseInt(id) - 1;
+        String resId = String.valueOf(restaurantId);
+        int i = context.getResources().getIdentifier("back" + resId + "_1", "drawable", context.getPackageName());
         return i;
     }
 
@@ -76,7 +84,6 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
         TextView restaurantName;
         ImageView logoImage;
         MaterialCardView topratedCardview;
-
         ImageView bgImage;
         public TopRatedViewHolder(@NonNull View itemView) {
             super(itemView);

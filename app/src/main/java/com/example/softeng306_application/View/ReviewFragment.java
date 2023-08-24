@@ -26,7 +26,6 @@ public class ReviewFragment extends Fragment {
     private RecyclerView reviewRecyclerView;
     private ReviewRecyclerAdapter reviewRecyclerAdapter;
     private DetailsViewModel detailsViewModel;
-
     private List<Review> reviewList;
 
     public ReviewFragment() {
