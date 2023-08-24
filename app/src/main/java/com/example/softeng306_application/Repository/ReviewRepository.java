@@ -1,7 +1,10 @@
 package com.example.softeng306_application.Repository;
 
+import com.example.softeng306_application.Entity.Review;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ReviewRepository implements IReviewRepository {
@@ -21,12 +24,8 @@ public class ReviewRepository implements IReviewRepository {
     }
 
     @Override
-    public void addReview(String restaurantID, String userID) {
-
-    }
-
-    @Override
-    public void deleteReview(String restaurantID) {
-
+    public void addReview(String restaurantID, Review review) {
+        DocumentReference documentRef  = db.collection("restaurants").document("restaurant " + restaurantID);
+        documentRef.update("reviews", FieldValue.arrayUnion(review));
     }
 }
