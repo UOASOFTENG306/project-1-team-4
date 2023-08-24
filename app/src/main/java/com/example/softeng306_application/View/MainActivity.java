@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.ImageButton;
@@ -47,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         CardView favouriteCardview;
         RecyclerView topRatedRecyclerView;
         RecyclerView categoryRecyclerView;
-        SearchView searchView;
+        LinearLayout customSearchBar;
+        EditText searchEditText;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +71,12 @@ public class MainActivity extends AppCompatActivity {
                 vh.usernameText.setText(documentSnapshot.getString("username"));
             }
         });
-        vh.searchView = findViewById(R.id.inputText_search);
-        vh.searchView.clearFocus();
+
+        vh.customSearchBar = findViewById(R.id.customSearchBar);
+        vh.searchEditText = findViewById(R.id.searchEditText);
+        vh.searchEditText.setInputType(InputType.TYPE_NULL);
+        vh.searchEditText.setFocusable(false);
+        vh.searchEditText.setClickable(true);
 
         // Binding TopRatedRecyclerAdapter
         vh.topRatedRecyclerView = findViewById(R.id.recview_top_rated);
@@ -100,48 +108,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clickSearchBar(ViewHolder vh) {
-        vh.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                showListActivitySearch(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
+        vh.searchEditText.setOnClickListener(v -> {
+            Intent listIntent = new Intent(this, ListActivity.class);
+            listIntent.putExtra("SEARCH", true);
+            startActivity(listIntent);
         });
-    }
-
-    private void showListActivitySearch(CharSequence query) {
-        Intent listIntent = new Intent(this, ListActivity.class);
-        listIntent.putExtra("SEARCH", query);
-        startActivity(listIntent);
     }
 
     private void clickLogout(ViewHolder vh){
         vh.logoutButton.setOnClickListener(v -> {
             mainViewModel.logout();
-            showLoginActivity(v);
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
         });
     }
     private void clickFavourites(ViewHolder vh){
-        vh.favouriteCardview.setOnClickListener(v -> showListActivity(v));
-    }
-    private void showLoginActivity(View v) {
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
-    }
-    private void showListActivity(View v){
-        Intent listIntent = new Intent(this, ListActivity.class);
-        listIntent.putExtra("FAVOURITES", true);
-        startActivity(listIntent);
+        vh.favouriteCardview.setOnClickListener(v -> {
+            Intent listIntent = new Intent(this, ListActivity.class);
+            listIntent.putExtra("FAVOURITES", true);
+            startActivity(listIntent);
+        });
     }
 
-    private void showListActivityFromSearch(View v){
-        Intent listIntent = new Intent(this, ListActivity.class);
-        listIntent.putExtra("SEARCH", true);
-        startActivity(listIntent);
-    }
 }
