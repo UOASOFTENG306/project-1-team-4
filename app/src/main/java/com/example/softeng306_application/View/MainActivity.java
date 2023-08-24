@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -96,8 +97,13 @@ public class MainActivity extends AppCompatActivity {
         vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
         vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
 
-        LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
+        // For Portrait mode
+//        LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+//        vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
+
+        // For Landscape mode
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
+        vh.topRatedRecyclerView.setLayoutManager(gridLayoutManager);
 
         LinearLayoutManager verticalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.categoryRecyclerView.setLayoutManager(verticalLayout);

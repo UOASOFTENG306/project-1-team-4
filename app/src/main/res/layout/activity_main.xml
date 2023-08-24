@@ -8,6 +8,7 @@
     android:layout_gravity="center"
     tools:context=".View.MainActivity">
 
+
     <RelativeLayout
         android:id="@+id/smallLogoHeader"
         android:layout_alignParentTop="true"
@@ -33,7 +34,7 @@
         android:layout_below="@id/layout_searchbar"
         android:id="@+id/scrollview_contents"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,7 +61,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recview_categories"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:scrollbars="vertical"
                     android:scrollbarStyle="outsideOverlay"
@@ -83,3 +84,4 @@
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
+
