@@ -241,6 +241,9 @@ public class DetailsViewModel extends AndroidViewModel {
         String resId = String.valueOf(restaurantId);
 
         return resId;
+    }
 
+    public void addReviews(String restaurantID, Review review) {
+        reviewRepository.addReview(restaurantID, review);
     }
 }
