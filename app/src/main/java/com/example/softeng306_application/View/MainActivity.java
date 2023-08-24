@@ -13,11 +13,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
 import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class ViewHolder{
         TextView usernameText;
-        ImageButton logoutButton;
+        ImageButton logoutButton, listButton, mainButton, favouritesButton, searchButton;
         CardView favouriteCardview;
         RecyclerView topRatedRecyclerView;
         RecyclerView categoryRecyclerView;
@@ -51,52 +53,63 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
-        restaurantFirestoreDataProvider.addRestaurantToFirestore();
-        /**UserFirestoreDataProvider userFirestoreDataProvider = new UserFirestoreDataProvider();
-        userFirestoreDataProvider.addFavouritesToDB();**/
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
+        restaurantFirestoreDataProvider.addRestaurantToFirestore();
+
+        /**UserFirestoreDataProvider userFirestoreDataProvider = new UserFirestoreDataProvider();
+        userFirestoreDataProvider.addFavouritesToDB();**/
+
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        // ViewHolder
         ViewHolder vh = new ViewHolder();
         vh.logoutButton = findViewById(R.id.btn_logout);
         vh.usernameText = findViewById(R.id.txt_username);
         vh.favouriteCardview = findViewById(R.id.cardview_favourites);
-        mainViewModel.getUserInfo().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                vh.usernameText.setText(documentSnapshot.getString("username"));
-            }
-        });
+        vh.logoutButton = findViewById(R.id.btn_logout);
+        vh.listButton = findViewById(R.id.btn_list);
+        vh.mainButton = findViewById(R.id.btn_main);
+        vh.favouritesButton = findViewById(R.id.btn_favourites);
+        vh.searchButton = findViewById(R.id.btn_search);
+
         vh.searchView = findViewById(R.id.inputText_search);
         vh.searchView.clearFocus();
 
-        // Binding TopRatedRecyclerAdapter
-        vh.topRatedRecyclerView = findViewById(R.id.recview_top_rated);
 
-        // Binding CategoryRecyclerAdapter
+
+//        mainViewModel.getUserInfo().addOnSuccessListener(documentSnapshot -> {
+//            if (documentSnapshot.exists()) {
+//                vh.usernameText.setText(documentSnapshot.getString("username"));
+//            }
+//        });
+
+        // RECYCLER ADAPTERS
+        vh.topRatedRecyclerView = findViewById(R.id.recview_top_rated);
         vh.categoryRecyclerView = findViewById(R.id.recview_categories);
 
-        // Create adapters passing in the test lists
         topRatedAdapter = new TopRatedRecylerAdapter(this, mainViewModel.getTopRatedRestaurants());
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, mainViewModel.getCategories());
 
-        // Attach adapter to the recycler view to populate these items
         vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
         vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
 
-        // Set layout manager to position the items
-        // Set Horizontal Layout Manager for topRatedRecyclerView
         LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
 
-        // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.categoryRecyclerView.setLayoutManager(verticalLayout);
 
-        //OnClickListeners
-        clickLogout(vh);
-        clickFavourites(vh);
+        // OnClickListeners
         clickSearchBar(vh);
+        clickNavFavourites(vh);
+        clickNavLogout(vh);
+        clickNavSearch(vh, new View(this));
+        clickNavMain(vh);
+        clickNavList(vh);
     }
 
     private void clickSearchBar(ViewHolder vh) {
@@ -120,14 +133,32 @@ public class MainActivity extends AppCompatActivity {
         startActivity(listIntent);
     }
 
-    private void clickLogout(ViewHolder vh){
+    // This method implements a listener for the navbar search button which simulates clicking the search bar at the top, bringing up the keyboard
+    private void clickNavSearch(ViewHolder vh, View v) {
+        vh.searchButton.setOnClickListener(view -> {
+            vh.searchView.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        });
+    }
+    private void clickNavLogout(ViewHolder vh){
         vh.logoutButton.setOnClickListener(v -> {
             mainViewModel.logout();
             showLoginActivity(v);
         });
     }
-    private void clickFavourites(ViewHolder vh){
-        vh.favouriteCardview.setOnClickListener(v -> showListActivity(v));
+    private void clickNavFavourites(ViewHolder vh){
+        vh.favouritesButton.setOnClickListener(v -> showListActivity(v));
+    }
+    private void clickNavMain(ViewHolder vh) {
+        vh.mainButton.setOnClickListener(v -> {
+            Toast.makeText(this,"Already on Main Menu", Toast.LENGTH_SHORT).show();
+        });
+    }
+    private void clickNavList(ViewHolder vh) {
+        vh.listButton.setOnClickListener(v -> {
+            showListActivitySearch("");
+        });
     }
     private void showLoginActivity(View v) {
         Intent loginIntent = new Intent(this, LoginActivity.class);
@@ -138,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
         listIntent.putExtra("FAVOURITES", true);
         startActivity(listIntent);
     }
-
     private void showListActivityFromSearch(View v){
         Intent listIntent = new Intent(this, ListActivity.class);
         listIntent.putExtra("SEARCH", true);
