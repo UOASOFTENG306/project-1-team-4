@@ -18,6 +18,7 @@ import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.ReviewRepository;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -243,7 +244,24 @@ public class DetailsViewModel extends AndroidViewModel {
         return resId;
     }
 
-    public void addReviews(String restaurantID, Review review) {
-        reviewRepository.addReview(restaurantID, review);
+    public void addReviews(String restaurantID, String reviewText) {
+        userRepository.getAllUserInformation().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                try {
+                    DocumentSnapshot document = task.getResult();
+                    String username = (String) document.get("username");
+                    if(username != null) {
+                        Review review = new Review(username, reviewText);
+                        reviewRepository.addReview(restaurantID, review);
+                    }
+                } catch (Exception e) {
+                    Log.d("FirestoreActivity", "Error getting the username: ", task.getException());
+                }
+            }
+            else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+            }
+
+        });
     }
 }

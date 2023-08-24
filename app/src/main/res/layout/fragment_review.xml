@@ -51,6 +51,14 @@
                         android:layout_below="@id/linearLayout_overall_rating"
                         android:layoutAnimation="@anim/reviews_animation"/>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/AdminInputLayout">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reviewTest"
+                            style="@style/AdminInputText"
+                            android:hint="@string/email" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <Button
                         android:id="@+id/btn_add_review"
                         style="@style/AddReviewButton"

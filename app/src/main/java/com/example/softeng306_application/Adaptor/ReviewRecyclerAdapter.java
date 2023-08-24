@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.softeng306_application.Entity.Category;
+import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.R;
 
@@ -19,11 +20,16 @@ import java.util.List;
 public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAdapter.ReviewViewHolder> {
 
     Context context;
-    List<Review> reviewList;
+    private List<Review> reviewList;
 
     public ReviewRecyclerAdapter(Context context, List<Review> reviewList) {
         this.context = context;
         this.reviewList = reviewList;
+    }
+
+    public void setReviews(List<Review> reviewList) {
+        this.reviewList = reviewList;
+        notifyDataSetChanged();
     }
 
     @NonNull
