@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 public class ListViewModel extends AndroidViewModel {
     private List<Category> categoryList;
     private List<Restaurant> searchList;
-
+    private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
     private MutableLiveData<List<Restaurant>> restaurantList =  new MutableLiveData<>();
     private List<Category> allCategories = new ArrayList<Category>() {
         {
@@ -168,6 +168,8 @@ public class ListViewModel extends AndroidViewModel {
                         }
                         setSearchList(restaurants);
                         updateRestaurantList(restaurants);
+                        updateFavouriteList(restaurants);
+
                     }
                 }
             }
@@ -176,6 +178,40 @@ public class ListViewModel extends AndroidViewModel {
             }
         });
         return restaurants;
+    }
+
+    public void updateFavouriteList(List<Restaurant> restaurantList) {
+        this.favouritesList.setValue(restaurantList);
+    }
+    public MutableLiveData<List<Restaurant>> getFavouritesList() {
+        return favouritesList;
+    }
+
+    public void loadFavouriteList(){
+        //TODO DUPLICATE CODE NEEDS REFACTOR
+        List<Restaurant> restaurants = new ArrayList<>();
+        Task<DocumentSnapshot> task1 = userRepository.getFavourites();
+        Task<DocumentSnapshot> documentSnapshotTask = task1.addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Map<String, Object> map = documentSnapshot.getData();
+                if (map != null && map.containsKey("favourites")) {
+                    Map<String, Object> innerMap = (Map<String, Object>) map.get("favourites");
+                    if (innerMap != null && innerMap.containsKey("favouriteRestaurants")) {
+                        List<Map<String, Object>> array = (List<Map<String, Object>>) innerMap.get("favouriteRestaurants");
+
+                        // Now 'array' contains your list of maps
+                        for (Map<String, Object> itemMap : array) {
+                            restaurants.add(restaurantBuilder(itemMap));
+                        }
+                        updateFavouriteList(restaurants);
+
+                    }
+                }
+            }
+            else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task1.getException());
+            }
+        });
     }
 
     public List<Restaurant> getRestaurantsTest() {

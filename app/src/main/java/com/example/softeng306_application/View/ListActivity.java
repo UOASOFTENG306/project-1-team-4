@@ -38,6 +38,7 @@ import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
+import com.example.softeng306_application.ViewModel.DetailsViewModel;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
 
@@ -48,6 +49,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
 
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
+    private DetailsViewModel detailsViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
     private CategoryDropdownAdapter adapterCategoryItems;
     private ArrayAdapter<String> adapterItems;
@@ -96,6 +98,8 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 return false;
             }
         });
+
+
         // Bind RestaurantAdapter
         adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, listViewModel.getAllCategoryNameOptions());
         vh.autoCompleteTextView.setAdapter(adapterItems);
@@ -103,12 +107,18 @@ public class ListActivity extends AppCompatActivity implements Activity {
         // Bind RestaurantRecyclerAdapter
         restaurantAdapter = new RestaurantRecyclerAdapter(this);
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
-
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
         listViewModel.setFavourite(false);
+        listViewModel.loadFavouriteList();
         listViewModel.setAllCategories();
+
+        //TODO FIX FAVOURITES NOT SHOWING ON LIST AFTER JUST FAVOURITING ON DETAILS
+        listViewModel.getFavouritesList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setFavouriteRestaurants(restaurants);
+        });
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -121,7 +131,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
             } else if (intent.hasExtra("FAVOURITES")) {
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
                 listViewModel.setFavourite(true);
-                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
+                restaurantAdapter.setRestaurants(listViewModel.getFavouriteRestaurants());
 
             } else if (intent.hasExtra("SEARCH")) {
                 Boolean isFavourite = intent.getBooleanExtra("SEARCH", false);
@@ -161,6 +171,10 @@ public class ListActivity extends AppCompatActivity implements Activity {
             restaurantAdapter.setRestaurants(restaurants);
         });
 
+        listViewModel.getFavouritesList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setFavouriteRestaurants(restaurants);
+        });
         listViewModel.getEmptyMessageVisibility().observe(this, visibility -> {
             vh.emptyListText.setVisibility(visibility);
         });
@@ -180,11 +194,21 @@ public class ListActivity extends AppCompatActivity implements Activity {
         @Override
         protected void onResume() {
             super.onResume();
+            listViewModel.loadFavouriteList();
             if (listViewModel.getFavourite()) {
                 listViewModel.getFavouriteRestaurants();
             } else {
                 listViewModel.getRestaurantsTest();
             }
+            listViewModel.getRestaurantList().observe(this, restaurants -> {
+                // Update the adapter with the new list of items
+                restaurantAdapter.setRestaurants(restaurants);
+            });
+
+            listViewModel.getFavouritesList().observe(this, restaurants -> {
+                // Update the adapter with the new list of items
+                restaurantAdapter.setFavouriteRestaurants(restaurants);
+            });
 
 
         }
