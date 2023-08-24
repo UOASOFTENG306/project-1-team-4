@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.ReviewRecyclerAdapter;
 import com.example.softeng306_application.Entity.Restaurant;
@@ -29,6 +31,10 @@ public class ReviewFragment extends Fragment {
 
     private List<Review> reviewList;
 
+    private class ViewHolder {
+        Button reviewButton;
+    }
+
     public ReviewFragment() {
         // Required empty public constructor
     }
@@ -37,9 +43,17 @@ public class ReviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ReviewFragment.ViewHolder vh = new ReviewFragment.ViewHolder();
         View view = inflater.inflate(R.layout.fragment_review, container, false);
         reviewRecyclerView = view.findViewById(R.id.recview_reviews);
+        vh.reviewButton = view.findViewById(R.id.btn_add_review);
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
+        //TODO ADD FIELDS FROM FRONT END THAT WILL POPULATE THESE TWO STRINGS
+        String username = "";
+        String comment = "";
+        Review review = new Review(username, comment);
+        String restaurantID = detailsViewModel.getRestaurant().getValue().getRestaurantID();
+        vh.reviewButton.setOnClickListener(view1 -> detailsViewModel.addReviews(restaurantID, review));
 
         detailsViewModel.getRestaurant().observe(getViewLifecycleOwner(), restaurant -> {
             reviewList = detailsViewModel.getReviewsByRestaurant(restaurant.getRestaurantID());
@@ -49,6 +63,7 @@ public class ReviewFragment extends Fragment {
                 reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             });
         });
+
 
         return view;
     }
