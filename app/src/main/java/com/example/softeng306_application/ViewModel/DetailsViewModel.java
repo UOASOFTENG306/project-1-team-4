@@ -241,6 +241,5 @@ public class DetailsViewModel extends AndroidViewModel {
         String resId = String.valueOf(restaurantId);
 
         return resId;
-
     }
 }
