@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 public class ListViewModel extends AndroidViewModel {
     private List<Category> categoryList;
     private List<Restaurant> searchList;
-
+    private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
     private MutableLiveData<List<Restaurant>> restaurantList =  new MutableLiveData<>();
     private List<Category> allCategories = new ArrayList<Category>() {
         {
@@ -168,6 +168,8 @@ public class ListViewModel extends AndroidViewModel {
                         }
                         setSearchList(restaurants);
                         updateRestaurantList(restaurants);
+                        updateFavouriteList(restaurants);
+
                     }
                 }
             }
@@ -178,6 +180,12 @@ public class ListViewModel extends AndroidViewModel {
         return restaurants;
     }
 
+    public void updateFavouriteList(List<Restaurant> restaurantList) {
+        this.favouritesList.setValue(restaurantList);
+    }
+    public MutableLiveData<List<Restaurant>> getFavouritesList() {
+        return favouritesList;
+    }
     public List<Restaurant> getRestaurantsTest() {
         List<Restaurant> restaurants = new ArrayList<>();
 

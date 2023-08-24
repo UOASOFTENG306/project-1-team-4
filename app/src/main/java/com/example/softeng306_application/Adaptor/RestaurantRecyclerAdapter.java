@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,23 +25,28 @@ import com.example.softeng306_application.View.ListActivity;
 import com.google.android.material.card.MaterialCardView;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRecyclerAdapter.RestaurantViewHolder> {
     Context context;
-    private List<Restaurant> restaurants;
+    private List<Restaurant> restaurants = new ArrayList<>();
+    private List<Restaurant> favouriteList = new ArrayList<>();
 
     public void setRestaurants(List<Restaurant> restaurants) {
         this.restaurants = restaurants;
         notifyDataSetChanged();
     }
 
-    // TODO: instead of a list of restaurants as an argument to the constructor, it should take in a category type THEN populate a list of restaurants belonging to this type.
+    public void setFavouriteRestaurants(List<Restaurant> restaurants) {
+        this.favouriteList = restaurants;
+        notifyDataSetChanged();
+    }
+
     public RestaurantRecyclerAdapter(Context context) {
         this.context = context;
 
     }
-
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,8 +61,12 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
         holder.price.setText(restaurant.getPrice());
         holder.logoImage.setImageResource(showImage(restaurant));
         holder.restaurantItem.setStrokeColor(Color.parseColor(colourHex));
-        // TODO: handle condition for favourite or not
-        holder.favouriteHeart.setVisibility(View.VISIBLE);
+
+        if (favouriteList.contains(restaurant)){
+            holder.favouriteHeart.setVisibility(View.VISIBLE);
+        } else {
+            holder.favouriteHeart.setVisibility(View.INVISIBLE);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
