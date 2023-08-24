@@ -81,11 +81,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
 
-        //TODO ABSTRACT FUNCTIONALITY FOR CHECKING IF RESTAURANT IS PART OF USER's FAVOURITES
-        //TODO REMOVE DETAILSVIEWMODEL FROM THIS CLASS
-        detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
-        detailsViewModel.getFavouriteRestaurants();
-
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
         vh.backButton = findViewById(R.id.btn_back);
@@ -112,12 +107,18 @@ public class ListActivity extends AppCompatActivity implements Activity {
         // Bind RestaurantRecyclerAdapter
         restaurantAdapter = new RestaurantRecyclerAdapter(this);
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
-
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
         listViewModel.setFavourite(false);
+        listViewModel.loadFavouriteList();
         listViewModel.setAllCategories();
+
+        //TODO FIX FAVOURITES NOT SHOWING ON LIST AFTER JUST FAVOURITING ON DETAILS
+        listViewModel.getFavouritesList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setFavouriteRestaurants(restaurants);
+        });
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -193,11 +194,21 @@ public class ListActivity extends AppCompatActivity implements Activity {
         @Override
         protected void onResume() {
             super.onResume();
+            listViewModel.loadFavouriteList();
             if (listViewModel.getFavourite()) {
                 listViewModel.getFavouriteRestaurants();
             } else {
                 listViewModel.getRestaurantsTest();
             }
+            listViewModel.getRestaurantList().observe(this, restaurants -> {
+                // Update the adapter with the new list of items
+                restaurantAdapter.setRestaurants(restaurants);
+            });
+
+            listViewModel.getFavouritesList().observe(this, restaurants -> {
+                // Update the adapter with the new list of items
+                restaurantAdapter.setFavouriteRestaurants(restaurants);
+            });
 
 
         }

@@ -186,6 +186,34 @@ public class ListViewModel extends AndroidViewModel {
     public MutableLiveData<List<Restaurant>> getFavouritesList() {
         return favouritesList;
     }
+
+    public void loadFavouriteList(){
+        //TODO DUPLICATE CODE NEEDS REFACTOR
+        List<Restaurant> restaurants = new ArrayList<>();
+        Task<DocumentSnapshot> task1 = userRepository.getFavourites();
+        Task<DocumentSnapshot> documentSnapshotTask = task1.addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Map<String, Object> map = documentSnapshot.getData();
+                if (map != null && map.containsKey("favourites")) {
+                    Map<String, Object> innerMap = (Map<String, Object>) map.get("favourites");
+                    if (innerMap != null && innerMap.containsKey("favouriteRestaurants")) {
+                        List<Map<String, Object>> array = (List<Map<String, Object>>) innerMap.get("favouriteRestaurants");
+
+                        // Now 'array' contains your list of maps
+                        for (Map<String, Object> itemMap : array) {
+                            restaurants.add(restaurantBuilder(itemMap));
+                        }
+                        updateFavouriteList(restaurants);
+
+                    }
+                }
+            }
+            else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task1.getException());
+            }
+        });
+    }
+
     public List<Restaurant> getRestaurantsTest() {
         List<Restaurant> restaurants = new ArrayList<>();
 
