@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -97,13 +98,15 @@ public class MainActivity extends AppCompatActivity {
         vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
         vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
 
-        // For Portrait mode
-//        LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-//        vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
 
         // For Landscape mode
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
-        vh.topRatedRecyclerView.setLayoutManager(gridLayoutManager);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
+            vh.topRatedRecyclerView.setLayoutManager(gridLayoutManager);
+        } else { // For Portrait mode
+            LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+            vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
+        }
 
         LinearLayoutManager verticalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.categoryRecyclerView.setLayoutManager(verticalLayout);
