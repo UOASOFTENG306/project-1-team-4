@@ -67,6 +67,8 @@
                         >
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/input_add_review"
+                            android:focusable="true"
+                            android:clickable="true"
                             style="@style/AdminInputText" />
                     </com.google.android.material.textfield.TextInputLayout>
 

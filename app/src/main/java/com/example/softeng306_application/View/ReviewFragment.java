@@ -120,6 +120,7 @@ public class ReviewFragment extends Fragment {
             if (imm != null) {
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             }
+            vh.addReviewInput.requestFocus();
         });
     }
     private void addReviewComment(ViewHolder vh) {
