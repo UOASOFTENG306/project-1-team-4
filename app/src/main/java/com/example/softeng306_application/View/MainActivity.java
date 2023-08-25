@@ -26,7 +26,6 @@ import com.example.softeng306_application.Entity.CategoryType;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.MainViewModel;
-import com.example.softeng306_application.dataprovider.RestaurantFirestoreDataProvider;
 import com.example.softeng306_application.dataprovider.UserFirestoreDataProvider;
 
 import org.checkerframework.checker.units.qual.A;
@@ -51,10 +50,6 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
-        restaurantFirestoreDataProvider.addRestaurantToFirestore();
-        /**UserFirestoreDataProvider userFirestoreDataProvider = new UserFirestoreDataProvider();
-        userFirestoreDataProvider.addFavouritesToDB();**/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);

@@ -38,6 +38,8 @@
                     android:id="@+id/btn_add_review_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="3dp"
                     android:src="@drawable/add"
                     android:backgroundTint="@color/transparent"/>
 
@@ -49,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_margin="10dp"
                 android:layout_below="@id/linearLayout_add_review"
                 android:id="@+id/linearLayout_overall_rating">
                 <TextView
@@ -57,8 +60,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
                     android:textSize="16sp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+
                     android:text="OVERALL"/>
             </LinearLayout>
 
