@@ -33,8 +33,8 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
-        restaurantFirestoreDataProvider.addRestaurantToFirestore();
+//        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
+//        restaurantFirestoreDataProvider.addRestaurantToFirestore();
 
         setContentView(R.layout.activity_login);
         ViewHolder vh = new ViewHolder();

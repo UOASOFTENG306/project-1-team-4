@@ -174,6 +174,7 @@ public class DetailsViewModel extends AndroidViewModel {
 
     public void updateReviewsList(List<Review> reviews) {
         this.reviewsList.setValue(reviews);
+        calculateAverageReviewScoreFromList();
     }
 
 
@@ -249,6 +250,18 @@ public class DetailsViewModel extends AndroidViewModel {
 
     public LiveData<Integer> getAverageReviewScore() {
         return averageScore;
+    }
+
+    public void calculateAverageReviewScoreFromList(){
+        float sum = 0;
+        float average;
+
+        Integer num = this.getReviewsList().getValue().size();
+        for (Review review : this.getReviewsList().getValue()) {
+            sum += review.getReviewScore();
+        }
+        average = sum/num;
+        this.averageScore.setValue(Math.round(average));
     }
 
     public void calculateAverageReviewScore(String restaurantId) {

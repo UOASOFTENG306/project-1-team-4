@@ -154,8 +154,6 @@ public class ReviewFragment extends Fragment {
 //            reviewScore = vh.ratingBar.getRating();
             // Add review comment and rating as Review object to database
             detailsViewModel.addReviews(restaurantID, reviewComment, vh.ratingBar.getRating());
-            detailsViewModel.calculateAverageReviewScore(restaurantID);
-
         });
     }
 }
