@@ -214,6 +214,13 @@ public class ListViewModel extends AndroidViewModel {
         });
     }
 
+    public void listFavouritesByCategory(){
+        List<Restaurant> filteredItems = this.getFavouritesList().getValue().stream()
+                .filter(item -> this.categoryList.contains(item.getCategory()))
+                .collect(Collectors.toList());
+        updateRestaurantList(filteredItems);
+    }
+
     public List<Restaurant> getRestaurantsTest() {
         List<Restaurant> restaurants = new ArrayList<>();
 
