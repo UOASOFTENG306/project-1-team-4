@@ -45,6 +45,7 @@ public class ReviewFragment extends Fragment {
         TextInputEditText addReviewInput;
         LinearLayout linearLayoutAddReview, linearLayoutRatingPanel, linearLayoutOverallRating;
         RatingBar ratingBar;
+        TextView averageScoreText;
 
     }
 
@@ -67,7 +68,7 @@ public class ReviewFragment extends Fragment {
         vh.linearLayoutRatingPanel = view.findViewById(R.id.linearLayout_rating_panel);
         vh.linearLayoutOverallRating = view.findViewById(R.id.linearLayout_overall_rating);
         vh.submitReviewButton = view.findViewById(R.id.btn_submit_review);
-
+        vh.averageScoreText = view.findViewById(R.id.averageScoreText);
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
 
         reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext());
@@ -78,8 +79,12 @@ public class ReviewFragment extends Fragment {
 
         detailsViewModel.getRestaurant().observe(getViewLifecycleOwner(), restaurant -> {
             detailsViewModel.getReviewsByRestaurant(restaurant.getRestaurantID());
+            detailsViewModel.calculateAverageReviewScore(restaurant.getRestaurantID());
         });
 
+        detailsViewModel.getAverageReviewScore().observe(getViewLifecycleOwner(), averageScore -> {
+            vh.averageScoreText.setText(averageScore.toString());
+        });
         detailsViewModel.getReviewsList().observe(getViewLifecycleOwner(), reviews -> {
             reviewRecyclerAdapter.setReviews(reviews);
         });
@@ -121,9 +126,10 @@ public class ReviewFragment extends Fragment {
             vh.linearLayoutRatingPanel.setVisibility(View.GONE);
 
             // Save rating
-            reviewScore = vh.ratingBar.getRating();
+//            reviewScore = vh.ratingBar.getRating();
             // Add review comment and rating as Review object to database
-            detailsViewModel.addReviews(restaurantID, reviewComment, reviewScore);
+            detailsViewModel.addReviews(restaurantID, reviewComment, vh.ratingBar.getRating());
+            detailsViewModel.calculateAverageReviewScore(restaurantID);
 
         });
     }

@@ -10,6 +10,7 @@ public class Review {
     public Review(String username, String comment) {
         this.userID = username;
         this.description = comment;
+        this.reviewScore = 1;
     }
 
     public Review(String username, String comment, float score) {
