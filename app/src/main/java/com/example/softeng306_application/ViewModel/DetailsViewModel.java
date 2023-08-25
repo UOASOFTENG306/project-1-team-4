@@ -244,14 +244,40 @@ public class DetailsViewModel extends AndroidViewModel {
         return resId;
     }
 
-    public void addReviews(String restaurantID, String reviewText) {
+//    public void addReviews(String restaurantID, String reviewText) {
+//        userRepository.getAllUserInformation().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                try {
+//                    DocumentSnapshot document = task.getResult();
+//                    String username = (String) document.get("username");
+//                    if(username != null) {
+//                        Review review = new Review(username, reviewText);
+//                        reviewRepository.addReview(restaurantID, review);
+//                        List<Review> currentItems = this.reviewsList.getValue();
+//                        if (currentItems != null) {
+//                            currentItems.add(review);
+//                            updateReviewsList(currentItems);
+//                        }
+//                    }
+//                } catch (Exception e) {
+//                    Log.d("FirestoreActivity", "Error getting the username: ", task.getException());
+//                }
+//            }
+//            else {
+//                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+//            }
+//
+//        });
+//    }
+
+    public void addReviews(String restaurantID, String reviewComment, float reviewScore) {
         userRepository.getAllUserInformation().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 try {
                     DocumentSnapshot document = task.getResult();
                     String username = (String) document.get("username");
                     if(username != null) {
-                        Review review = new Review(username, reviewText);
+                        Review review = new Review(username, reviewComment, reviewScore);
                         reviewRepository.addReview(restaurantID, review);
                         List<Review> currentItems = this.reviewsList.getValue();
                         if (currentItems != null) {

@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,13 +35,17 @@ public class ReviewFragment extends Fragment {
     private RecyclerView reviewRecyclerView;
     private ReviewRecyclerAdapter reviewRecyclerAdapter;
     private DetailsViewModel detailsViewModel;
-    private String reviewComment, reviewScore, restaurantID;
+    private String reviewComment, restaurantID;
+    private float reviewScore;
+    private Review reviewToAdd;
 
     private class ViewHolder {
-        Button reviewButton;
+        Button reviewButton, submitReviewButton;
         ImageButton addReviewCommentButton;
         TextInputEditText addReviewInput;
-        LinearLayout linearLayoutAddReview;
+        LinearLayout linearLayoutAddReview, linearLayoutRatingPanel, linearLayoutOverallRating;
+        RatingBar ratingBar;
+
     }
 
     public ReviewFragment() {
@@ -58,25 +63,18 @@ public class ReviewFragment extends Fragment {
         vh.reviewButton = view.findViewById(R.id.btn_add_review);
         vh.addReviewCommentButton = view.findViewById(R.id.btn_add_review_comment);
         vh.linearLayoutAddReview = view.findViewById(R.id.linearLayout_add_review);
+        vh.ratingBar = view.findViewById(R.id.rb_ratingBar);
+        vh.linearLayoutRatingPanel = view.findViewById(R.id.linearLayout_rating_panel);
+        vh.linearLayoutOverallRating = view.findViewById(R.id.linearLayout_overall_rating);
+        vh.submitReviewButton = view.findViewById(R.id.btn_submit_review);
+
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
 
         reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext());
         reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true));
 
-        //TODO ADD FIELDS FROM FRONT END THAT WILL POPULATE THESE TWO STRINGS
-        reviewScore = "";
-        reviewComment = "";
         restaurantID = detailsViewModel.getRestaurant().getValue().getRestaurantID();
-//        vh.reviewButton.setOnClickListener(view1 -> {
-//
-//            // Show add review input field
-//            vh.linearLayoutAddReview.setVisibility(View.VISIBLE);
-//            // TODO: Bring up keyboard
-//
-////            String review1 = String.valueOf(vh.addReviewInput.getText());
-////            detailsViewModel.addReviews(restaurantID, review1);
-//        });
 
         detailsViewModel.getRestaurant().observe(getViewLifecycleOwner(), restaurant -> {
             detailsViewModel.getReviewsByRestaurant(restaurant.getRestaurantID());
@@ -89,6 +87,7 @@ public class ReviewFragment extends Fragment {
         // OnClickListeners
         showAddReviewComment(vh);
         addReviewComment(vh);
+        submitReview(vh);
 
         return view;
     }
@@ -104,9 +103,28 @@ public class ReviewFragment extends Fragment {
     }
     private void addReviewComment(ViewHolder vh) {
         vh.addReviewCommentButton.setOnClickListener(view -> {
-            String review1 = String.valueOf(vh.addReviewInput.getText());
-            detailsViewModel.addReviews(restaurantID, review1);
-        });
+            // Show rating panel
+            vh.linearLayoutRatingPanel.setVisibility(View.VISIBLE);
+            vh.linearLayoutAddReview.setVisibility(View.GONE);
+            vh.linearLayoutOverallRating.setVisibility(View.GONE);
 
+            // Save comment
+            reviewComment = String.valueOf(vh.addReviewInput.getText());
+
+        });
+    }
+
+    private void submitReview(ViewHolder vh) {
+        vh.submitReviewButton.setOnClickListener(view -> {
+            // Show overall rating
+            vh.linearLayoutOverallRating.setVisibility(View.VISIBLE);
+            vh.linearLayoutRatingPanel.setVisibility(View.GONE);
+
+            // Save rating
+            reviewScore = vh.ratingBar.getRating();
+            // Add review comment and rating as Review object to database
+            detailsViewModel.addReviews(restaurantID, reviewComment, reviewScore);
+
+        });
     }
 }
