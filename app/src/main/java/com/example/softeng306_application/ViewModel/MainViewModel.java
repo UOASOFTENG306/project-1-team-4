@@ -21,16 +21,23 @@ import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<List<Restaurant>> restaurantList =  new MutableLiveData<>();
+
+    private List<Restaurant> randomRestaurant = new ArrayList<>();
 
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
@@ -153,6 +160,8 @@ public class MainViewModel extends AndroidViewModel {
         return topRatedList;
     }
 
+
+
     public void logout(){
         userRepository.logout();
     }
@@ -187,5 +196,34 @@ public class MainViewModel extends AndroidViewModel {
         }
 
         return restaurant;
+    }
+
+
+    public List<Restaurant> getRandomRestaurants() {
+        List<Restaurant> rando = new ArrayList<>();
+        restaurantRepository.getRestaurants().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Map<String, Object> data = document.getData();
+                    randomRestaurant.add(restaurantBuilder(data));
+                }
+
+                Random random = new Random();
+                while (rando.size() < 6) {
+                    Restaurant randomCollectionName = randomRestaurant.get(random.nextInt(randomRestaurant.size()));
+                    if (!rando.contains(randomCollectionName)) {
+                        rando.add(randomCollectionName);
+                    }
+                }
+
+                for(Restaurant r : rando) {
+                    Log.d("FirestoreActivity", r.getName());
+                }
+
+            } else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+            }
+        });
+        return rando;
     }
 }

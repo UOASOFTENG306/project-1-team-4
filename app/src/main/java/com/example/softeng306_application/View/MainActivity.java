@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         vh.categoryRecyclerView = findViewById(R.id.recview_categories);
 
         // Create adapters passing in the test lists
-        topRatedAdapter = new TopRatedRecylerAdapter(this, mainViewModel.getTopRatedRestaurants());
+        topRatedAdapter = new TopRatedRecylerAdapter(this, mainViewModel.getRandomRestaurants());
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, mainViewModel.getCategories());
 
         // Attach adapter to the recycler view to populate these items
