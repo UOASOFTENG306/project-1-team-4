@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class ReviewFragment extends Fragment {
         Button reviewButton, submitReviewButton;
         ImageButton addReviewCommentButton;
         TextInputEditText addReviewInput;
-        LinearLayout linearLayoutAddReview, linearLayoutRatingPanel, linearLayoutOverallRating;
+        LinearLayout linearLayoutAddReview, linearLayoutRatingPanel, linearLayoutOverallRating, averageScoreLayout;
         RatingBar ratingBar;
         TextView averageScoreText;
 
@@ -67,6 +68,7 @@ public class ReviewFragment extends Fragment {
         vh.ratingBar = view.findViewById(R.id.rb_ratingBar);
         vh.linearLayoutRatingPanel = view.findViewById(R.id.linearLayout_rating_panel);
         vh.linearLayoutOverallRating = view.findViewById(R.id.linearLayout_overall_rating);
+        vh.averageScoreLayout = view.findViewById(R.id.averageScoreLayout);
         vh.submitReviewButton = view.findViewById(R.id.btn_submit_review);
         vh.averageScoreText = view.findViewById(R.id.averageScoreText);
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
@@ -84,6 +86,16 @@ public class ReviewFragment extends Fragment {
 
         detailsViewModel.getAverageReviewScore().observe(getViewLifecycleOwner(), averageScore -> {
             vh.averageScoreText.setText(averageScore.toString());
+            vh.averageScoreLayout.removeAllViews();
+            for (int i = 0; i < averageScore; i++) {
+                ImageView imageView = new ImageView(requireActivity());
+                imageView.setImageResource(R.drawable.review_star); // Set your image resource here
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                ));
+                vh.averageScoreLayout.addView(imageView);
+            }
         });
         detailsViewModel.getReviewsList().observe(getViewLifecycleOwner(), reviews -> {
             reviewRecyclerAdapter.setReviews(reviews);

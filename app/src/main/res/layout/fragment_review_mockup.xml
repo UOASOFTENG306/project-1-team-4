@@ -100,8 +100,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="OVERALL"
+                    android:text="AVERAGE SCORE: "
                     android:textSize="16sp" />
+
 
                 <TextView
                     android:id="@+id/averageScoreText"
@@ -109,6 +110,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="score" />
+                <LinearLayout
+                    android:id="@+id/averageScoreLayout"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <!-- Child views go here -->
+                </LinearLayout>
             </LinearLayout>
 
             <!--            Review recycler view -->
