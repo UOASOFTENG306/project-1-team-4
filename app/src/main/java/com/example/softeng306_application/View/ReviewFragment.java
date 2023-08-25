@@ -31,8 +31,6 @@ public class ReviewFragment extends Fragment {
     private ReviewRecyclerAdapter reviewRecyclerAdapter;
     private DetailsViewModel detailsViewModel;
 
-    private List<Review> reviewList;
-
     private class ViewHolder {
         Button reviewButton;
         TextInputEditText editReview;
@@ -52,6 +50,11 @@ public class ReviewFragment extends Fragment {
         vh.editReview = view.findViewById(R.id.reviewTest);
         vh.reviewButton = view.findViewById(R.id.btn_add_review);
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
+
+        reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext());
+        reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
+        reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         //TODO ADD FIELDS FROM FRONT END THAT WILL POPULATE THESE TWO STRINGS
         String rating = "";
         String comment = "";
@@ -62,17 +65,13 @@ public class ReviewFragment extends Fragment {
         });
 
         detailsViewModel.getRestaurant().observe(getViewLifecycleOwner(), restaurant -> {
-            reviewList = detailsViewModel.getReviewsByRestaurant(restaurant.getRestaurantID());
-            detailsViewModel.getReviewsList().observe(getViewLifecycleOwner(), reviews -> {
-                //reviewRecyclerAdapter.setReviews(reviews)
-                reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext(), reviewList);
-                reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
-                reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            });
+            detailsViewModel.getReviewsByRestaurant(restaurant.getRestaurantID());
+        });
+
+        detailsViewModel.getReviewsList().observe(getViewLifecycleOwner(), reviews -> {
+            reviewRecyclerAdapter.setReviews(reviews);
         });
 
         return view;
     }
-
-
 }

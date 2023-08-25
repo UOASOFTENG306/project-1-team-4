@@ -15,16 +15,16 @@ import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAdapter.ReviewViewHolder> {
 
     Context context;
-    private List<Review> reviewList;
+    private List<Review> reviewList = new ArrayList<>();
 
-    public ReviewRecyclerAdapter(Context context, List<Review> reviewList) {
+    public ReviewRecyclerAdapter(Context context) {
         this.context = context;
-        this.reviewList = reviewList;
     }
 
     public void setReviews(List<Review> reviewList) {

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +47,7 @@ public class Restaurant implements Parcelable {
         this.category = category;
         this.logoImage = logoImage;
         this.price = price;
+        this.reviews = new ArrayList<>();
     }
 
     public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImage, String price, List<Review> reviews) {

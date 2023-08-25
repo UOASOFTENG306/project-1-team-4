@@ -253,6 +253,7 @@ public class DetailsViewModel extends AndroidViewModel {
                     if(username != null) {
                         Review review = new Review(username, reviewText);
                         reviewRepository.addReview(restaurantID, review);
+                        this.reviewsList.getValue().add(review);
                     }
                 } catch (Exception e) {
                     Log.d("FirestoreActivity", "Error getting the username: ", task.getException());
