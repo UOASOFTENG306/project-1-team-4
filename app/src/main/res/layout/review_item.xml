@@ -21,39 +21,20 @@
         android:gravity="center_vertical"
         android:padding="2dp">
         <TextView
-            android:id="@+id/txt_username"
+            android:id="@+id/txt_review_username"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:text="username"
             android:layout_weight="1"
             android:fontFamily="@font/montserrat_bold"
             />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/review_star"
-            />
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/review_star"
-            />
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/review_star"
-            />
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/review_star"
-            />
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/review_star"
-            />
+        <LinearLayout
+            android:id="@+id/reviewScoreLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <!-- Child views go here -->
+        </LinearLayout>
 
     </LinearLayout>
 

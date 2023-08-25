@@ -157,7 +157,8 @@ public class DetailsViewModel extends AndroidViewModel {
                     if (reviewsArray != null) {
                         for (Map<String, Object> review : reviewsArray) {
                             Log.d("FirestoreActivity", (String) review.get("description"));
-                            reviews.add(new Review((String) review.get("userID"), (String) review.get("description")));
+                            Double reviewScore = (Double) review.get("reviewScore");
+                            reviews.add(new Review((String) review.get("userID"), (String) review.get("description"), reviewScore.floatValue()));
                         }
                         updateReviewsList(reviews);
                     }
