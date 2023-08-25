@@ -1,52 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-    tools:context=".View.LoginActivity"
-    android:id="@+id/linearlayout_login">
+    tools:context=".View.LoginActivity">
 
-    <TextView
-        style="@style/MainLogoText"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/loginBackgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.7"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_login_image" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout_login"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp" />
+        android:background="#B3FFFFFF"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/loginBackgroundImage"
+        app:layout_constraintTop_toTopOf="@+id/loginBackgroundImage"
+        tools:layout_editor_absoluteX="84dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/AdminInputLayout">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            style="@style/AdminInputText"
-            android:hint="@string/email" />
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            style="@style/MainLogoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/AdminInputLayout"
-       >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
-            style="@style/AdminInputText"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout style="@style/AdminInputLayout">
 
-    <Button
-        android:id="@+id/btn_login"
-        style="@style/AdminButton"
-        android:text="@string/login" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                style="@style/AdminInputText"
+                android:hint="@string/email" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_create_new_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/bg"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="Create a new account"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
+        <com.google.android.material.textfield.TextInputLayout style="@style/AdminInputLayout">
 
-</LinearLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                style="@style/AdminInputText"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/AdminButton"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/btn_create_new_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Create a new account"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
