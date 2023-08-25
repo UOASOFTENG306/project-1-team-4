@@ -22,6 +22,7 @@
         android:background="#B3FFFFFF"
         android:gravity="center"
         android:orientation="vertical"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/loginBackgroundImage"
         app:layout_constraintTop_toTopOf="@+id/loginBackgroundImage"
         tools:layout_editor_absoluteX="84dp">
