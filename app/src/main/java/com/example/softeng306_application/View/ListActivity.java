@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -23,6 +24,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -47,18 +49,13 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity {
 
-    private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
-    private DetailsViewModel detailsViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
-    private CategoryDropdownAdapter adapterCategoryItems;
     private ArrayAdapter<String> adapterItems;
-
     private class ViewHolder {
         AutoCompleteTextView autoCompleteTextView;
         TextView emptyListText;
         RecyclerView restaurantRecyclerView;
-        SearchView searchView;
         ImageButton backButton;
         View viewLayout;
         LinearLayout customSearchBar;
@@ -78,7 +75,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         setContentView(R.layout.activity_list);
 
         ViewHolder vh = new ViewHolder();
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
 
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
@@ -87,7 +84,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
         vh.emptyListText = findViewById(R.id.txt_emptyList);
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.customSearchBar = findViewById(R.id.customSearchBar);
-
         vh.searchEditText = findViewById(R.id.searchEditText);
 
         vh.viewLayout= findViewById(R.id.layout_list);

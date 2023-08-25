@@ -8,7 +8,27 @@
     android:id="@+id/layout_list"
     android:orientation="vertical">
 
-    <include layout="@layout/action_bar"/>
+    <RelativeLayout
+        android:id="@+id/smallLogoHeader"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/btn">
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:backgroundTint="@color/transparent"
+            android:src="@drawable/btn_back_white"/>
+
+        <TextView
+            android:id="@+id/txt_logo"
+            style="@style/SmallLogoHeader"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
     <include layout="@layout/activity_search2"/>
 
@@ -28,8 +48,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,12 +57,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recview_restaurant_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            >
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginTop="8dp"
+            />
         <TextView
             android:id="@+id/txt_emptyList"
             android:gravity="center"

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.example.softeng306_application.View.DetailsActivity;
 import com.example.softeng306_application.View.ListActivity;
 import com.google.android.material.card.MaterialCardView;
 import com.example.softeng306_application.ViewModel.ListViewModel;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +58,18 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     @Override
     public void onBindViewHolder(RestaurantRecyclerAdapter.RestaurantViewHolder holder, int position) {
         Restaurant restaurant = restaurants.get(position);
-        String colourHex = restaurant.getCategory().getBorderColour();
+
         holder.restaurantName.setText(restaurant.getName());
         holder.price.setText(restaurant.getPrice());
         holder.logoImage.setImageResource(showImage(restaurant));
-        holder.restaurantItem.setStrokeColor(Color.parseColor(colourHex));
+
+        // Set colours according to category
+        String colourHex = restaurant.getCategory().getBorderColour();
+        holder.logoImageCardView.setStrokeColor(Color.parseColor(colourHex));
+        holder.categoryLabelCard.setCardBackgroundColor(Color.parseColor(colourHex));
+
+        holder.categoryLabelText.setText(restaurant.getCategory().getCategoryType());
+
 
         if (favouriteList.contains(restaurant)){
             holder.favouriteHeart.setVisibility(View.VISIBLE);
@@ -92,16 +101,20 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     }
 
     public class RestaurantViewHolder extends RecyclerView.ViewHolder{
-        ImageView logoImage, favouriteHeart;
-        TextView restaurantName, price;
-        MaterialCardView restaurantItem;
+        ImageView favouriteHeart, logoImage;
+        MaterialCardView logoImageCardView;
+        TextView restaurantName, price, categoryLabelText;
+        MaterialCardView categoryLabelCard;
+
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
             logoImage = itemView.findViewById(R.id.img_logo);
+            logoImageCardView = itemView.findViewById(R.id.img_logo_card);
             restaurantName = itemView.findViewById(R.id.txt_restaurant_name);
             price = itemView.findViewById(R.id.txt_price);
             favouriteHeart = itemView.findViewById(R.id.img_favourite);
-            restaurantItem = itemView.findViewById(R.id.mtrlcardview_restaurant);
+            categoryLabelCard = itemView.findViewById(R.id.mtrlcardview_categoryLabel);
+            categoryLabelText = itemView.findViewById(R.id.txt_categoryLabel);
         }
 
     }

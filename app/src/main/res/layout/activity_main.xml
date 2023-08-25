@@ -9,7 +9,7 @@
     tools:context=".View.MainActivity">
 
     <TextView
-        style="@style/SmallLogoText"
+        style="@style/SmallLogoHeader"
         android:layout_height="wrap_content" />
     <include layout="@layout/activity_search2"/>
 
