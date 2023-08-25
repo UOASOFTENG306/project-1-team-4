@@ -46,7 +46,6 @@ public class ReviewFragment extends Fragment {
         TextInputEditText addReviewInput;
         LinearLayout linearLayoutAddReview, linearLayoutRatingPanel, linearLayoutOverallRating, averageScoreLayout;
         RatingBar ratingBar;
-        TextView averageScoreText;
 
     }
 
@@ -70,7 +69,6 @@ public class ReviewFragment extends Fragment {
         vh.linearLayoutOverallRating = view.findViewById(R.id.linearLayout_overall_rating);
         vh.averageScoreLayout = view.findViewById(R.id.averageScoreLayout);
         vh.submitReviewButton = view.findViewById(R.id.btn_submit_review);
-        vh.averageScoreText = view.findViewById(R.id.averageScoreText);
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
 
         reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext());
@@ -85,14 +83,19 @@ public class ReviewFragment extends Fragment {
         });
 
         detailsViewModel.getAverageReviewScore().observe(getViewLifecycleOwner(), averageScore -> {
-            vh.averageScoreText.setText(averageScore.toString());
             vh.averageScoreLayout.removeAllViews();
             for (int i = 0; i < averageScore; i++) {
+
+                // Star image view
                 ImageView imageView = new ImageView(requireActivity());
+                int width = 60;
+                int height = 60;
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
                 imageView.setImageResource(R.drawable.review_star); // Set your image resource here
                 imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
+                        width,
+                        height
                 ));
                 vh.averageScoreLayout.addView(imageView);
             }

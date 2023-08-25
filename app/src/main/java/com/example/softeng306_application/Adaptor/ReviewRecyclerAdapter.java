@@ -54,10 +54,12 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
         holder.reviewScoreLayout.removeAllViews();
         for (int i = 0; i < score; i++) {
             ImageView imageView = new ImageView(context);
+            int width = 40;
+            int height = 40;
             imageView.setImageResource(R.drawable.review_star);
             imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
+                    width,
+                    height
             ));
             holder.reviewScoreLayout.addView(imageView);
         }
