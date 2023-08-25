@@ -97,8 +97,12 @@ public class ReviewFragment extends Fragment {
 
             // Show add review input field
             vh.linearLayoutAddReview.setVisibility(View.VISIBLE);
-            // TODO: Bring up keyboard
 
+            // Show keyboard
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            }
         });
     }
     private void addReviewComment(ViewHolder vh) {
@@ -111,6 +115,11 @@ public class ReviewFragment extends Fragment {
             // Save comment
             reviewComment = String.valueOf(vh.addReviewInput.getText());
 
+            // Hide keyboard
+            InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
         });
     }
 
@@ -120,6 +129,10 @@ public class ReviewFragment extends Fragment {
             vh.linearLayoutOverallRating.setVisibility(View.VISIBLE);
             vh.linearLayoutRatingPanel.setVisibility(View.GONE);
 
+            // Minimum of one star
+            if (reviewScore < 0) {
+                reviewScore = 1;
+            }
             // Save rating
             reviewScore = vh.ratingBar.getRating();
             // Add review comment and rating as Review object to database
