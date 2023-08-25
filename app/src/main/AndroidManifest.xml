@@ -38,7 +38,8 @@
         <activity
             android:name=".View.DetailsActivity"
             android:theme="@style/DetailsActivityTheme"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
 
         </activity>
         <activity

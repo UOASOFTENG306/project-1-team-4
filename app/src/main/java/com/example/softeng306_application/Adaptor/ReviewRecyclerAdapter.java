@@ -8,12 +8,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.R;
+import com.google.api.Distribution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         return new ReviewRecyclerAdapter.ReviewViewHolder(LayoutInflater.from(context).inflate(R.layout.review_item, parent, false));
     }
 

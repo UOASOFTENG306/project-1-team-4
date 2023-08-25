@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayout_review_fragment"
+    android:background="@color/bg">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+<!--            Add Review text field-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/linearLayout_add_review"
+                android:gravity="center"
+                android:visibility="gone">
+<!--                Add Review input field -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayout_add_review"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_add_review"
+                        style="@style/AdminInputText" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+<!--                Submit review comment button -->
+                <ImageButton
+                    android:id="@+id/btn_add_review_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/add"
+                    android:backgroundTint="@color/transparent"/>
+
+            </LinearLayout>
+
+
+<!--            Overall Rating -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/linearLayout_add_review"
+                android:id="@+id/linearLayout_overall_rating">
+                <TextView
+                    android:id="@+id/txt_overall_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="OVERALL"/>
+            </LinearLayout>
+
+<!--            Review recycler view -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recview_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayout_overall_rating"
+                android:layoutAnimation="@anim/reviews_animation"
+                app:reverseLayout="true"/>
+
+<!--            Add review button -->
+            <Button
+                android:id="@+id/btn_add_review"
+                style="@style/ShowAddReviewButton"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Review..."
+                android:backgroundTint="#BDF0B8"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:elevation="5dp"
+                android:fontFamily="@font/montserrat_bold"/>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

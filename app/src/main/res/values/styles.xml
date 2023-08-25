@@ -48,7 +48,7 @@
         <item name="android:backgroundTint">@color/btn</item>
     </style>
 
-    <style name="AddReviewButton">
+    <style name="ShowAddReviewButton">
         <item name="cornerRadius">5dp</item>
     </style>
     <style name="AdminInputText">
