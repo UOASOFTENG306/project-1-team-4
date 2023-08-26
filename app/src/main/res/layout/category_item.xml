@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
-    android:layout_gravity="center"
-    android:id="@+id/cardview_category"
-    style="@style/CategoryCard"
-    app:cardElevation="5dp">
+    style="@style/CategoryLayout"
+    android:id="@+id/relativeLayout_category"
+    >
+
+    <ImageView
+        android:id="@+id/img_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/back0_3"
+        android:scaleType="centerCrop"
+        android:alpha="0.7"/>
 
     <TextView
         android:id="@+id/txt_category"
         style="@style/CategoryText"
         android:text="Category"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
         />
 
-</androidx.cardview.widget.CardView>
+</RelativeLayout>
