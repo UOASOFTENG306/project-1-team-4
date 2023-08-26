@@ -80,7 +80,7 @@ public class GetAllRestaurantsUseCase {
             for (Map<String, Object> review : reviewsArray) {
                 String username = (String) review.get("userID");
                 String comment =(String) review.get("description");
-                Long reviewScore = (Long) review.get("reviewScore");
+                Number reviewScore = (Number) review.get("reviewScore");
 //                int score = Integer.parseInt(reviewScore);
                 reviews.add(new Review(username, comment, reviewScore.floatValue()));
             }
