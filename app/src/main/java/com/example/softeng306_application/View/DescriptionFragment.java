@@ -58,13 +58,9 @@ public class DescriptionFragment extends Fragment {
 
         vh.categoryNameText = rootView.findViewById(R.id.txt_category);
         YoYo.with(Techniques.FadeInDown).duration(700).playOn(vh.categoryNameText);
-        detailsViewModel.getRestaurant().observe(getViewLifecycleOwner(), new Observer<Restaurant>() {
-            @Override
-            public void onChanged(Restaurant restaurant) {
-                 vh.descriptionText.setText(restaurant.getDescription());
-                 vh.categoryNameText.setText(restaurant.getCategory().getCategoryType());
-            }
-        });
+        Restaurant restaurant = detailsViewModel.getRestaurant();
+        vh.descriptionText.setText(restaurant.getDescription());
+        vh.categoryNameText.setText(restaurant.getCategory().getCategoryType());
         return rootView;
     }
 }

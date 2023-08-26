@@ -18,6 +18,7 @@ import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.ReviewRepository;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.example.softeng306_application.UseCase.AddFavouriteUseCase;
 import com.example.softeng306_application.UseCase.CheckFavouriteUseCase;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -28,13 +29,14 @@ import java.util.Map;
 
 public class DetailsViewModel extends AndroidViewModel {
     private CheckFavouriteUseCase checkFavouriteUseCase;
+    private AddFavouriteUseCase addFavouriteUseCase;
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
     private ReviewRepository reviewRepository;
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
     private MutableLiveData<List<Review>> reviewsList =  new MutableLiveData<>();
     private Boolean isFavourite;
-    private MutableLiveData<Restaurant> restaurant  = new MutableLiveData<>();;
+    private Restaurant restaurant;
 
     public DetailsViewModel(@NonNull Application application) {
         super(application);
@@ -42,9 +44,10 @@ public class DetailsViewModel extends AndroidViewModel {
         restaurantRepository = restaurantRepository.getInstance();
         reviewRepository = reviewRepository.getInstance();
         checkFavouriteUseCase = checkFavouriteUseCase.getInstance();
+        addFavouriteUseCase = addFavouriteUseCase.getInstance();
     }
 
-    public LiveData<Restaurant> getRestaurant() {
+    public Restaurant getRestaurant() {
         return restaurant;
     }
 
@@ -60,69 +63,9 @@ public class DetailsViewModel extends AndroidViewModel {
         return isFavourite;
     }
 
-
-    public void checkIfFavourite() {
-        //TODO IDENTICAL CODE WITH LISTVIEWMODEL
-        List<Restaurant> restaurants = new ArrayList<>();
-        Task<DocumentSnapshot> task = userRepository.getFavourites();
-        task.addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                try {
-                    List<Map<String, Object>> favouritesArray = (List<Map<String, Object>>) task1.getResult().getData().get("favourites.favouriteRestaurants");
-                    if (favouritesArray != null) {
-                        for (Map<String, Object> favourites : favouritesArray) {
-                            restaurants.add(restaurantBuilder(favourites));
-                        }
-                        updateFavouriteList(restaurants);
-                    }
-                    setIsFavourite(restaurants.contains(restaurant.getValue()));
-
-                } catch (Exception e) {
-                    Log.d("FirestoreActivity", "Error updating restaurants: ", task.getException());
-                }
-            }
-            else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
-            }
-        });
-    }
     public LiveData<Boolean> checkFavourite(Restaurant restaurant) {
         return checkFavouriteUseCase.checkFavourite(restaurant);
     }
-    private Restaurant restaurantBuilder(Map<String, Object> data) {
-        //TODO IDENTICAL CODE WITH LISTVIEWMODEL
-
-        String restaurantID = (String) data.get("restaurantID");
-        String name = (String) data.get("name");
-        String description = (String) data.get("description");
-        String location = (String) data.get("location");
-
-        Map<String, Object> nestedField = (Map<String, Object>) data.get("category");
-
-        String categoryType = (String) nestedField.get("categoryType");
-        String logoImage = (String) data.get("logoImage");
-        String price = (String) data.get("price");
-
-        Restaurant restaurant = new Restaurant(restaurantID,  name,  description,  location, logoImage, price);;
-
-        switch (categoryType){
-            case "EUROPEAN":
-                restaurant.setCategory(new European());
-                break;
-            case "ASIAN":
-                restaurant.setCategory(new Asian());
-                break;
-            case "FAST FOOD":
-                restaurant.setCategory(new FastFood());
-                break;
-            case "CAFE":
-                restaurant.setCategory(new Cafe());
-                break;
-        }
-
-        return restaurant;
-    }
-
     public List<Review> getReviewsByRestaurant(String restaurantId) {
         List<Review> reviews = new ArrayList<>();
         Task<DocumentSnapshot> task = reviewRepository.getReviews(restaurantId);
@@ -158,47 +101,19 @@ public class DetailsViewModel extends AndroidViewModel {
         this.favouritesList.setValue(restaurantList);
     }
     public void setRestaurant(Restaurant restaurant) {
-        this.restaurant.setValue(restaurant);
+        this.restaurant = restaurant;
     }
 
     public void addFavourite() {
-        if (this.restaurant.getValue() == null) {
-            this.restaurant.observeForever(new Observer<Restaurant>() {
-                @Override
-                public void onChanged(Restaurant res) {
-                    if (res != null) {
-                        userRepository.addFavourite(restaurant.getValue());
-                    }
-                    restaurant.removeObserver(this);
-                }
-
-
-            });
-            return;
-        }
-        userRepository.addFavourite(restaurant.getValue());
+        addFavouriteUseCase.addFavourite(this.restaurant);
     }
 
     public void removeFavourite() {
-        if (this.restaurant.getValue() == null) {
-            this.restaurant.observeForever(new Observer<Restaurant>() {
-                @Override
-                public void onChanged(Restaurant res) {
-                    if (res != null) {
-                        userRepository.deleteFavourite(restaurant.getValue());
-                    }
-                    restaurant.removeObserver(this);
-                }
-
-
-            });
-            return;
-        }
-        userRepository.deleteFavourite(restaurant.getValue());
+        userRepository.deleteFavourite(this.restaurant);
     }
 
     public String getRestaurantIDMinusOne() {
-        Restaurant currentRestaurant = restaurant.getValue();
+        Restaurant currentRestaurant = this.restaurant;
         String id = currentRestaurant.getRestaurantID();
         int restaurantId = Integer.parseInt(id) - 1;
         String resId = String.valueOf(restaurantId);
