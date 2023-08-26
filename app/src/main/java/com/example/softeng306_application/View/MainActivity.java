@@ -73,13 +73,10 @@ public class MainActivity extends AppCompatActivity {
         vh.topRatedRecyclerView.setAdapter(randomRecylerAdapter);
         vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
 
-        mainViewModel.getRandomRestaurantList().observe(this, restaurants -> {
+        mainViewModel.getRandomRestaurants().observe(this, restaurants -> {
             // Update the adapter with the new list of items
             randomRecylerAdapter.setRandmoList(restaurants);
         });
-
-        //Load random restaurants to show
-        mainViewModel.getRandomRestaurants();
 
         // Set layout manager to position the items
         // Set Horizontal Layout Manager for topRatedRecyclerView
