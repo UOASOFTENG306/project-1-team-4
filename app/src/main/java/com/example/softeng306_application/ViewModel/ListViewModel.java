@@ -226,16 +226,21 @@ public class ListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Restaurant>> getRestaurantByCategoryList() {
-        LiveData<List<Restaurant>> restaurantList = getAllRestaurantsUseCase.getAllRestaurants();
-        setSearchList(restaurantList.getValue());
-        return restaurantList;
-//        return restaurantList;
+        LiveData<List<Restaurant>> filteredLiveData = Transformations.map(getAllRestaurantsUseCase.getAllRestaurants(), restaurantList -> {
+            // Filter condition
+            List<Restaurant> filteredItems = restaurantList.stream()
+                    .filter(restaurant -> getCategory().contains(restaurant.getCategory()))
+                    .collect(Collectors.toList());
+
+            setSearchList(filteredItems);
+            return filteredItems;
+        });
+        return filteredLiveData;
     }
     public LiveData<List<Restaurant>> getRestaurantList() {
         LiveData<List<Restaurant>> restaurantList = getAllRestaurantsUseCase.getAllRestaurants();
         setSearchList(restaurantList.getValue());
         return restaurantList;
-//        return restaurantList;
     }
     public List<Restaurant> getRestaurantsTest() {
         List<Restaurant> restaurants = new ArrayList<>();
@@ -282,13 +287,13 @@ public class ListViewModel extends AndroidViewModel {
 
     public List<Restaurant> filterList(String s) {
         if (this.getRestaurantList().getValue() == null) {
-            this.restaurantList.observeForever(new Observer<List<Restaurant>>() {
+            this.getRestaurantList().observeForever(new Observer<List<Restaurant>>() {
                 @Override
                 public void onChanged(List<Restaurant> restaurants) {
                     if(restaurants != null){
                         filterList(s);
                     }
-                    restaurantList.removeObserver(this);
+                    getRestaurantList().removeObserver(this);
                 }
             });
         }

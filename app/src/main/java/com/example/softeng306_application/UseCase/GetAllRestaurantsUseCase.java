@@ -36,7 +36,7 @@ public class GetAllRestaurantsUseCase {
         return instance;
     }
 
-    public LiveData<List<Restaurant>> getAllRestaurants() {
+    public MutableLiveData<List<Restaurant>> getAllRestaurants() {
         if (allRestaurantList.getValue() == null){
             restaurantRepository.getRestaurants().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {

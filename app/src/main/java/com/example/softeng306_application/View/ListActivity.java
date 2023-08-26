@@ -164,9 +164,9 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 // Set selected category
                 listViewModel.setCategory(selectedCategory);
                 if(listViewModel.getFavourite()){
-                    loadFavouritesByCategory();
+                    loadFavouritesByCategory(vh.emptyListText);
                 } else {
-                    restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
+                    loadRestaurantsByCategory(vh.emptyListText);
                 }
             }
         });
@@ -179,9 +179,18 @@ public class ListActivity extends AppCompatActivity implements Activity {
             empty.setVisibility(View.GONE);
         }
     }
-    private void loadFavouritesByCategory(){
+    private void loadFavouritesByCategory(TextView emptyListText){
         listViewModel.getFavouritesByCategory().observe(this, restaurants -> {
             restaurantAdapter.setRestaurants(restaurants);
+            checkIfEmpty(restaurants, emptyListText);
+
+        });
+    }
+    private void loadRestaurantsByCategory(TextView emptyListText){
+        listViewModel.getRestaurantByCategoryList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setRestaurants(restaurants);
+            checkIfEmpty(restaurants, emptyListText);
         });
     }
         @Override
@@ -198,7 +207,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 listViewModel.getFavouritesList().observe(this, restaurants -> {
                     restaurantAdapter.setFavouriteRestaurants(restaurants);
                 });
-                listViewModel.getRestaurantList().observe(this, restaurants -> {
+                listViewModel.getRestaurantByCategoryList().observe(this, restaurants -> {
                     // Update the adapter with the new list of items
                     restaurantAdapter.setRestaurants(restaurants);
                     checkIfEmpty(restaurants, emptyListText);
