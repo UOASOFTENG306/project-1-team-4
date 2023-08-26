@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
         // For Landscape mode
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
-            vh.randomRecyclerView.setLayoutManager(gridLayoutManager);
+            LinearLayoutManager verticalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+            vh.randomRecyclerView.setLayoutManager(verticalLayout);
         } else { // For Portrait mode
             LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
             vh.randomRecyclerView.setLayoutManager(horizontalLayout);
