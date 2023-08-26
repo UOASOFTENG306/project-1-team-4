@@ -21,6 +21,7 @@ import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.example.softeng306_application.UseCase.GetCurrentUserUseCase;
 import com.example.softeng306_application.UseCase.GetRandomRestaurantsUseCase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,16 +37,14 @@ import java.util.Map;
 import java.util.Random;
 
 public class MainViewModel extends AndroidViewModel {
-    private RestaurantRepository restaurantRepository;
-    private UserRepository userRepository;
-
     private GetRandomRestaurantsUseCase getRandomRestaurantsUseCase;
+
+    private GetCurrentUserUseCase getCurrentUserUseCase;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        userRepository = userRepository.getInstance();
-        restaurantRepository = restaurantRepository.getInstance();
         getRandomRestaurantsUseCase = GetRandomRestaurantsUseCase.getInstance();
+        getCurrentUserUseCase = GetCurrentUserUseCase.getInstance();
     }
 
     public LiveData<List<Restaurant>> getRandomRestaurants() {
@@ -53,7 +52,7 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public Task<DocumentSnapshot> getUserInfo() {
-        return userRepository.getAllUserInformation();
+        return getCurrentUserUseCase.getUserInfo();
     }
 
     public List<Category> getCategories(){
@@ -73,6 +72,6 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void logout(){
-        userRepository.logout();
+        getCurrentUserUseCase.logout();
     }
 }
