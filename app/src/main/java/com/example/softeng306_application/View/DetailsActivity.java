@@ -85,20 +85,10 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
             vh.favouriteButton.setImageResource(heartType);
         });
 
-        vh.favouriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detailsViewModel.setOppositeFavourite();
-            }
-        });
+        vh.favouriteButton.setOnClickListener(v -> detailsViewModel.setOppositeFavourite());
 
 
-        vh.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        vh.backButton.setOnClickListener(v -> finish());
         Intent intent = getIntent();
         if (intent != null) {
             if(intent.hasExtra("RESTAURANT")){
@@ -141,11 +131,7 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
 
         String id = detailsViewModel.getRestaurantIDMinusOne();
 
-        images = new int[3];
-        images[0] = getResources().getIdentifier("back" + id + "_1", "drawable", this.getPackageName());
-        images[1] = getResources().getIdentifier("back" + id + "_2", "drawable", this.getPackageName());
-        images[2] = getResources().getIdentifier("back" + id + "_3", "drawable", this.getPackageName());
-
+        images = detailsViewModel.getBackgroundImages(this);
         SliderAdapter sliderAdapter = new SliderAdapter(images);
 
         vh.sliderView.setSliderAdapter(sliderAdapter);

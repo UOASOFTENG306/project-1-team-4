@@ -1,6 +1,7 @@
 package com.example.softeng306_application.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -116,6 +117,11 @@ public class DetailsViewModel extends AndroidViewModel {
         String name = (String) data.get("name");
         String description = (String) data.get("description");
         String location = (String) data.get("location");
+        List<String> backgroundImages = (List<String>) data.get("backgroundImages");
+        for(String s: backgroundImages) {
+            Log.d("FirestoreActivity", s);
+        }
+
 
         Map<String, Object> nestedField = (Map<String, Object>) data.get("category");
 
@@ -141,6 +147,17 @@ public class DetailsViewModel extends AndroidViewModel {
         }
 
         return restaurant;
+    }
+    public int[] getBackgroundImages(Context context) {
+        Restaurant currentRestaurant = restaurant.getValue();
+        String id = currentRestaurant.getRestaurantID();
+        int restaurantId = Integer.parseInt(id) - 1;
+        String resId = String.valueOf(restaurantId);
+        int[] images = new int[3];
+        images[0] = context.getResources().getIdentifier("back" + resId + "_1", "drawable", context.getPackageName());
+        images[1] = context.getResources().getIdentifier("back" + resId + "_2", "drawable", context.getPackageName());
+        images[2] = context.getResources().getIdentifier("back" + resId + "_3", "drawable", context.getPackageName());
+        return images;
     }
 
     public List<Review> getReviewsByRestaurant(String restaurantId) {
