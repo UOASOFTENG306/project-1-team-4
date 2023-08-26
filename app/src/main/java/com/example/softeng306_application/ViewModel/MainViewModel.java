@@ -35,9 +35,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class MainViewModel extends AndroidViewModel {
-    private MutableLiveData<List<Restaurant>> restaurantList =  new MutableLiveData<>();
     private MutableLiveData<List<Restaurant>> randomRestaurantList = new MutableLiveData<>();
-
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
 
@@ -47,15 +45,8 @@ public class MainViewModel extends AndroidViewModel {
         restaurantRepository = restaurantRepository.getInstance();
     }
 
-    public LiveData<List<Restaurant>> getRestaurantList() {
-        return restaurantList;
-    }
     public LiveData<List<Restaurant>> getRandomRestaurantList() {
         return randomRestaurantList;
-    }
-
-    public void updateRestaurantList(List<Restaurant> restaurantList) {
-        this.restaurantList.setValue(restaurantList);
     }
 
     public void updateRandomRestaurantList(List<Restaurant> randomList) {
@@ -82,23 +73,6 @@ public class MainViewModel extends AndroidViewModel {
 
 
         return categoryList;
-    }
-    public void getAllRestaurants() {
-        restaurantRepository.getRestaurants().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                List<Restaurant> restaurants12 = new ArrayList<>();
-
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Log.d("FirestoreActivity", document.getId() + " => " + document.getData());
-                    Map<String, Object> data = document.getData();
-                    restaurants12.add(restaurantBuilder(data));
-                }
-                updateRestaurantList(restaurants12);
-
-            } else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
-            }
-        });
     }
 
     public void logout(){

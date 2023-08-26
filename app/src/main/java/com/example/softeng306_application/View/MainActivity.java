@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
-        restaurantFirestoreDataProvider.addRestaurantToFirestore();
+//        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
+//        restaurantFirestoreDataProvider.addRestaurantToFirestore();
         /**UserFirestoreDataProvider userFirestoreDataProvider = new UserFirestoreDataProvider();
         userFirestoreDataProvider.addFavouritesToDB();**/
         super.onCreate(savedInstanceState);
