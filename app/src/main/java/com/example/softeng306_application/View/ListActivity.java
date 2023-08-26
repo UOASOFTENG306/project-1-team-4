@@ -197,21 +197,13 @@ public class ListActivity extends AppCompatActivity implements Activity {
         protected void onResume() {
             super.onResume();
             TextView emptyListText = findViewById(R.id.txt_emptyList);
+            listViewModel.getFavouritesList().observe(this, restaurants -> {
+                restaurantAdapter.setFavouriteRestaurants(restaurants);
+            });
             if (listViewModel.getFavourite()) {
-                listViewModel.getFavouritesList().observe(this, restaurants -> {
-                    restaurantAdapter.setFavouriteRestaurants(restaurants);
-                    restaurantAdapter.setRestaurants(restaurants);
-                    checkIfEmpty(restaurants, emptyListText);
-                });
+                loadFavouritesByCategory(emptyListText);
             } else {
-                listViewModel.getFavouritesList().observe(this, restaurants -> {
-                    restaurantAdapter.setFavouriteRestaurants(restaurants);
-                });
-                listViewModel.getRestaurantByCategoryList().observe(this, restaurants -> {
-                    // Update the adapter with the new list of items
-                    restaurantAdapter.setRestaurants(restaurants);
-                    checkIfEmpty(restaurants, emptyListText);
-                });
+                loadRestaurantsByCategory(emptyListText);
             }
         }
 

@@ -190,8 +190,16 @@ public class ListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Restaurant>> getFavouritesByCategory() {
-        return getFavouritesByCategoryUseCase.getFavouritesByCategory(this.categoryList);
-//        return favouritesList;
+        LiveData<List<Restaurant>> filteredLiveData = Transformations.map(getFavouritesUseCase.getFavouriteRestaurants(), restaurantList -> {
+            // Filter condition
+            List<Restaurant> filteredItems = restaurantList.stream()
+                    .filter(restaurant -> getCategory().contains(restaurant.getCategory()))
+                    .collect(Collectors.toList());
+
+            setSearchList(filteredItems);
+            return filteredItems;
+        });
+        return filteredLiveData;
     }
     public LiveData<List<Restaurant>> getFavouritesList() {
         return getFavouritesUseCase.getFavouriteRestaurants();
