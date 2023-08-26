@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -99,12 +101,15 @@ public class MainActivity extends AppCompatActivity {
         vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
         vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
 
-        // Set layout manager to position the items
-        // Set Horizontal Layout Manager for topRatedRecyclerView
-        LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
+        // For Landscape mode
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
+            vh.topRatedRecyclerView.setLayoutManager(gridLayoutManager);
+        } else { // For Portrait mode
+            LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+            vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
+        }
 
-        // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.categoryRecyclerView.setLayoutManager(verticalLayout);
 

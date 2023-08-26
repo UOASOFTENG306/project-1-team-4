@@ -12,9 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
         android:id="@+id/layout_topBar">
 
-        <include layout="@layout/activity_search"
+        <include layout="@layout/activity_search2"
             android:layout_height="wrap_content"
             android:layout_width="400dp"
             android:layout_marginBottom="5dp"
@@ -22,7 +23,7 @@
 
         <include layout="@layout/navbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:layout_alignParentBottom="true"/>
     </LinearLayout>
 
@@ -30,6 +31,7 @@
     <ScrollView
         android:layout_below="@id/layout_topBar"
         android:id="@+id/scrollview_contents"
+        android:layout_marginTop="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -48,10 +50,10 @@
                     style="@style/HeaderText"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Top Rated" />
+                    android:text="Discover New" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_below="@id/txt_top_rated"
