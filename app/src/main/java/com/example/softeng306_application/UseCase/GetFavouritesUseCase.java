@@ -12,6 +12,7 @@ import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Favourites;
 import com.example.softeng306_application.Entity.Restaurant;
+import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.Repository.UserRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -78,6 +79,16 @@ public class GetFavouritesUseCase {
         String logoImage = (String) data.get("logoImage");
         String price = (String) data.get("price");
 
+        List<Review> reviews = new ArrayList<>();
+        List<Map<String, Object>> reviewsArray = (List<Map<String, Object>>) data.get("reviews");
+        if (reviewsArray != null || !reviewsArray.isEmpty()) {
+            for (Map<String, Object> review : reviewsArray) {
+                String username = (String) review.get("userID");
+                String comment =(String) review.get("description");
+                Long reviewScore = (Long) review.get("reviewScore");
+                reviews.add(new Review(username, comment, reviewScore.floatValue()));
+            }
+        }
 
         switch (categoryType){
             case "FAST FOOD":
@@ -96,7 +107,7 @@ public class GetFavouritesUseCase {
                 category = new FastFood();
         }
 
-        return new Restaurant(restaurantID, name, description, location, category, logoImage, price);
+        return new Restaurant(restaurantID, name, description, location, category, logoImage, price, reviews);
     }
 
     public Favourites getFavourites(String userID) { return null; }

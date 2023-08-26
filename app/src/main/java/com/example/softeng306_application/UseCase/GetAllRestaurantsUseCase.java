@@ -11,6 +11,7 @@ import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
+import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.ReviewRepository;
 import com.example.softeng306_application.Repository.UserRepository;
@@ -73,6 +74,17 @@ public class GetAllRestaurantsUseCase {
         String logoImage = (String) data.get("logoImage");
         String price = (String) data.get("price");
 
+        List<Review> reviews = new ArrayList<>();
+        List<Map<String, Object>> reviewsArray = (List<Map<String, Object>>) data.get("reviews");
+        if (reviewsArray != null || !reviewsArray.isEmpty()) {
+            for (Map<String, Object> review : reviewsArray) {
+                String username = (String) review.get("userID");
+                String comment =(String) review.get("description");
+                Long reviewScore = (Long) review.get("reviewScore");
+//                int score = Integer.parseInt(reviewScore);
+                reviews.add(new Review(username, comment, reviewScore.floatValue()));
+            }
+        }
 
         switch (categoryType){
             case "FAST FOOD":
@@ -91,7 +103,7 @@ public class GetAllRestaurantsUseCase {
                 category = new FastFood();
         }
 
-        return new Restaurant(restaurantID, name, description, location, category, logoImage, price);
+        return new Restaurant(restaurantID, name, description, location, category, logoImage, price, reviews);
     }
 
 
