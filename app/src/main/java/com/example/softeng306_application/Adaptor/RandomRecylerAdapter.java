@@ -56,7 +56,10 @@ public class RandomRecylerAdapter extends RecyclerView.Adapter<RandomRecylerAdap
     }
 
     private int showImageBackground(Restaurant restaurant) {
-        int i = context.getResources().getIdentifier("back" + restaurant.getRestaurantID()+ "_1", "drawable", context.getPackageName());
+        int number = Integer.parseInt(restaurant.getRestaurantID());
+        number = number - 1;
+        String id = String.valueOf(number);
+        int i = context.getResources().getIdentifier("back" + id + "_1", "drawable", context.getPackageName());
         return i;
     }
 
