@@ -131,11 +131,7 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
 
         String id = detailsViewModel.getRestaurantIDMinusOne();
 
-        images = new int[3];
-        images[0] = getResources().getIdentifier("back" + id + "_1", "drawable", this.getPackageName());
-        images[1] = getResources().getIdentifier("back" + id + "_2", "drawable", this.getPackageName());
-        images[2] = getResources().getIdentifier("back" + id + "_3", "drawable", this.getPackageName());
-
+        images = detailsViewModel.getBackgroundImages(this);
         SliderAdapter sliderAdapter = new SliderAdapter(images);
 
         vh.sliderView.setSliderAdapter(sliderAdapter);
