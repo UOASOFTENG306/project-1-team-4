@@ -81,6 +81,7 @@ public class GetAllRestaurantsUseCase {
                 String username = (String) review.get("userID");
                 String comment =(String) review.get("description");
                 Number reviewScore = (Number) review.get("reviewScore");
+
 //                int score = Integer.parseInt(reviewScore);
                 reviews.add(new Review(username, comment, reviewScore.floatValue()));
             }
@@ -103,7 +104,7 @@ public class GetAllRestaurantsUseCase {
                 category = new FastFood();
         }
 
-        return new Restaurant(restaurantID, name, description, location, category, logoImage, price, reviews);
+        return new Restaurant(restaurantID, new ArrayList<>(), name, description, location, category, logoImage, price, reviews);
     }
 
 

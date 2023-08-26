@@ -107,7 +107,7 @@ public class GetFavouritesUseCase {
                 category = new FastFood();
         }
 
-        return new Restaurant(restaurantID, name, description, location, category, logoImage, price, reviews);
+        return new Restaurant(restaurantID, new ArrayList<>(), name, description, location, category, logoImage, price, reviews);
     }
 
     public Favourites getFavourites(String userID) { return null; }
