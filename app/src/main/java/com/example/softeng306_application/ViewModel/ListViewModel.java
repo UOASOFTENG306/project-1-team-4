@@ -318,9 +318,6 @@ public class ListViewModel extends AndroidViewModel {
 
 
         switch (categoryType){
-            case "FAST FOOD":
-                category = new FastFood();
-                break;
             case "EUROPEAN":
                 category = new European();
                 break;

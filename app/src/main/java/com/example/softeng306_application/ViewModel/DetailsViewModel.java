@@ -117,11 +117,6 @@ public class DetailsViewModel extends AndroidViewModel {
         String name = (String) data.get("name");
         String description = (String) data.get("description");
         String location = (String) data.get("location");
-        List<String> backgroundImages = (List<String>) data.get("backgroundImages");
-        for(String s: backgroundImages) {
-            Log.d("FirestoreActivity", s);
-        }
-
 
         Map<String, Object> nestedField = (Map<String, Object>) data.get("category");
 
