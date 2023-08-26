@@ -34,10 +34,11 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
-//        restaurantFirestoreDataProvider.addRestaurantToFirestore();
+        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
+        restaurantFirestoreDataProvider.addRestaurantToFirestore();
 //        UserFirestoreDataProvider userFirestoreDataProvider = new UserFirestoreDataProvider();
 //         userFirestoreDataProvider.addFavouritesToDB();
+
         setContentView(R.layout.activity_login);
         ViewHolder vh = new ViewHolder();
         vh.editTextEmail = findViewById(R.id.email);

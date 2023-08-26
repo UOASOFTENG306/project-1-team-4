@@ -3,7 +3,7 @@
     <style name="Base.Theme.HungryRadar" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimarySurface">@color/bg</item>
         <item name="android:colorBackground">@color/bg</item>
-        <item name="android:padding">3dp</item>
+<!--        <item name="android:padding">3dp</item>-->
         <item name="android:statusBarColor">@color/black</item>
     </style>
 

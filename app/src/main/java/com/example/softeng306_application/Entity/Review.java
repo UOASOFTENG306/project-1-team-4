@@ -15,7 +15,15 @@ public class Review {
     public Review(String username, String comment) {
         this.userID = username;
         this.description = comment;
+        this.reviewScore = 1;
     }
+
+    public Review(String username, String comment, float score) {
+        this.userID = username;
+        this.description = comment;
+        this.reviewScore = score;
+    }
+
     public String getUserID() { return userID; }
 
     public String getReviewID() {
@@ -33,3 +41,4 @@ public class Review {
 
 
 }
+

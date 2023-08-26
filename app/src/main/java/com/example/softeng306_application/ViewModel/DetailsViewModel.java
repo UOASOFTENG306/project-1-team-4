@@ -23,6 +23,7 @@ import com.example.softeng306_application.UseCase.CheckFavouriteUseCase;
 import com.example.softeng306_application.UseCase.RemoveFavouriteUseCase;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ public class DetailsViewModel extends AndroidViewModel {
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
     private ReviewRepository reviewRepository;
+    private MutableLiveData<Integer> averageScore =  new MutableLiveData<>();
+
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
     private MutableLiveData<List<Review>> reviewsList =  new MutableLiveData<>();
     private Boolean isFavourite;
@@ -75,6 +78,7 @@ public class DetailsViewModel extends AndroidViewModel {
 
     public void updateReviewsList(List<Review> reviews) {
         this.reviewsList.setValue(reviews);
+        calculateAverageReviewScoreFromList();
     }
 
 
@@ -101,6 +105,67 @@ public class DetailsViewModel extends AndroidViewModel {
         String resId = String.valueOf(restaurantId);
 
         return resId;
+
+    }
+
+    public LiveData<Integer> getAverageReviewScore() {
+        return averageScore;
+    }
+
+    public void calculateAverageReviewScoreFromList(){
+        float sum = 0;
+        float average;
+
+        Integer num = this.getReviewsList().getValue().size();
+        for (Review review : this.getReviewsList().getValue()) {
+            sum += review.getReviewScore();
+        }
+        average = sum/num;
+        this.averageScore.setValue(Math.round(average));
+    }
+
+    public void calculateAverageReviewScore(String restaurantId) {
+        float sum = 0;
+        int itemCount = 0;
+
+        for (Review review : restaurant.getReviews()) {
+            float score = review.getReviewScore();
+            sum += score;
+            itemCount++;
+        }
+        if (itemCount > 0) {
+            float average = sum / itemCount;
+            Integer integerValue = (int) Math.round(average);
+            this.averageScore.setValue(integerValue);
+        } else {
+            this.averageScore.setValue(0);
+        }
+
+    }
+    public void addReviews(String restaurantID, String reviewComment, float reviewScore) {
+        userRepository.getAllUserInformation().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                try {
+                    DocumentSnapshot document = task.getResult();
+                    String username = (String) document.get("username");
+                    if(username != null) {
+                        Review review = new Review(username, reviewComment, reviewScore);
+                        reviewRepository.addReview(restaurantID, review);
+                        List<Review> currentItems = this.reviewsList.getValue();
+                        if (currentItems != null) {
+                            currentItems.add(review);
+                            updateReviewsList(currentItems);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d("FirestoreActivity", "Error getting the username: ", task.getException());
+                }
+            }
+            else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+            }
+
+        });
 
     }
 }

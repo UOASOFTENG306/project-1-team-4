@@ -81,6 +81,9 @@ public class ListActivity extends AppCompatActivity implements Activity {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
 
+        NavbarViewHolder navbarViewHolder = new NavbarViewHolder(findViewById(R.id.layout_list), mainViewModel);
+        Navbar.setUpNavbar(navbarViewHolder, this);
+
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
         vh.backButton = findViewById(R.id.btn_back);

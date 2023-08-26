@@ -7,16 +7,30 @@
     tools:context=".View.ListActivity"
     android:id="@+id/layout_list"
     >
-    <include layout="@layout/action_bar" android:id="@+id/action_bar"/>
+    <include layout="@layout/action_bar" android:visibility="gone"/>
 
-    <include layout="@layout/activity_search2" android:id="@+id/search_bar"
-        android:layout_below="@id/action_bar"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/layout_topBar"
+        >
+        <include layout="@layout/activity_search2"
+            android:layout_height="wrap_content"
+            android:layout_width="400dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/search_bar"/>
+
+        <include layout="@layout/navbar"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentBottom="true"/>
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/DropDownLayout"
-        android:layout_below="@id/search_bar"
+        android:layout_below="@id/layout_topBar"
         android:id="@+id/dropdown_menu">
 
         <AutoCompleteTextView
@@ -57,11 +71,5 @@
             android:visibility="gone"/>
 
     </RelativeLayout>
-
-    <include layout="@layout/navbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
-
 
 </RelativeLayout>

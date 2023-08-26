@@ -64,12 +64,7 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
 
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
 
-        vh.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        vh.backButton.setOnClickListener(v -> finish());
         Intent intent = getIntent();
         if (intent != null) {
             if(intent.hasExtra("RESTAURANT")){
