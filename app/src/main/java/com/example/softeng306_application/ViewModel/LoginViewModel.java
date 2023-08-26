@@ -5,20 +5,18 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.softeng306_application.Entity.User;
-import com.example.softeng306_application.Repository.UserRepository;
+import com.example.softeng306_application.UseCase.SignInUseCase;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
 public class LoginViewModel extends AndroidViewModel {
-
-    private UserRepository userRepository;
+    private SignInUseCase signInUseCase;
     public LoginViewModel(@NonNull Application application) {
         super(application);
-        userRepository = userRepository.getInstance();
+        signInUseCase = signInUseCase.getInstance();
     }
 
     public Task<AuthResult> signIn(String email, String password){
-        return userRepository.signIn(email, password);
+        return signInUseCase.signInWithEmailAndPassword(email,password);
     }
 }

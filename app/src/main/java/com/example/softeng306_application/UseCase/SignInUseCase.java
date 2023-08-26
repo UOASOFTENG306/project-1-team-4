@@ -1,8 +1,25 @@
 package com.example.softeng306_application.UseCase;
-
-import com.example.softeng306_application.Entity.User;
+import com.example.softeng306_application.Repository.UserRepository;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 
 public class SignInUseCase {
 
-    public User signIn(String email, String password) { return null; }
+    private static SignInUseCase instance;
+    private UserRepository userRepository;
+
+    private SignInUseCase(){
+        userRepository = userRepository.getInstance();
+    }
+
+    public static SignInUseCase getInstance() {
+        if (instance == null){
+            instance = new SignInUseCase();
+        }
+        return instance;
+    }
+
+    public Task<AuthResult> signInWithEmailAndPassword(String email, String password){
+        return userRepository.signIn(email, password);
+    }
 }
