@@ -1,9 +1,7 @@
 package com.example.softeng306_application.View;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,53 +11,39 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
-import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.CategoryType;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
+import com.example.softeng306_application.Adaptor.RandomRecylerAdapter;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.MainViewModel;
-import com.example.softeng306_application.dataprovider.RestaurantFirestoreDataProvider;
-import com.example.softeng306_application.dataprovider.UserFirestoreDataProvider;
-
-import org.checkerframework.checker.units.qual.A;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private MainViewModel mainViewModel;
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
-    private TopRatedRecylerAdapter topRatedAdapter;
+    private RandomRecylerAdapter randomRecylerAdapter;
 
     private class ViewHolder{
         TextView usernameText;
         ImageButton logoutNavButton, favouritesNavButton, listNavButton, mainNavButton, searchNavButton;
-        RecyclerView topRatedRecyclerView;
+        RecyclerView randomRecyclerView;
         RecyclerView categoryRecyclerView;
         LinearLayout customSearchBar;
         EditText searchEditText;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
-        restaurantFirestoreDataProvider.addRestaurantToFirestore();
+//        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
+//        restaurantFirestoreDataProvider.addRestaurantToFirestore();
         /**UserFirestoreDataProvider userFirestoreDataProvider = new UserFirestoreDataProvider();
          userFirestoreDataProvider.addFavouritesToDB();**/
         super.onCreate(savedInstanceState);
@@ -87,27 +71,35 @@ public class MainActivity extends AppCompatActivity {
         vh.searchNavButton = findViewById(R.id.btn_search);
         vh.mainNavButton = findViewById(R.id.btn_main);
 
-        // Binding TopRatedRecyclerAdapter
-        vh.topRatedRecyclerView = findViewById(R.id.recview_top_rated);
+        // Binding RandomRecyclerAdapter
+        vh.randomRecyclerView = findViewById(R.id.recview_random);
 
         // Binding CategoryRecyclerAdapter
         vh.categoryRecyclerView = findViewById(R.id.recview_categories);
 
         // Create adapters passing in the test lists
-        topRatedAdapter = new TopRatedRecylerAdapter(this, mainViewModel.getTopRatedRestaurants());
+        randomRecylerAdapter = new RandomRecylerAdapter(this);
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, mainViewModel.getCategories());
 
         // Attach adapter to the recycler view to populate these items
-        vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
+        vh.randomRecyclerView.setAdapter(randomRecylerAdapter);
         vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
+
+        mainViewModel.getRandomRestaurantList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            randomRecylerAdapter.setRandmoList(restaurants);
+        });
+
+        //Load random restaurants to show
+        mainViewModel.getRandomRestaurants();
 
         // For Landscape mode
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
-            vh.topRatedRecyclerView.setLayoutManager(gridLayoutManager);
+            vh.randomRecyclerView.setLayoutManager(gridLayoutManager);
         } else { // For Portrait mode
             LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-            vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
+            vh.randomRecyclerView.setLayoutManager(horizontalLayout);
         }
 
         LinearLayoutManager verticalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
