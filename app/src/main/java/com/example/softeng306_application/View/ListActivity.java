@@ -171,7 +171,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 } else {
                     loadRestaurantsByCategory(vh.emptyListText);
                 }
-                if (selectedCategory.equals("ALL")) {
+                if (!selectedCategory.equals("ALL")) {
                     vh.header.setBackgroundColor(Color.parseColor(listViewModel.getCategory().get(0).getBorderColour()));
                 } else {
                     vh.header.setBackgroundColor(getResources().getColor(R.color.btn));
