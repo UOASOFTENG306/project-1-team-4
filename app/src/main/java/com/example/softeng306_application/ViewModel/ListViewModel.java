@@ -41,8 +41,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ListViewModel extends AndroidViewModel {
-    private final GetFavouritesUseCase getFavouritesUseCase;
-    private final GetFavouritesByCategoryUseCase getFavouritesByCategoryUseCase;
+    private GetFavouritesUseCase getFavouritesUseCase;
+    private GetFavouritesByCategoryUseCase getFavouritesByCategoryUseCase;
     private GetAllRestaurantsUseCase getAllRestaurantsUseCase;
     private List<Category> categoryList;
     private List<Restaurant> searchList;
@@ -68,8 +68,8 @@ public class ListViewModel extends AndroidViewModel {
         userRepository = userRepository.getInstance();
         restaurantRepository = restaurantRepository.getInstance();
         categoryList = allCategories;
-        getFavouritesUseCase = new GetFavouritesUseCase();
-        getFavouritesByCategoryUseCase = new GetFavouritesByCategoryUseCase();
+        getFavouritesUseCase = getFavouritesUseCase.getInstance();
+        getFavouritesByCategoryUseCase = getFavouritesByCategoryUseCase.getInstance();
         getAllRestaurantsUseCase = getAllRestaurantsUseCase.getInstance();
     }
 

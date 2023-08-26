@@ -21,10 +21,17 @@ import java.util.List;
 import java.util.Map;
 
 public class GetFavouritesUseCase {
+    private static GetFavouritesUseCase instance;
     private UserRepository userRepository;
 
-    public GetFavouritesUseCase(){
+    private GetFavouritesUseCase(){
         userRepository = userRepository.getInstance();
+    }
+    public static GetFavouritesUseCase getInstance() {
+        if (instance == null){
+            instance = new GetFavouritesUseCase();
+        }
+        return instance;
     }
 
     public LiveData<List<Restaurant>> getFavouriteRestaurants() {
