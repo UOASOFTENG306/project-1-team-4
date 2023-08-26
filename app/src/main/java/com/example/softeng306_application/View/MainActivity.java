@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
-import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.MainViewModel;
 import com.example.softeng306_application.dataprovider.RestaurantFirestoreDataProvider;
