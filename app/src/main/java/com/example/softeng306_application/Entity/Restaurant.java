@@ -142,7 +142,7 @@ public class Restaurant implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Restaurant that = (Restaurant) o;
-        return Objects.equals(restaurantID, that.restaurantID) && Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(backgroundImageUrls, that.backgroundImageUrls) && Objects.equals(logoImage, that.logoImage) && Objects.equals(reviews, that.reviews) && Objects.equals(description, that.description) && Objects.equals(location, that.location) && Objects.equals(price, that.price);
+        return Objects.equals(restaurantID, that.restaurantID);
     }
 
     @Override
