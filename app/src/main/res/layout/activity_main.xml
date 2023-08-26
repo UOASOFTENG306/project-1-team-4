@@ -14,74 +14,84 @@
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:gravity="center"
         android:background="@color/btn">
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:backgroundTint="@color/transparent"
+            android:src="@drawable/btn_back_white"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/txt_logo"
             style="@style/SmallLogoHeader"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
-
-    <include layout="@layout/activity_search2"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+    <LinearLayout
         android:layout_below="@id/smallLogoHeader"
-        android:layout_marginBottom="5dp"
-        android:id="@+id/layout_searchbar"/>
-
-    <ScrollView
-        android:layout_below="@id/layout_searchbar"
-        android:id="@+id/scrollview_contents"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_weight="2">
 
-            <TextView
+            <include layout="@layout/activity_search2" android:id="@+id/layout_searchbar"
                 android:layout_height="wrap_content"
-                android:text="Discover"
-                style="@style/HeaderText"
-                android:layout_margin="10dp"
-                />
+                android:layout_width="match_parent"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recview_random"
+            <ScrollView
+                android:layout_below="@id/layout_searchbar"
+                android:id="@+id/scrollview_contents"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:layout_gravity="center"
-                android:scrollbars="horizontal"
-                android:layoutAnimation="@anim/main_recview_anim"
-                />
+                android:layout_height="wrap_content">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recview_categories"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:scrollbars="vertical"
-                    android:scrollbarStyle="outsideOverlay"
-                    android:layoutAnimation="@anim/main_recview_anim"
-                    />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:text="Discover"
+                        style="@style/HeaderText"
+                        android:layout_margin="10dp"
+                        />
 
-    </ScrollView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recview_random"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:layout_gravity="center"
+                        android:scrollbars="horizontal"
+                        android:layoutAnimation="@anim/main_recview_anim"
+                        />
 
-<!--    <TextView-->
-<!--        android:id="@+id/txt_username"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Loading..." />-->
-
-    <include layout="@layout/navbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recview_categories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:scrollbars="vertical"
+                        android:scrollbarStyle="outsideOverlay"
+                        android:layoutAnimation="@anim/main_recview_anim"
+                        />
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+        <include layout="@layout/navbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 </RelativeLayout>
 

@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="90dp"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center_horizontal"
-    app:cardCornerRadius="10dp"
-    android:layout_margin="8dp"
     android:id="@+id/mtrlcardview_restaurant"
-    app:strokeColor="@color/black"
-    app:strokeWidth="3dp"
-    >
+    app:cardCornerRadius="0dp"
+    app:strokeWidth="0dp"
+   >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,36 +15,81 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_margin="8dp"
-            android:src="@color/black"
-            />
-
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/img_logo_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="8dp"
+            app:strokeWidth="3dp"
+            >
+            <ImageView
+                android:id="@+id/img_logo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@color/black"
+                />
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <LinearLayout
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="10dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_restaurant_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Name"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mtrlcardview_categoryLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/dela_gothic_one"
-                android:textSize="16sp"
-                android:textAllCaps="true"
-                android:text="Name"/>
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="5dp"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp">
+
+                <TextView
+                    android:id="@+id/txt_categoryLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="7dp"
+                    android:layout_marginVertical="5dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center"
+                    android:text="Category"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="10dp"
+            android:orientation="vertical">
+
+<!--            TODO: Review stars to be displayed -->
 
             <TextView
                 android:id="@+id/txt_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_semibold"
                 android:text="$"
-                android:fontFamily="@font/montserrat_semibold"/>
-
+                android:textSize="16sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -60,12 +103,5 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/heart_fav"/>
         </RelativeLayout>
-
-
-
-
     </LinearLayout>
-
-
-
 </com.google.android.material.card.MaterialCardView>
