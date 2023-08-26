@@ -170,7 +170,6 @@ public class ListViewModel extends AndroidViewModel {
             prev = s;
             return filteredRestaurants;
         });
-
         return filteredLiveData;
     }
 }

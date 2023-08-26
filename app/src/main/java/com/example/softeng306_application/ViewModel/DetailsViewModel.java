@@ -1,6 +1,8 @@
 package com.example.softeng306_application.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
+
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -76,6 +78,17 @@ public class DetailsViewModel extends AndroidViewModel {
         currentReviews.add(review);
         updateCurrentList(currentReviews);
         calculateAverageReviewScoreFromList(currentReviews);
+    }
+    public int[] getBackgroundImages(Context context) {
+        Restaurant currentRestaurant = restaurant;
+        String id = currentRestaurant.getRestaurantID();
+        int restaurantId = Integer.parseInt(id) - 1;
+        String resId = String.valueOf(restaurantId);
+        int[] images = new int[3];
+        images[0] = context.getResources().getIdentifier("back" + resId + "_1", "drawable", context.getPackageName());
+        images[1] = context.getResources().getIdentifier("back" + resId + "_2", "drawable", context.getPackageName());
+        images[2] = context.getResources().getIdentifier("back" + resId + "_3", "drawable", context.getPackageName());
+        return images;
     }
 
     public void setRestaurant(Restaurant restaurant) {

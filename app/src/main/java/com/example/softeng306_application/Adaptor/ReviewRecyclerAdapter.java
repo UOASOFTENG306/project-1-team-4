@@ -72,7 +72,6 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
     }
 
     public class ReviewViewHolder extends RecyclerView.ViewHolder{
-
         TextView username, comment;
         LinearLayout reviewScoreLayout;
 

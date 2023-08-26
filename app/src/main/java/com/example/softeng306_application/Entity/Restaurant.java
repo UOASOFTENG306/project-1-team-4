@@ -13,7 +13,7 @@ public class Restaurant implements Parcelable {
     private String restaurantID;
     private String name;
     private Category category;
-    private List<Integer> backgroundImageUrls;
+    private List<String> backgroundImageUrls;
     private String logoImage;
     private List<Review> reviews = new ArrayList<>();
     private String description;
@@ -38,6 +38,7 @@ public class Restaurant implements Parcelable {
         this.logoImage = logoImage;
         this.price = price;
     }
+
     public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImage, String price) {
         //TODO ADD REVIEWS
         this.restaurantID = restaurantID;
@@ -50,8 +51,21 @@ public class Restaurant implements Parcelable {
         this.reviews = new ArrayList<>();
     }
 
-    public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImage, String price, List<Review> reviews) {
+    public Restaurant(String restaurantID, List<String> backgroundImageUrls, String name, String description, String location, Category category, String logoImage, String price) {
+        //TODO ADD REVIEWS
         this.restaurantID = restaurantID;
+        this.backgroundImageUrls = backgroundImageUrls;
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.category = category;
+        this.logoImage = logoImage;
+        this.price = price;
+    }
+
+    public Restaurant(String restaurantID, List<String> backgroundImageUrls, String name, String description, String location, Category category, String logoImage, String price, List<Review> reviews) {
+        this.restaurantID = restaurantID;
+        this.backgroundImageUrls = backgroundImageUrls;
         this.name = name;
         this.description = description;
         this.location = location;
@@ -100,7 +114,7 @@ public class Restaurant implements Parcelable {
         this.category = category;
     }
 
-    public List<Integer> getBackgroundImages() {
+    public List<String> getBackgroundImages() {
         return backgroundImageUrls;
     }
 

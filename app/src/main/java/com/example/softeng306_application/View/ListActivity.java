@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -23,6 +24,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -46,22 +48,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity {
-
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
-    private DetailsViewModel detailsViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
-    private CategoryDropdownAdapter adapterCategoryItems;
     private ArrayAdapter<String> adapterItems;
-
     private class ViewHolder {
         AutoCompleteTextView autoCompleteTextView;
         TextView emptyListText;
         RecyclerView restaurantRecyclerView;
-        SearchView searchView;
         ImageButton backButton;
         View viewLayout;
         LinearLayout customSearchBar;
+        RelativeLayout header;
         EditText searchEditText;
     }
 
@@ -91,6 +89,9 @@ public class ListActivity extends AppCompatActivity implements Activity {
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.customSearchBar = findViewById(R.id.customSearchBar);
         vh.searchEditText = findViewById(R.id.searchEditText);
+
+        vh.header = findViewById(R.id.smallLogoHeader);
+
         vh.viewLayout= findViewById(R.id.layout_list);
         vh.viewLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -100,7 +101,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
             }
         });
 
-
         // Bind RestaurantAdapter
         adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, listViewModel.getAllCategoryNameOptions());
         vh.autoCompleteTextView.setAdapter(adapterItems);
@@ -108,6 +108,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         // Bind RestaurantRecyclerAdapter
         restaurantAdapter = new RestaurantRecyclerAdapter(this);
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
+
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
@@ -121,7 +122,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 Category category = intent.getParcelableExtra("CATEGORY");
                 listViewModel.setCategory(category);
                 vh.autoCompleteTextView.setText(category.getCategoryType(), false);
-
+                vh.header.setBackgroundColor(Color.parseColor(category.getBorderColour()));
             } else if (intent.hasExtra("FAVOURITES")) {
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
                 listViewModel.setFavourite(true);
@@ -164,11 +165,18 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 vh.autoCompleteTextView.setText(selectedCategory, false);
                 // Set selected category
                 listViewModel.setCategory(selectedCategory);
+
                 if(listViewModel.getFavourite()){
                     loadFavouritesByCategory(vh.emptyListText);
                 } else {
                     loadRestaurantsByCategory(vh.emptyListText);
                 }
+                if (selectedCategory.equals("ALL")) {
+                    vh.header.setBackgroundColor(Color.parseColor(listViewModel.getCategory().get(0).getBorderColour()));
+                } else {
+                    vh.header.setBackgroundColor(getResources().getColor(R.color.btn));
+                }
+
             }
         });
     }
@@ -205,6 +213,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         protected void onResume() {
             super.onResume();
             TextView emptyListText = findViewById(R.id.txt_emptyList);
+
             listViewModel.getFavouritesList().observe(this, restaurants -> {
                 restaurantAdapter.setFavouriteRestaurants(restaurants);
             });
