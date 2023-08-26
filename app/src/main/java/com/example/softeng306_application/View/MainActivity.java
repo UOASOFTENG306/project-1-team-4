@@ -1,7 +1,9 @@
 package com.example.softeng306_application.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,6 +22,7 @@ import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.MainViewModel;
 import com.example.softeng306_application.dataprovider.RestaurantFirestoreDataProvider;
+
 
 public class MainActivity extends AppCompatActivity {
 
