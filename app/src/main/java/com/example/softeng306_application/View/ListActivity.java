@@ -138,9 +138,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 String query = charSequence.toString();
-                List<Restaurant> filteredRestaurants = listViewModel.filterList(query);
-                restaurantAdapter.setRestaurants(filteredRestaurants);
-                checkIfEmpty(filteredRestaurants, vh.emptyListText);
+                loadFilteredRestaurants(query, vh.emptyListText);
             }
 
             @Override
@@ -178,6 +176,13 @@ public class ListActivity extends AppCompatActivity implements Activity {
         } else {
             empty.setVisibility(View.GONE);
         }
+    }
+    private void loadFilteredRestaurants(String query, TextView emptyListText){
+        listViewModel.filterList(query).observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setRestaurants(restaurants);
+            checkIfEmpty(restaurants, emptyListText);
+        });
     }
     private void loadFavouritesByCategory(TextView emptyListText){
         listViewModel.getFavouritesByCategory().observe(this, restaurants -> {

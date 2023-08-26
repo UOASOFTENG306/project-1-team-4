@@ -179,38 +179,29 @@ public class ListViewModel extends AndroidViewModel {
         setSearchList(restaurantList.getValue());
         return restaurantList;
     }
-    
-    public List<Restaurant> filterList(String s) {
-        if (this.getRestaurantList().getValue() == null) {
-            this.getRestaurantList().observeForever(new Observer<List<Restaurant>>() {
-                @Override
-                public void onChanged(List<Restaurant> restaurants) {
-                    if(restaurants != null){
-                        filterList(s);
+
+    public LiveData<List<Restaurant>> filterList(String s) {
+        LiveData<List<Restaurant>> filteredLiveData = Transformations.map(getRestaurantByCategoryList(), restaurantList -> {
+            // Filter condition
+            List<Restaurant> filteredRestaurants = new ArrayList<>();
+
+            if(prev.length() >= s.length()) {
+                for(Restaurant r: getSearchList()) {
+                    if (r.getName().toLowerCase().contains(s)) {
+                        filteredRestaurants.add(r);
                     }
-                    getRestaurantList().removeObserver(this);
                 }
-            });
-        }
-
-        List<Restaurant> restaurants = this.getRestaurantList().getValue();
-
-        List<Restaurant> filteredRestaurants = new ArrayList<>();
-
-        if(prev.length() >= s.length()) {
-            for(Restaurant r: getSearchList()) {
-                if (r.getName().toLowerCase().contains(s)) {
-                    filteredRestaurants.add(r);
+            } else {
+                for(Restaurant r: restaurantList) {
+                    if (r.getName().toLowerCase().contains(s)) {
+                        filteredRestaurants.add(r);
+                    }
                 }
             }
-        } else {
-            for(Restaurant r: restaurants) {
-                if (r.getName().toLowerCase().contains(s)) {
-                    filteredRestaurants.add(r);
-                }
-            }
-        }
-        prev = s;
-        return filteredRestaurants;
+            prev = s;
+            return filteredRestaurants;
+        });
+
+        return filteredLiveData;
     }
 }
