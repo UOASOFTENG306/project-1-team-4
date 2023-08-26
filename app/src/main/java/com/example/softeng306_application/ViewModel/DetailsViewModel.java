@@ -18,8 +18,10 @@ import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.ReviewRepository;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,8 @@ public class DetailsViewModel extends AndroidViewModel {
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
     private ReviewRepository reviewRepository;
+    private MutableLiveData<Integer> averageScore =  new MutableLiveData<>();
+
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
     private MutableLiveData<List<Review>> reviewsList =  new MutableLiveData<>();
     private MutableLiveData<Boolean> favourite  = new MutableLiveData<>();;
@@ -153,7 +157,8 @@ public class DetailsViewModel extends AndroidViewModel {
                     if (reviewsArray != null) {
                         for (Map<String, Object> review : reviewsArray) {
                             Log.d("FirestoreActivity", (String) review.get("description"));
-                            reviews.add(new Review((String) review.get("userID"), (String) review.get("description")));
+                            Double reviewScore = (Double) review.get("reviewScore");
+                            reviews.add(new Review((String) review.get("userID"), (String) review.get("description"), reviewScore.floatValue()));
                         }
                         updateReviewsList(reviews);
                     }
@@ -170,6 +175,7 @@ public class DetailsViewModel extends AndroidViewModel {
 
     public void updateReviewsList(List<Review> reviews) {
         this.reviewsList.setValue(reviews);
+        calculateAverageReviewScoreFromList();
     }
 
 
@@ -241,6 +247,78 @@ public class DetailsViewModel extends AndroidViewModel {
         String resId = String.valueOf(restaurantId);
 
         return resId;
+    }
 
+    public LiveData<Integer> getAverageReviewScore() {
+        return averageScore;
+    }
+
+    public void calculateAverageReviewScoreFromList(){
+        float sum = 0;
+        float average;
+
+        Integer num = this.getReviewsList().getValue().size();
+        for (Review review : this.getReviewsList().getValue()) {
+            sum += review.getReviewScore();
+        }
+        average = sum/num;
+        this.averageScore.setValue(Math.round(average));
+    }
+
+    public void calculateAverageReviewScore(String restaurantId) {
+        Task<DocumentSnapshot> task = reviewRepository.getReviews(restaurantId);
+        task.addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                double sum =  0;
+                int itemCount = 0;
+                try {
+                    List<Map<String, Object>> reviewsArray = (List<Map<String, Object>>) task1.getResult().getData().get("reviews");
+                    if (reviewsArray != null) {
+                        for (Map<String, Object> review : reviewsArray) {
+                            double fieldValue = (double) review.get("reviewScore");
+                            sum += fieldValue;
+                            itemCount++;
+                        }
+                        if (itemCount > 0) {
+                            double average = sum / itemCount;
+                            Integer integerValue =(int) Math.round(average);
+                            this.averageScore.setValue(integerValue);
+                        } else {
+                            this.averageScore.setValue(0);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d("FirestoreActivity", "Error getting the reviews: ", task.getException());
+                }
+            }
+            else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+            }
+        });
+    }
+    public void addReviews(String restaurantID, String reviewComment, float reviewScore) {
+        userRepository.getAllUserInformation().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                try {
+                    DocumentSnapshot document = task.getResult();
+                    String username = (String) document.get("username");
+                    if(username != null) {
+                        Review review = new Review(username, reviewComment, reviewScore);
+                        reviewRepository.addReview(restaurantID, review);
+                        List<Review> currentItems = this.reviewsList.getValue();
+                        if (currentItems != null) {
+                            currentItems.add(review);
+                            updateReviewsList(currentItems);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d("FirestoreActivity", "Error getting the username: ", task.getException());
+                }
+            }
+            else {
+                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
+            }
+
+        });
     }
 }
