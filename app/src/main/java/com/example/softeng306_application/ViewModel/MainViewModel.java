@@ -51,9 +51,6 @@ public class MainViewModel extends AndroidViewModel {
         return getRandomRestaurantsUseCase.getRandomRestaurants();
     }
 
-    public Task<DocumentSnapshot> getUserInfo() {
-        return getCurrentUserUseCase.getUserInfo();
-    }
 
     public List<Category> getCategories(){
         // TODO: RETRIEVE DATA FROM REPOSITORY(?)
