@@ -76,7 +76,7 @@ public class ReviewFragment extends Fragment {
 
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
         Restaurant restaurant = detailsViewModel.getRestaurant();
-        reviewList = detailsViewModel.getReviews();
+        reviewList = restaurant.getReviews();
         detailsViewModel.updateReviewsList(reviewList);
 
         reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext());

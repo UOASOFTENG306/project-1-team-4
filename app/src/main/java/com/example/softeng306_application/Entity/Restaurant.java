@@ -69,6 +69,8 @@ public class Restaurant implements Parcelable {
         description = in.readString();
         location = in.readString();
         price = in.readString();
+        reviews = new ArrayList<>();
+        in.readList(reviews, Review.class.getClassLoader());
     }
 
     public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
@@ -132,6 +134,7 @@ public class Restaurant implements Parcelable {
         dest.writeString(description);
         dest.writeString(location);
         dest.writeString(price);
+        dest.writeList(reviews);
     }
 
     @Override
