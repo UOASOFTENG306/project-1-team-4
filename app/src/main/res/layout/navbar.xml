@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white"
+    android:layout_gravity="bottom"
+    android:gravity="center"
+    >
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/logout"
+            android:id="@+id/btn_logout"
+            android:layout_margin="20dp"/>
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="20dp"
+            android:scaleType="fitXY"
+            android:id="@+id/btn_list"
+
+            android:background="@drawable/list"/>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:id="@+id/btn_main"
+
+            android:background="@drawable/main"/>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:id="@+id/btn_favourites"
+            android:background="@drawable/heart_fav"/>
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="20dp"
+            android:id="@+id/btn_search"
+            android:background="@drawable/search"/>
+
+
+</LinearLayout>

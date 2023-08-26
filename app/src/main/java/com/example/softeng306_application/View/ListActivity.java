@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -23,6 +24,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -46,22 +48,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity {
-
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
-    private DetailsViewModel detailsViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
-    private CategoryDropdownAdapter adapterCategoryItems;
     private ArrayAdapter<String> adapterItems;
-
     private class ViewHolder {
         AutoCompleteTextView autoCompleteTextView;
         TextView emptyListText;
         RecyclerView restaurantRecyclerView;
-        SearchView searchView;
         ImageButton backButton;
         View viewLayout;
         LinearLayout customSearchBar;
+        RelativeLayout header;
         EditText searchEditText;
     }
 
@@ -81,14 +79,17 @@ public class ListActivity extends AppCompatActivity implements Activity {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
 
+        NavbarViewHolder navbarViewHolder = new NavbarViewHolder(findViewById(R.id.layout_list), mainViewModel);
+        Navbar.setUpNavbar(navbarViewHolder, this);
+
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
         vh.backButton = findViewById(R.id.btn_back);
         vh.emptyListText = findViewById(R.id.txt_emptyList);
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.customSearchBar = findViewById(R.id.customSearchBar);
-
         vh.searchEditText = findViewById(R.id.searchEditText);
+        vh.header = findViewById(R.id.smallLogoHeader);
 
         vh.viewLayout= findViewById(R.id.layout_list);
         vh.viewLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -99,7 +100,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
             }
         });
 
-
         // Bind RestaurantAdapter
         adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, listViewModel.getAllCategoryNameOptions());
         vh.autoCompleteTextView.setAdapter(adapterItems);
@@ -107,6 +107,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         // Bind RestaurantRecyclerAdapter
         restaurantAdapter = new RestaurantRecyclerAdapter(this);
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
+
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
@@ -125,6 +126,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 Category category = intent.getParcelableExtra("CATEGORY");
                 listViewModel.setCategory(category);
                 vh.autoCompleteTextView.setText(category.getCategoryType(), false);
+                vh.header.setBackgroundColor(Color.parseColor(category.getBorderColour()));
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
 
             } else if (intent.hasExtra("FAVOURITES")) {
@@ -137,9 +139,10 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 vh.searchEditText.requestFocus();
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
 
-            }else {
+            } else {
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
             }
+
         }
 
         vh.searchEditText.addTextChangedListener(new TextWatcher() {
@@ -185,11 +188,14 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 vh.autoCompleteTextView.setText(selectedCategory, false);
                 // Set selected category
                 listViewModel.setCategory(selectedCategory);
-                if(listViewModel.getFavourite()){
-                    listViewModel.listFavouritesByCategory();
+
+                if (listViewModel.getCategory().size() != listViewModel.getAllCategories().size()) {
+                    vh.header.setBackgroundColor(Color.parseColor(listViewModel.getCategory().get(0).getBorderColour()));
                 } else {
-                    restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
+                    vh.header.setBackgroundColor(getResources().getColor(R.color.btn));
                 }
+                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
+
             }
         });
     }
@@ -197,6 +203,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         @Override
         protected void onResume() {
             super.onResume();
+
             listViewModel.loadFavouriteList();
             if (listViewModel.getFavourite()) {
                 listViewModel.getFavouriteRestaurants();

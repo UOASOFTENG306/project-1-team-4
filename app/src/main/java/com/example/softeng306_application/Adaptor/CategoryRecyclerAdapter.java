@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,7 +45,14 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     public void onBindViewHolder(CategoryRecyclerAdapter.CategoryViewHolder holder, int position) {
         Category category = categoryList.get(position);
         String audio = category.getAudioFileName();
-        holder.categoryName.setText(categoryList.get(position).getCategoryType());
+
+        // Handle category background image and text
+        String name = categoryList.get(position).getCategoryType();
+        holder.categoryName.setText(name);
+        String imgName = name.toLowerCase().replace(" ","");
+        int img = context.getResources().getIdentifier(imgName, "drawable", context.getPackageName());
+        holder.backgroundImage.setImageResource(img);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,11 +87,13 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder{
         TextView categoryName;
-        CardView cardView;
+        ImageView backgroundImage;
+        RelativeLayout categoryItem;
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryName = itemView.findViewById(R.id.txt_category);
-            cardView = itemView.findViewById(R.id.cardview_category);
+            categoryItem = itemView.findViewById(R.id.relativeLayout_category);
+            backgroundImage = itemView.findViewById(R.id.img_category);
         }
 
     }

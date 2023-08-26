@@ -19,7 +19,6 @@ import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
-import com.example.softeng306_application.Repository.FirestoreCallback;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.UserRepository;
 import com.example.softeng306_application.View.ListActivity;

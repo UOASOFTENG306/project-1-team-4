@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.ListActivity"
+    android:id="@+id/layout_list"
+    >
+    <include layout="@layout/action_bar" android:id="@+id/smallLogoHeader" android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/layout_topBar"
+        >
+        <include layout="@layout/activity_search2"
+            android:layout_height="wrap_content"
+            android:layout_width="400dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/search_bar"/>
+
+        <include layout="@layout/navbar"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentBottom="true"/>
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/DropDownLayout"
+        android:layout_below="@id/layout_topBar"
+        android:id="@+id/dropdown_menu">
+
+        <AutoCompleteTextView
+            android:id="@+id/dropdown_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:text="CATEGORY"
+            android:layout_gravity="start"
+            style="@style/DropDownMenuText"
+            android:backgroundTint="@color/transparent"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/dropdown_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layoutAnimation="@anim/layout_animation">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recview_restaurant_list"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/txt_emptyList"
+            android:gravity="center"
+            android:text="No Restaurants to display!"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
