@@ -46,16 +46,17 @@ public class RandomRecylerAdapter extends RecyclerView.Adapter<RandomRecylerAdap
         holder.restaurantName.setText(randomList.get(position).getName());
         holder.logoImage.setImageResource(showImage(randomList.get(position)));
         holder.randomCardView.setStrokeColor(Color.parseColor(colourHex));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRestaurantClick(restaurant);
-            }
-        });
+        holder.backgroundImage.setImageResource(showImageBackground(randomList.get(position)));
+        holder.itemView.setOnClickListener(v -> onRestaurantClick(restaurant));
     }
 
     private int showImage(Restaurant restaurant) {
         int i = context.getResources().getIdentifier(restaurant.getLogoImage(), "drawable", context.getPackageName());
+        return i;
+    }
+
+    private int showImageBackground(Restaurant restaurant) {
+        int i = context.getResources().getIdentifier("back" + restaurant.getRestaurantID()+ "_1", "drawable", context.getPackageName());
         return i;
     }
 
@@ -72,13 +73,15 @@ public class RandomRecylerAdapter extends RecyclerView.Adapter<RandomRecylerAdap
 
     public class RandomViewHolder extends RecyclerView.ViewHolder {
         TextView restaurantName;
-        ImageView logoImage;
+        ImageView logoImage, backgroundImage;
         MaterialCardView randomCardView;
+
         public RandomViewHolder(@NonNull View itemView) {
             super(itemView);
             restaurantName =  itemView.findViewById(R.id.textview_random);
             logoImage =  itemView.findViewById(R.id.imgview_main_logo);
             randomCardView = itemView.findViewById(R.id.mtrlcardview_random);
+            backgroundImage = itemView.findViewById(R.id.img_bg);
         }
 
     }
