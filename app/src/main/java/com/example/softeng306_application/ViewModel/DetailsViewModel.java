@@ -18,6 +18,7 @@ import com.example.softeng306_application.Entity.Review;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.ReviewRepository;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.example.softeng306_application.UseCase.CheckFavouriteUseCase;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -26,12 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 public class DetailsViewModel extends AndroidViewModel {
+    private CheckFavouriteUseCase checkFavouriteUseCase;
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
     private ReviewRepository reviewRepository;
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
     private MutableLiveData<List<Review>> reviewsList =  new MutableLiveData<>();
-    private MutableLiveData<Boolean> favourite  = new MutableLiveData<>();;
+    private Boolean isFavourite;
     private MutableLiveData<Restaurant> restaurant  = new MutableLiveData<>();;
 
     public DetailsViewModel(@NonNull Application application) {
@@ -39,6 +41,7 @@ public class DetailsViewModel extends AndroidViewModel {
         userRepository = userRepository.getInstance();
         restaurantRepository = restaurantRepository.getInstance();
         reviewRepository = reviewRepository.getInstance();
+        checkFavouriteUseCase = checkFavouriteUseCase.getInstance();
     }
 
     public LiveData<Restaurant> getRestaurant() {
@@ -49,12 +52,12 @@ public class DetailsViewModel extends AndroidViewModel {
         return reviewsList;
     }
 
-    public void setFavourite(Boolean value) {
-        this.favourite.setValue(value);
+    public void setIsFavourite(Boolean value) {
+        this.isFavourite = value;
     }
 
-    public LiveData<Boolean> isFavourite() {
-        return favourite;
+    public Boolean isFavourite() {
+        return isFavourite;
     }
 
 
@@ -72,7 +75,7 @@ public class DetailsViewModel extends AndroidViewModel {
                         }
                         updateFavouriteList(restaurants);
                     }
-                    setFavourite(restaurants.contains(restaurant.getValue()));
+                    setIsFavourite(restaurants.contains(restaurant.getValue()));
 
                 } catch (Exception e) {
                     Log.d("FirestoreActivity", "Error updating restaurants: ", task.getException());
@@ -83,31 +86,8 @@ public class DetailsViewModel extends AndroidViewModel {
             }
         });
     }
-    public void getFavouriteRestaurants() {
-        List<Restaurant> restaurants = new ArrayList<>();
-        Task<DocumentSnapshot> task1 = userRepository.getFavourites();
-        Task<DocumentSnapshot> documentSnapshotTask = task1.addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                Map<String, Object> map = documentSnapshot.getData();
-                if (map != null && map.containsKey("favourites")) {
-                    Map<String, Object> innerMap = (Map<String, Object>) map.get("favourites");
-                    if (innerMap != null && innerMap.containsKey("favouriteRestaurants")) {
-                        List<Map<String, Object>> array = (List<Map<String, Object>>) innerMap.get("favouriteRestaurants");
-
-                        // Now 'array' contains your list of maps
-                        for (Map<String, Object> itemMap : array) {
-                            restaurants.add(restaurantBuilder(itemMap));
-                        }
-                        updateFavouriteList(restaurants);
-                        setFavourite(restaurants.contains(restaurant.getValue()));
-
-                    }
-                }
-            }
-            else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task1.getException());
-            }
-        });
+    public LiveData<Boolean> checkFavourite(Restaurant restaurant) {
+        return checkFavouriteUseCase.checkFavourite(restaurant);
     }
     private Restaurant restaurantBuilder(Map<String, Object> data) {
         //TODO IDENTICAL CODE WITH LISTVIEWMODEL
@@ -179,23 +159,6 @@ public class DetailsViewModel extends AndroidViewModel {
     }
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant.setValue(restaurant);
-    }
-
-    public void setOppositeFavourite() {
-        if (this.favourite.getValue() == null) {
-            this.favourite.observeForever(new Observer<Boolean>() {
-                @Override
-                public void onChanged(Boolean isFav) {
-                    if (isFav != null) {
-                        setFavourite(!favourite.getValue());
-                    }
-                    favourite.removeObserver(this);
-                }
-
-            });
-            return;
-        }
-        setFavourite(!favourite.getValue());
     }
 
     public void addFavourite() {
