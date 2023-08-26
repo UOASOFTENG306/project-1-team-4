@@ -23,7 +23,7 @@ public interface IUserRepository {
 
     void addFavourite(Restaurant restaurant);
 
-    void deleteFavourite(Restaurant restaurant);
+    void removeFavourite(Restaurant restaurant);
 };
 
 

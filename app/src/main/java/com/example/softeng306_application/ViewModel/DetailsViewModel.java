@@ -20,6 +20,7 @@ import com.example.softeng306_application.Repository.ReviewRepository;
 import com.example.softeng306_application.Repository.UserRepository;
 import com.example.softeng306_application.UseCase.AddFavouriteUseCase;
 import com.example.softeng306_application.UseCase.CheckFavouriteUseCase;
+import com.example.softeng306_application.UseCase.RemoveFavouriteUseCase;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -29,6 +30,7 @@ import java.util.Map;
 
 public class DetailsViewModel extends AndroidViewModel {
     private CheckFavouriteUseCase checkFavouriteUseCase;
+    private RemoveFavouriteUseCase removeFavouriteUseCase;
     private AddFavouriteUseCase addFavouriteUseCase;
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
@@ -45,6 +47,7 @@ public class DetailsViewModel extends AndroidViewModel {
         reviewRepository = reviewRepository.getInstance();
         checkFavouriteUseCase = checkFavouriteUseCase.getInstance();
         addFavouriteUseCase = addFavouriteUseCase.getInstance();
+        removeFavouriteUseCase = removeFavouriteUseCase.getInstance();
     }
 
     public Restaurant getRestaurant() {
@@ -109,7 +112,7 @@ public class DetailsViewModel extends AndroidViewModel {
     }
 
     public void removeFavourite() {
-        userRepository.deleteFavourite(this.restaurant);
+        removeFavouriteUseCase.removeFavourite(this.restaurant);
     }
 
     public String getRestaurantIDMinusOne() {
