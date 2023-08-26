@@ -196,8 +196,10 @@ public class ListActivity extends AppCompatActivity implements Activity {
                     restaurantAdapter.setFavouriteRestaurants(restaurants);
                     restaurantAdapter.setRestaurants(restaurants);
                 });
-
-
+            } else {
+                listViewModel.getFavouritesList().observe(this, restaurants -> {
+                    restaurantAdapter.setFavouriteRestaurants(restaurants);
+                });
             }
         }
 
