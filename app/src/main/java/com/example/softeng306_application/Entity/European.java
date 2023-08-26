@@ -8,7 +8,7 @@ public class European extends Category {
 
     // Non-argument constructor to enable auto conversion of the Firebase documents to Asian objects
     public European() {
-        this.borderColour = "#7A8DD2";
+        this.borderColour = "#A1C2F1";
         this.audioFileName = "european";
         this.categoryType =  "EUROPEAN";
     }
