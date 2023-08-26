@@ -87,9 +87,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         vh.emptyListText = findViewById(R.id.txt_emptyList);
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.customSearchBar = findViewById(R.id.customSearchBar);
-
         vh.searchEditText = findViewById(R.id.searchEditText);
-
         vh.viewLayout= findViewById(R.id.layout_list);
         vh.viewLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -120,7 +118,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 Category category = intent.getParcelableExtra("CATEGORY");
                 listViewModel.setCategory(category);
                 vh.autoCompleteTextView.setText(category.getCategoryType(), false);
-                listViewModel.getRestaurantsTest();
 
             } else if (intent.hasExtra("FAVOURITES")) {
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
@@ -141,7 +138,9 @@ public class ListActivity extends AppCompatActivity implements Activity {
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 String query = charSequence.toString();
-                restaurantAdapter.setRestaurants(listViewModel.filterList(query));
+                List<Restaurant> filteredRestaurants = listViewModel.filterList(query);
+                restaurantAdapter.setRestaurants(filteredRestaurants);
+                checkIfEmpty(filteredRestaurants, vh.emptyListText);
             }
 
             @Override
@@ -156,9 +155,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
             }
         });
 
-        listViewModel.getEmptyMessageVisibility().observe(this, visibility -> {
-            vh.emptyListText.setVisibility(visibility);
-        });
 
         vh.autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -176,6 +172,13 @@ public class ListActivity extends AppCompatActivity implements Activity {
         });
     }
 
+    private void checkIfEmpty(List<Restaurant> restaurants, TextView empty){
+        if(restaurants.isEmpty()){
+            empty.setVisibility(View.VISIBLE);
+        } else {
+            empty.setVisibility(View.GONE);
+        }
+    }
     private void loadFavouritesByCategory(){
         listViewModel.getFavouritesByCategory().observe(this, restaurants -> {
             restaurantAdapter.setRestaurants(restaurants);
@@ -184,19 +187,21 @@ public class ListActivity extends AppCompatActivity implements Activity {
         @Override
         protected void onResume() {
             super.onResume();
+            TextView emptyListText = findViewById(R.id.txt_emptyList);
             if (listViewModel.getFavourite()) {
                 listViewModel.getFavouritesList().observe(this, restaurants -> {
                     restaurantAdapter.setFavouriteRestaurants(restaurants);
                     restaurantAdapter.setRestaurants(restaurants);
+                    checkIfEmpty(restaurants, emptyListText);
                 });
             } else {
                 listViewModel.getFavouritesList().observe(this, restaurants -> {
                     restaurantAdapter.setFavouriteRestaurants(restaurants);
                 });
-
                 listViewModel.getRestaurantList().observe(this, restaurants -> {
                     // Update the adapter with the new list of items
                     restaurantAdapter.setRestaurants(restaurants);
+                    checkIfEmpty(restaurants, emptyListText);
                 });
             }
         }
