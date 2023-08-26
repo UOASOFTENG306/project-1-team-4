@@ -5,18 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.ImageButton;
@@ -27,6 +27,7 @@ import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
 import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
 import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.CategoryType;
+import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.MainViewModel;
@@ -47,139 +48,113 @@ public class MainActivity extends AppCompatActivity {
 
     private class ViewHolder{
         TextView usernameText;
-        ImageButton logoutButton, listButton, mainButton, favouritesButton, searchButton;
-        CardView favouriteCardview;
+        ImageButton logoutNavButton, favouritesNavButton, listNavButton, mainNavButton, searchNavButton;
         RecyclerView topRatedRecyclerView;
         RecyclerView categoryRecyclerView;
-        SearchView searchView;
+        LinearLayout customSearchBar;
+        EditText searchEditText;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
         restaurantFirestoreDataProvider.addRestaurantToFirestore();
-
         /**UserFirestoreDataProvider userFirestoreDataProvider = new UserFirestoreDataProvider();
-        userFirestoreDataProvider.addFavouritesToDB();**/
-
+         userFirestoreDataProvider.addFavouritesToDB();**/
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
-        // ViewHolder
         ViewHolder vh = new ViewHolder();
-        vh.logoutButton = findViewById(R.id.btn_logout);
-        vh.usernameText = findViewById(R.id.txt_username);
-        vh.logoutButton = findViewById(R.id.btn_logout);
-        vh.listButton = findViewById(R.id.btn_list);
-        vh.mainButton = findViewById(R.id.btn_main);
-        vh.favouritesButton = findViewById(R.id.btn_favourites);
-        vh.searchButton = findViewById(R.id.btn_search);
-
-        vh.searchView = findViewById(R.id.inputText_search);
-        vh.searchView.clearFocus();
-
-
-
+//        vh.usernameText = findViewById(R.id.txt_username);
 //        mainViewModel.getUserInfo().addOnSuccessListener(documentSnapshot -> {
 //            if (documentSnapshot.exists()) {
 //                vh.usernameText.setText(documentSnapshot.getString("username"));
 //            }
 //        });
 
-        // RECYCLER ADAPTERS
+        vh.customSearchBar = findViewById(R.id.customSearchBar);
+        vh.searchEditText = findViewById(R.id.searchEditText);
+        vh.searchEditText.setInputType(InputType.TYPE_NULL);
+        vh.searchEditText.setFocusable(false);
+        vh.searchEditText.setClickable(true);
+
+
+        // Navbar Buttons
+        vh.favouritesNavButton = findViewById(R.id.btn_favourites);
+        vh.logoutNavButton = findViewById(R.id.btn_logout);
+        vh.listNavButton = findViewById(R.id.btn_list);
+        vh.searchNavButton = findViewById(R.id.btn_search);
+        vh.mainNavButton = findViewById(R.id.btn_main);
+
+        // Binding TopRatedRecyclerAdapter
         vh.topRatedRecyclerView = findViewById(R.id.recview_top_rated);
+
+        // Binding CategoryRecyclerAdapter
         vh.categoryRecyclerView = findViewById(R.id.recview_categories);
 
+        // Create adapters passing in the test lists
         topRatedAdapter = new TopRatedRecylerAdapter(this, mainViewModel.getTopRatedRestaurants());
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, mainViewModel.getCategories());
 
+        // Attach adapter to the recycler view to populate these items
         vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
         vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
 
+        // Set layout manager to position the items
+        // Set Horizontal Layout Manager for topRatedRecyclerView
+        LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
 
-        // For Landscape mode
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
-            vh.topRatedRecyclerView.setLayoutManager(gridLayoutManager);
-        } else { // For Portrait mode
-            LinearLayoutManager horizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-            vh.topRatedRecyclerView.setLayoutManager(horizontalLayout);
-        }
-
+        // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.categoryRecyclerView.setLayoutManager(verticalLayout);
 
-        // OnClickListeners
-        clickSearchBar(vh);
-        clickNavFavourites(vh);
+        //OnClickListeners
         clickNavLogout(vh);
-        clickNavSearch(vh, new View(this));
+        clickNavFavourites(vh);
+        clickSearchBar(vh);
+        clickNavSearch(vh);
         clickNavMain(vh);
         clickNavList(vh);
     }
-
     private void clickSearchBar(ViewHolder vh) {
-        vh.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                showListActivitySearch(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-    }
-
-    private void showListActivitySearch(CharSequence query) {
-        Intent listIntent = new Intent(this, ListActivity.class);
-        listIntent.putExtra("SEARCH", query);
-        startActivity(listIntent);
-    }
-
-    // This method implements a listener for the navbar search button which simulates clicking the search bar at the top, bringing up the keyboard
-    private void clickNavSearch(ViewHolder vh, View v) {
-        vh.searchButton.setOnClickListener(view -> {
-            vh.searchView.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        vh.searchEditText.setOnClickListener(v -> {
+            Intent listIntent = new Intent(this, ListActivity.class);
+            listIntent.putExtra("SEARCH", true);
+            startActivity(listIntent);
         });
     }
     private void clickNavLogout(ViewHolder vh){
-        vh.logoutButton.setOnClickListener(v -> {
+        vh.logoutNavButton.setOnClickListener(v -> {
             mainViewModel.logout();
-            showLoginActivity(v);
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
         });
     }
     private void clickNavFavourites(ViewHolder vh){
-        vh.favouritesButton.setOnClickListener(v -> showListActivity(v));
-    }
-    private void clickNavMain(ViewHolder vh) {
-        vh.mainButton.setOnClickListener(v -> {
-            Toast.makeText(this,"Already on Main Menu", Toast.LENGTH_SHORT).show();
+        vh.favouritesNavButton.setOnClickListener(v -> {
+            Intent listIntent = new Intent(this, ListActivity.class);
+            listIntent.putExtra("FAVOURITES", true);
+            startActivity(listIntent);
         });
     }
     private void clickNavList(ViewHolder vh) {
-        vh.listButton.setOnClickListener(v -> {
-            showListActivitySearch("");
+        vh.listNavButton.setOnClickListener(v -> {
+            Intent listIntent = new Intent(this, ListActivity.class);
+            listIntent.putExtra("CATEGORY", new FastFood());
+            startActivity(listIntent);
         });
     }
-    private void showLoginActivity(View v) {
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
+    private void clickNavMain(ViewHolder vh) {
+        vh.mainNavButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Already on main menu", Toast.LENGTH_SHORT).show();
+        });
     }
-    private void showListActivity(View v){
-        Intent listIntent = new Intent(this, ListActivity.class);
-        listIntent.putExtra("FAVOURITES", true);
-        startActivity(listIntent);
+    private void clickNavSearch(ViewHolder vh) {
+        vh.searchNavButton.setOnClickListener(v -> {
+            Intent listIntent = new Intent(this, ListActivity.class);
+            listIntent.putExtra("SEARCH", true);
+            startActivity(listIntent);
+        });
     }
-    private void showListActivityFromSearch(View v){
-        Intent listIntent = new Intent(this, ListActivity.class);
-        listIntent.putExtra("SEARCH", true);
-        startActivity(listIntent);
-    }
+
 }
