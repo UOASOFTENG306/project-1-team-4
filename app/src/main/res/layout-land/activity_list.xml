@@ -7,7 +7,7 @@
     tools:context=".View.ListActivity"
     android:id="@+id/layout_list"
     >
-    <include layout="@layout/action_bar" android:visibility="gone"/>
+    <include layout="@layout/action_bar" android:id="@+id/smallLogoHeader" android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
