@@ -1,15 +1,11 @@
 package com.example.softeng306_application.ViewModel;
 
 import android.app.Application;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
 import com.example.softeng306_application.Entity.Asian;
@@ -18,25 +14,11 @@ import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
-import com.example.softeng306_application.R;
-import com.example.softeng306_application.Repository.RestaurantRepository;
-import com.example.softeng306_application.Repository.UserRepository;
 import com.example.softeng306_application.UseCase.GetAllRestaurantsUseCase;
-import com.example.softeng306_application.UseCase.GetFavouritesByCategoryUseCase;
 import com.example.softeng306_application.UseCase.GetFavouritesUseCase;
-import com.example.softeng306_application.View.ListActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ListViewModel extends AndroidViewModel {
@@ -44,8 +26,6 @@ public class ListViewModel extends AndroidViewModel {
     private GetAllRestaurantsUseCase getAllRestaurantsUseCase;
     private List<Category> categoryList;
     private List<Restaurant> searchList;
-    private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
-    private MutableLiveData<List<Restaurant>> restaurantList =  new MutableLiveData<>();
     private List<Category> allCategories = new ArrayList<Category>() {
         {
             add(new Asian());
@@ -55,15 +35,11 @@ public class ListViewModel extends AndroidViewModel {
         }
     };
     private Boolean isFavourite;
-    private RestaurantRepository restaurantRepository;
-    private UserRepository userRepository;
 
     private String prev = "";
 
     public ListViewModel(@NonNull Application application) {
         super(application);
-        userRepository = userRepository.getInstance();
-        restaurantRepository = restaurantRepository.getInstance();
         categoryList = getAllCategories();
         getFavouritesUseCase = getFavouritesUseCase.getInstance();
         getAllRestaurantsUseCase = getAllRestaurantsUseCase.getInstance();
@@ -157,7 +133,6 @@ public class ListViewModel extends AndroidViewModel {
     }
     public LiveData<List<Restaurant>> getFavouritesList() {
         return getFavouritesUseCase.getFavouriteRestaurants();
-//        return favouritesList;
     }
 
 
@@ -172,11 +147,6 @@ public class ListViewModel extends AndroidViewModel {
             return filteredItems;
         });
         return filteredLiveData;
-    }
-    public LiveData<List<Restaurant>> getRestaurantList() {
-        LiveData<List<Restaurant>> restaurantList = getAllRestaurantsUseCase.getAllRestaurants();
-        setSearchList(restaurantList.getValue());
-        return restaurantList;
     }
 
     public LiveData<List<Restaurant>> filterList(String s) {

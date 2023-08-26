@@ -1,36 +1,22 @@
 package com.example.softeng306_application.ViewModel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
-import com.example.softeng306_application.Entity.Asian;
-import com.example.softeng306_application.Entity.Cafe;
-import com.example.softeng306_application.Entity.European;
-import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.Entity.Review;
-import com.example.softeng306_application.Repository.RestaurantRepository;
-import com.example.softeng306_application.Repository.ReviewRepository;
-import com.example.softeng306_application.Repository.UserRepository;
 import com.example.softeng306_application.UseCase.AddFavouriteUseCase;
 import com.example.softeng306_application.UseCase.AddReviewUseCase;
 import com.example.softeng306_application.UseCase.CheckFavouriteUseCase;
 import com.example.softeng306_application.UseCase.GetCurrentUserUseCase;
 import com.example.softeng306_application.UseCase.GetReviewUseCase;
 import com.example.softeng306_application.UseCase.RemoveFavouriteUseCase;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DetailsViewModel extends AndroidViewModel {
     private GetReviewUseCase getReviewUseCase;
@@ -39,9 +25,6 @@ public class DetailsViewModel extends AndroidViewModel {
     private AddReviewUseCase addReviewUseCase;
     private RemoveFavouriteUseCase removeFavouriteUseCase;
     private AddFavouriteUseCase addFavouriteUseCase;
-    private RestaurantRepository restaurantRepository;
-    private UserRepository userRepository;
-    private ReviewRepository reviewRepository;
     private MutableLiveData<Integer> averageScore =  new MutableLiveData<>();
 
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
@@ -51,9 +34,6 @@ public class DetailsViewModel extends AndroidViewModel {
 
     public DetailsViewModel(@NonNull Application application) {
         super(application);
-        userRepository = userRepository.getInstance();
-        restaurantRepository = restaurantRepository.getInstance();
-        reviewRepository = reviewRepository.getInstance();
         checkFavouriteUseCase = checkFavouriteUseCase.getInstance();
         addFavouriteUseCase = addFavouriteUseCase.getInstance();
         removeFavouriteUseCase = removeFavouriteUseCase.getInstance();
