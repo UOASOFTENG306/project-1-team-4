@@ -12,39 +12,39 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.softeng306_application.Entity.Category;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.View.DetailsActivity;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecylerAdapter.TopRatedViewHolder> {
+public class RandomRecylerAdapter extends RecyclerView.Adapter<RandomRecylerAdapter.TopRatedViewHolder> {
     Context context;
-    private List<Restaurant> topRatedList;
+    private List<Restaurant> randmoList = new ArrayList<>();
 
-    public TopRatedRecylerAdapter(Context context, List<Restaurant> topRatedList) {
+    public RandomRecylerAdapter(Context context) {
         this.context = context;
-        this.topRatedList = topRatedList;
     }
 
-    public void setTopRatedList(List<Restaurant> topRatedList) {
-        this.topRatedList = topRatedList;
+    public void setRandmoList(List<Restaurant> randmoList) {
+        this.randmoList = randmoList;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public TopRatedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TopRatedViewHolder(LayoutInflater.from(context).inflate(R.layout.top_rated_item, parent, false));
+        return new TopRatedViewHolder(LayoutInflater.from(context).inflate(R.layout.random_restaurant_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(TopRatedRecylerAdapter.TopRatedViewHolder holder, int position) {
-        Restaurant restaurant = topRatedList.get(position);
-        String colourHex = topRatedList.get(position).getCategory().getBorderColour();
-//        holder.restaurantName.setText(topRatedList.get(position).getName());
-        holder.logoImage.setImageResource(showImage(topRatedList.get(position)));
+    public void onBindViewHolder(RandomRecylerAdapter.TopRatedViewHolder holder, int position) {
+        Restaurant restaurant = randmoList.get(position);
+        String colourHex = randmoList.get(position).getCategory().getBorderColour();
+        holder.restaurantName.setText(randmoList.get(position).getName());
+        holder.logoImage.setImageResource(showImage(randmoList.get(position)));
         holder.topratedCardview.setStrokeColor(Color.parseColor(colourHex));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +61,7 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
 
     @Override
     public int getItemCount() {
-        return topRatedList.size();
+        return randmoList.size();
     }
 
     private void onRestaurantClick(Restaurant restaurant){
@@ -71,14 +71,14 @@ public class TopRatedRecylerAdapter extends RecyclerView.Adapter<TopRatedRecyler
     }
 
     public class TopRatedViewHolder extends RecyclerView.ViewHolder {
-//        TextView restaurantName;
+        TextView restaurantName;
         ImageView logoImage;
         MaterialCardView topratedCardview;
         public TopRatedViewHolder(@NonNull View itemView) {
             super(itemView);
-//            restaurantName =  itemView.findViewById(R.id.textview_top_rated);
+            restaurantName =  itemView.findViewById(R.id.textview_random);
             logoImage =  itemView.findViewById(R.id.imgview_main_logo);
-            topratedCardview = itemView.findViewById(R.id.mtrlcardview_toprated);
+            topratedCardview = itemView.findViewById(R.id.mtrlcardview_random);
         }
 
     }

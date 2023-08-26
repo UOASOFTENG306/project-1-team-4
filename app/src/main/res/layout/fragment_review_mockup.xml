@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayout_review_fragment"
+    android:background="@color/bg">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <LinearLayout
+                android:id="@+id/linearLayout_dynamic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--                Add Review Rating Bar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:id="@+id/linearLayout_rating_panel"
+                    android:layout_margin="10dp"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Give a rating!"
+                        android:fontFamily="@font/montserrat_medium"/>
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:stepSize="1"
+                        android:id="@+id/rb_ratingBar"
+                        android:numStars="5"
+                        android:rating="1"
+                        >
+                    </RatingBar>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:id="@+id/txt_review_comment_preview"
+                        android:layout_margin="10dp"
+                        />
+                    <Button
+                        android:id="@+id/btn_submit_review"
+                        android:backgroundTint="@color/category_btn"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Submit"/>
+                </LinearLayout>
+
+                <!--            Add Review text field-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/linearLayout_add_review"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <!--                Add Review input field -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputLayout_add_review"
+                        android:layout_width="300dp"
+                        android:layout_height="50dp"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_add_review"
+                            android:focusable="true"
+                            android:clickable="true"
+                            style="@style/AdminInputText" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!--                Submit review comment button -->
+                    <ImageButton
+                        android:id="@+id/btn_add_review_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="3dp"
+                        android:src="@drawable/add"
+                        android:backgroundTint="@color/transparent"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--            Overall Rating -->
+            <LinearLayout
+                android:id="@+id/linearLayout_overall_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayout_dynamic"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_overall_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="OVERALL: "
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/averageScoreLayout"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <!-- Child views go here -->
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--            Review recycler view -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recview_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayout_overall_rating"
+                android:layoutAnimation="@anim/reviews_animation"
+                app:reverseLayout="true"/>
+
+            <!--            Add review button -->
+
+            <Button
+                android:id="@+id/btn_add_review"
+                style="@style/ShowAddReviewButton"
+                android:layout_marginTop="8dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Review..."
+                android:backgroundTint="#BDF0B8"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:fontFamily="@font/montserrat_bold"/>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
+

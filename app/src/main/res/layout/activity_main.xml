@@ -22,12 +22,12 @@
             android:orientation="vertical">
             <TextView
                 android:layout_height="wrap_content"
-                android:text="Top Rated"
+                android:text="Discover new"
                 style="@style/HeaderText"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recview_top_rated"
+                android:id="@+id/recview_random"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

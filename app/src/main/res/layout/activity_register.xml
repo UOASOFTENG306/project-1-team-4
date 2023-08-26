@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,8 +8,17 @@
     android:orientation="vertical"
     tools:context=".View.RegisterActivity"
     android:id="@+id/linearlayout_register">
+    <ImageView
+        android:id="@+id/loginBackgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.7"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_login_image" />
 
-    <include layout="@layout/action_bar"
+    <include
+        android:id="@+id/include3"
+        layout="@layout/action_bar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_weight="1"/>
@@ -17,48 +26,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#B3FFFFFF"
+        android:gravity="center"
         android:orientation="vertical"
-        android:layout_weight="2">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="568dp"
+        tools:layout_conversion_absoluteWidth="387dp"
+        tools:layout_editor_absoluteX="3dp">
+
         <TextView
             android:id="@+id/txt_logo"
+            style="@style/MainLogoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/MainLogoText"
-            android:layout_marginBottom="20dp"
-            />
+            android:layout_marginBottom="20dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/AdminInputLayout">
+        <com.google.android.material.textfield.TextInputLayout style="@style/AdminInputLayout">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
-                android:hint="@string/email"
-                style="@style/AdminInputText"/>
+                style="@style/AdminInputText"
+                android:hint="@string/email" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/AdminInputLayout">
+        <com.google.android.material.textfield.TextInputLayout style="@style/AdminInputLayout">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username"
-                android:hint="@string/username"
-                style="@style/AdminInputText"/>
+                style="@style/AdminInputText"
+                android:hint="@string/username" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/AdminInputLayout"
             android:layout_marginBottom="8dp">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
+                style="@style/AdminInputText"
                 android:hint="@string/password"
-                android:inputType="textPassword"
-                style="@style/AdminInputText"/>
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_register"
-            android:text="@string/register"
-            style="@style/AdminButton"/>
+            style="@style/AdminButton"
+            android:text="@string/register" />
 
     </LinearLayout>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

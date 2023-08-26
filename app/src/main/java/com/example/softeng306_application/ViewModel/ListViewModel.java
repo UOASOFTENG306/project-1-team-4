@@ -19,7 +19,6 @@ import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
-import com.example.softeng306_application.Repository.FirestoreCallback;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.UserRepository;
 import com.example.softeng306_application.View.ListActivity;
@@ -212,6 +211,13 @@ public class ListViewModel extends AndroidViewModel {
                 Log.d("FirestoreActivity", "Error getting documents: ", task1.getException());
             }
         });
+    }
+
+    public void listFavouritesByCategory(){
+        List<Restaurant> filteredItems = this.getFavouritesList().getValue().stream()
+                .filter(item -> this.categoryList.contains(item.getCategory()))
+                .collect(Collectors.toList());
+        updateRestaurantList(filteredItems);
     }
 
     public List<Restaurant> getRestaurantsTest() {

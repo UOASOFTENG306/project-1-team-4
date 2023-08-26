@@ -1,9 +1,7 @@
 package com.example.softeng306_application.View;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,25 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
-import com.example.softeng306_application.Adaptor.TopRatedRecylerAdapter;
-import com.example.softeng306_application.Entity.Category;
-import com.example.softeng306_application.Entity.CategoryType;
-import com.example.softeng306_application.Entity.Restaurant;
+import com.example.softeng306_application.Adaptor.RandomRecylerAdapter;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.MainViewModel;
-import com.example.softeng306_application.dataprovider.RestaurantFirestoreDataProvider;
 import com.example.softeng306_application.dataprovider.UserFirestoreDataProvider;
 
 import org.checkerframework.checker.units.qual.A;
@@ -38,11 +26,12 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private MainViewModel mainViewModel;
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
-    private TopRatedRecylerAdapter topRatedAdapter;
+    private RandomRecylerAdapter randomRecylerAdapter;
 
     private class ViewHolder{
         TextView usernameText;
@@ -55,10 +44,6 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
-        restaurantFirestoreDataProvider.addRestaurantToFirestore();
-        /**UserFirestoreDataProvider userFirestoreDataProvider = new UserFirestoreDataProvider();
-        userFirestoreDataProvider.addFavouritesToDB();**/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -79,18 +64,26 @@ public class MainActivity extends AppCompatActivity {
         vh.searchEditText.setClickable(true);
 
         // Binding TopRatedRecyclerAdapter
-        vh.topRatedRecyclerView = findViewById(R.id.recview_top_rated);
+        vh.topRatedRecyclerView = findViewById(R.id.recview_random);
 
         // Binding CategoryRecyclerAdapter
         vh.categoryRecyclerView = findViewById(R.id.recview_categories);
 
         // Create adapters passing in the test lists
-        topRatedAdapter = new TopRatedRecylerAdapter(this, mainViewModel.getTopRatedRestaurants());
+        randomRecylerAdapter = new RandomRecylerAdapter(this);
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, mainViewModel.getCategories());
 
         // Attach adapter to the recycler view to populate these items
-        vh.topRatedRecyclerView.setAdapter(topRatedAdapter);
+        vh.topRatedRecyclerView.setAdapter(randomRecylerAdapter);
         vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
+
+        mainViewModel.getRandomRestaurantList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            randomRecylerAdapter.setRandmoList(restaurants);
+        });
+
+        //Load random restaurants to show
+        mainViewModel.getRandomRestaurants();
 
         // Set layout manager to position the items
         // Set Horizontal Layout Manager for topRatedRecyclerView

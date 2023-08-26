@@ -110,7 +110,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
         listViewModel.loadFavouriteList();
         listViewModel.setAllCategories();
 
-        //TODO FIX FAVOURITES NOT SHOWING ON LIST AFTER JUST FAVOURITING ON DETAILS
         listViewModel.getFavouritesList().observe(this, restaurants -> {
             // Update the adapter with the new list of items
             restaurantAdapter.setFavouriteRestaurants(restaurants);
@@ -191,6 +190,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
                     vh.header.setBackgroundColor(getResources().getColor(R.color.btn));
                 }
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
+
             }
         });
     }
