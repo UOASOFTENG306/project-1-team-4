@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private RandomRecylerAdapter randomRecylerAdapter;
 
-    private class ViewHolder{
-        TextView usernameText;
+    protected class ViewHolder {
         ImageButton logoutNavButton, favouritesNavButton, listNavButton, mainNavButton, searchNavButton;
         RecyclerView randomRecyclerView;
         RecyclerView categoryRecyclerView;
@@ -42,34 +41,21 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        RestaurantFirestoreDataProvider restaurantFirestoreDataProvider = new RestaurantFirestoreDataProvider();
-//        restaurantFirestoreDataProvider.addRestaurantToFirestore();
-        /**UserFirestoreDataProvider userFirestoreDataProvider = new UserFirestoreDataProvider();
-         userFirestoreDataProvider.addFavouritesToDB();**/
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         ViewHolder vh = new ViewHolder();
-//        vh.usernameText = findViewById(R.id.txt_username);
-//        mainViewModel.getUserInfo().addOnSuccessListener(documentSnapshot -> {
-//            if (documentSnapshot.exists()) {
-//                vh.usernameText.setText(documentSnapshot.getString("username"));
-//            }
-//        });
+
+        // Navbar functionality
+        NavbarViewHolder navbarViewHolder = new NavbarViewHolder(findViewById(R.id.relativeLayout_mainActivity), mainViewModel);
+        Navbar.setUpNavbar(navbarViewHolder, this);
 
         vh.customSearchBar = findViewById(R.id.customSearchBar);
         vh.searchEditText = findViewById(R.id.searchEditText);
         vh.searchEditText.setInputType(InputType.TYPE_NULL);
         vh.searchEditText.setFocusable(false);
         vh.searchEditText.setClickable(true);
-
-
-        // Navbar Buttons
-        vh.favouritesNavButton = findViewById(R.id.btn_favourites);
-        vh.logoutNavButton = findViewById(R.id.btn_logout);
-        vh.listNavButton = findViewById(R.id.btn_list);
-        vh.searchNavButton = findViewById(R.id.btn_search);
-        vh.mainNavButton = findViewById(R.id.btn_main);
 
         // Binding RandomRecyclerAdapter
         vh.randomRecyclerView = findViewById(R.id.recview_random);
@@ -106,12 +92,7 @@ public class MainActivity extends AppCompatActivity {
         vh.categoryRecyclerView.setLayoutManager(verticalLayout);
 
         //OnClickListeners
-        clickNavLogout(vh);
-        clickNavFavourites(vh);
         clickSearchBar(vh);
-        clickNavSearch(vh);
-        clickNavMain(vh);
-        clickNavList(vh);
     }
     private void clickSearchBar(ViewHolder vh) {
         vh.searchEditText.setOnClickListener(v -> {
@@ -120,38 +101,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(listIntent);
         });
     }
-    private void clickNavLogout(ViewHolder vh){
-        vh.logoutNavButton.setOnClickListener(v -> {
-            mainViewModel.logout();
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
-        });
-    }
-    private void clickNavFavourites(ViewHolder vh){
-        vh.favouritesNavButton.setOnClickListener(v -> {
-            Intent listIntent = new Intent(this, ListActivity.class);
-            listIntent.putExtra("FAVOURITES", true);
-            startActivity(listIntent);
-        });
-    }
-    private void clickNavList(ViewHolder vh) {
-        vh.listNavButton.setOnClickListener(v -> {
-            Intent listIntent = new Intent(this, ListActivity.class);
-            listIntent.putExtra("CATEGORY", new FastFood());
-            startActivity(listIntent);
-        });
-    }
-    private void clickNavMain(ViewHolder vh) {
-        vh.mainNavButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Already on main menu", Toast.LENGTH_SHORT).show();
-        });
-    }
-    private void clickNavSearch(ViewHolder vh) {
-        vh.searchNavButton.setOnClickListener(v -> {
-            Intent listIntent = new Intent(this, ListActivity.class);
-            listIntent.putExtra("SEARCH", true);
-            startActivity(listIntent);
-        });
-    }
+//    private void clickNavLogout(ViewHolder vh){
+//        vh.logoutNavButton.setOnClickListener(v -> {
+//            mainViewModel.logout();
+//            Intent loginIntent = new Intent(this, LoginActivity.class);
+//            startActivity(loginIntent);
+//        });
 
 }
