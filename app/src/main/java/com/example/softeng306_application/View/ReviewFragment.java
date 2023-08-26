@@ -36,10 +36,6 @@ public class ReviewFragment extends Fragment {
     private RecyclerView reviewRecyclerView;
     private ReviewRecyclerAdapter reviewRecyclerAdapter;
     private DetailsViewModel detailsViewModel;
-    private List<Review> reviewList;
-    private String reviewComment, restaurantID;
-    private float reviewScore;
-    private Review reviewToAdd;
 
     private class ViewHolder {
         Button reviewButton, submitReviewButton;
@@ -75,16 +71,13 @@ public class ReviewFragment extends Fragment {
         vh.reviewCommentPreview = view.findViewById(R.id.txt_review_comment_preview);
 
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
-        Restaurant restaurant = detailsViewModel.getRestaurant();
-        reviewList = restaurant.getReviews();
-        detailsViewModel.updateReviewsList(reviewList);
-
         reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext());
         reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true));
 
-        restaurantID = detailsViewModel.getRestaurant().getRestaurantID();
+        String restaurantID = detailsViewModel.getRestaurant().getRestaurantID();
 
+        getReviews(restaurantID);
 
         detailsViewModel.getAverageReviewScore().observe(getViewLifecycleOwner(), averageScore -> {
             vh.averageScoreLayout.removeAllViews();
@@ -104,16 +97,20 @@ public class ReviewFragment extends Fragment {
                 vh.averageScoreLayout.addView(imageView);
             }
         });
-        detailsViewModel.getReviewsList().observe(getViewLifecycleOwner(), reviews -> {
-            reviewRecyclerAdapter.setReviews(reviews);
-        });
 
         // OnClickListeners
         showAddReviewComment(vh);
-        addReviewComment(vh);
-        submitReview(vh);
+        addReviewComment(vh,restaurantID);
 
         return view;
+    }
+
+    private void getReviews(String restaurantID){
+        detailsViewModel.getReviewsList(restaurantID).observe(getViewLifecycleOwner(), reviews -> {
+            reviewRecyclerAdapter.setReviews(reviews);
+            detailsViewModel.updateCurrentList(reviews);
+            detailsViewModel.calculateAverageReviewScoreFromList(reviews);
+        });
     }
 
     private void showAddReviewComment(ViewHolder vh) {
@@ -130,7 +127,7 @@ public class ReviewFragment extends Fragment {
             vh.addReviewInput.requestFocus();
         });
     }
-    private void addReviewComment(ViewHolder vh) {
+    private void addReviewComment(ViewHolder vh, String restaurantID) {
         vh.addReviewCommentButton.setOnClickListener(view -> {
             // Show rating panel
             vh.linearLayoutRatingPanel.setVisibility(View.VISIBLE);
@@ -138,7 +135,7 @@ public class ReviewFragment extends Fragment {
             vh.linearLayoutOverallRating.setVisibility(View.GONE);
 
             // Save comment
-            reviewComment = String.valueOf(vh.addReviewInput.getText());
+            String reviewComment = String.valueOf(vh.addReviewInput.getText());
             vh.reviewCommentPreview.setText("\"" + reviewComment + "\"");
 
 
@@ -147,23 +144,27 @@ public class ReviewFragment extends Fragment {
             if (imm != null) {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
+
+            submitReview(vh, restaurantID, reviewComment);
         });
     }
 
-    private void submitReview(ViewHolder vh) {
+    private void submitReview(ViewHolder vh, String restaurantID, String reviewComment) {
         vh.submitReviewButton.setOnClickListener(view -> {
             // Show overall rating
             vh.linearLayoutOverallRating.setVisibility(View.VISIBLE);
             vh.linearLayoutRatingPanel.setVisibility(View.GONE);
 
-            // Minimum of one star
-            if (reviewScore < 0) {
-                reviewScore = 1;
-            }
             // Save rating
-//            reviewScore = vh.ratingBar.getRating();
-            // Add review comment and rating as Review object to database
-            detailsViewModel.addReviews(restaurantID, reviewComment, vh.ratingBar.getRating());
+            float score = vh.ratingBar.getRating();
+            detailsViewModel.addReviews(restaurantID, reviewComment, score);
+            detailsViewModel.getUsername().observe(getViewLifecycleOwner(), username -> {
+                Review review = new Review(reviewComment, username, score);
+                detailsViewModel.addToReviewsList(reviewComment, username, score);
+                    });
+            detailsViewModel.getReviewsCurrentList().observe(getViewLifecycleOwner(), reviews -> {
+                reviewRecyclerAdapter.setReviews(reviews);
+            });
         });
     }
 }

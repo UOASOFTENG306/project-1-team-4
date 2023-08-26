@@ -19,7 +19,10 @@ import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.ReviewRepository;
 import com.example.softeng306_application.Repository.UserRepository;
 import com.example.softeng306_application.UseCase.AddFavouriteUseCase;
+import com.example.softeng306_application.UseCase.AddReviewUseCase;
 import com.example.softeng306_application.UseCase.CheckFavouriteUseCase;
+import com.example.softeng306_application.UseCase.GetCurrentUserUseCase;
+import com.example.softeng306_application.UseCase.GetReviewUseCase;
 import com.example.softeng306_application.UseCase.RemoveFavouriteUseCase;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,7 +33,10 @@ import java.util.List;
 import java.util.Map;
 
 public class DetailsViewModel extends AndroidViewModel {
+    private GetReviewUseCase getReviewUseCase;
+    private GetCurrentUserUseCase getCurrentUserUseCase;
     private CheckFavouriteUseCase checkFavouriteUseCase;
+    private AddReviewUseCase addReviewUseCase;
     private RemoveFavouriteUseCase removeFavouriteUseCase;
     private AddFavouriteUseCase addFavouriteUseCase;
     private RestaurantRepository restaurantRepository;
@@ -39,7 +45,7 @@ public class DetailsViewModel extends AndroidViewModel {
     private MutableLiveData<Integer> averageScore =  new MutableLiveData<>();
 
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
-    private MutableLiveData<List<Review>> reviewsList =  new MutableLiveData<>();
+    private MutableLiveData<List<Review>> reviewsCurrentList =  new MutableLiveData<>();
     private Boolean isFavourite;
     private Restaurant restaurant;
 
@@ -51,14 +57,17 @@ public class DetailsViewModel extends AndroidViewModel {
         checkFavouriteUseCase = checkFavouriteUseCase.getInstance();
         addFavouriteUseCase = addFavouriteUseCase.getInstance();
         removeFavouriteUseCase = removeFavouriteUseCase.getInstance();
+        addReviewUseCase = addReviewUseCase.getInstance();
+        getReviewUseCase = getReviewUseCase.getInstance();
+        getCurrentUserUseCase = getCurrentUserUseCase.getInstance();
     }
 
     public Restaurant getRestaurant() {
         return restaurant;
     }
 
-    public LiveData<List<Review>> getReviewsList() {
-        return reviewsList;
+    public LiveData<List<Review>> getReviewsList(String restaurantID) {
+        return getReviewUseCase.getReviewUse(restaurantID);
     }
 
     public void setIsFavourite(Boolean value) {
@@ -72,15 +81,22 @@ public class DetailsViewModel extends AndroidViewModel {
     public LiveData<Boolean> checkFavourite(Restaurant restaurant) {
         return checkFavouriteUseCase.checkFavourite(restaurant);
     }
-    public List<Review> getReviews() {
-        return restaurant.getReviews();
+    public LiveData<String> getUsername(){
+        return getCurrentUserUseCase.getUsername();
     }
-
-    public void updateReviewsList(List<Review> reviews) {
-        this.reviewsList.setValue(reviews);
-        calculateAverageReviewScoreFromList();
+    public LiveData<List<Review>> getReviewsCurrentList() {
+        return this.reviewsCurrentList;
     }
-
+    public void updateCurrentList(List<Review> reviewList) {
+        this.reviewsCurrentList.setValue(reviewList);
+    }
+    public void addToReviewsList(String reviewComment, String name, float reviewScore) {
+        Review review = new Review(name,reviewComment,reviewScore);
+        List<Review> currentReviews = this.reviewsCurrentList.getValue();
+        currentReviews.add(review);
+        updateCurrentList(currentReviews);
+        calculateAverageReviewScoreFromList(currentReviews);
+    }
 
     public void updateFavouriteList(List<Restaurant> restaurantList) {
         //TODO IDENTICAL CODE WITH LISTVIEWMODEL
@@ -112,12 +128,12 @@ public class DetailsViewModel extends AndroidViewModel {
         return averageScore;
     }
 
-    public void calculateAverageReviewScoreFromList(){
+    public void calculateAverageReviewScoreFromList(List<Review> reviews){
         float sum = 0;
         float average;
 
-        Integer num = this.getReviewsList().getValue().size();
-        for (Review review : this.getReviewsList().getValue()) {
+        Integer num = reviews.size();
+        for (Review review :reviews) {
             sum += review.getReviewScore();
         }
         average = sum/num;
@@ -143,29 +159,6 @@ public class DetailsViewModel extends AndroidViewModel {
 
     }
     public void addReviews(String restaurantID, String reviewComment, float reviewScore) {
-        userRepository.getAllUserInformation().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                try {
-                    DocumentSnapshot document = task.getResult();
-                    String username = (String) document.get("username");
-                    if(username != null) {
-                        Review review = new Review(username, reviewComment, reviewScore);
-                        reviewRepository.addReview(restaurantID, review);
-                        List<Review> currentItems = this.reviewsList.getValue();
-                        if (currentItems != null) {
-                            currentItems.add(review);
-                            updateReviewsList(currentItems);
-                        }
-                    }
-                } catch (Exception e) {
-                    Log.d("FirestoreActivity", "Error getting the username: ", task.getException());
-                }
-            }
-            else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
-            }
-
-        });
-
+         addReviewUseCase.addReviewUse(restaurantID,reviewComment, reviewScore);
     }
 }

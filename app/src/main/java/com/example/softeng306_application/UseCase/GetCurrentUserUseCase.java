@@ -26,7 +26,7 @@ public class GetCurrentUserUseCase {
         return instance;
     }
 
-    public LiveData<String> getUserInfo() {
+    public LiveData<String> getUsername() {
         MutableLiveData<String> name = new MutableLiveData<>();
         userRepository.getAllUserInformation().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
