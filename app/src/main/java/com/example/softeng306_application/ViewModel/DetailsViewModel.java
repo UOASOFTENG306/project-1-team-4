@@ -69,29 +69,8 @@ public class DetailsViewModel extends AndroidViewModel {
     public LiveData<Boolean> checkFavourite(Restaurant restaurant) {
         return checkFavouriteUseCase.checkFavourite(restaurant);
     }
-    public List<Review> getReviewsByRestaurant(String restaurantId) {
-        List<Review> reviews = new ArrayList<>();
-        Task<DocumentSnapshot> task = reviewRepository.getReviews(restaurantId);
-        task.addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                try {
-                    List<Map<String, Object>> reviewsArray = (List<Map<String, Object>>) task1.getResult().getData().get("reviews");
-                    if (reviewsArray != null) {
-                        for (Map<String, Object> review : reviewsArray) {
-                            Log.d("FirestoreActivity", (String) review.get("description"));
-                            reviews.add(new Review((String) review.get("userID"), (String) review.get("description")));
-                        }
-                        updateReviewsList(reviews);
-                    }
-                } catch (Exception e) {
-                    Log.d("FirestoreActivity", "Error getting the reviews: ", task.getException());
-                }
-            }
-            else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
-            }
-        });
-        return reviews;
+    public List<Review> getReviews() {
+        return restaurant.getReviews();
     }
 
     public void updateReviewsList(List<Review> reviews) {

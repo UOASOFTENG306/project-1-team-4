@@ -40,12 +40,11 @@ public class ReviewFragment extends Fragment {
         reviewRecyclerView = view.findViewById(R.id.recview_reviews);
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
         Restaurant restaurant = detailsViewModel.getRestaurant();
-        reviewList = detailsViewModel.getReviewsByRestaurant(restaurant.getRestaurantID());
-        detailsViewModel.getReviewsList().observe(getViewLifecycleOwner(), reviews -> {
-            reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext(), reviewList);
-            reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
-            reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        });
+        reviewList = detailsViewModel.getReviews();
+
+        reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext(), reviewList);
+        reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
+        reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
     }
 }
