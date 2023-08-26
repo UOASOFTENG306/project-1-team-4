@@ -8,7 +8,6 @@
     android:layout_gravity="center"
     tools:context=".View.MainActivity">
 
-
     <RelativeLayout
         android:id="@+id/smallLogoHeader"
         android:layout_alignParentTop="true"

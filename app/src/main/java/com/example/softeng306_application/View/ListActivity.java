@@ -8,12 +8,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,6 +38,7 @@ import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
+import com.example.softeng306_application.ViewModel.DetailsViewModel;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
 
@@ -39,6 +49,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
 
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
+    private DetailsViewModel detailsViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
     private CategoryDropdownAdapter adapterCategoryItems;
     private ArrayAdapter<String> adapterItems;
@@ -49,8 +60,18 @@ public class ListActivity extends AppCompatActivity implements Activity {
         RecyclerView restaurantRecyclerView;
         SearchView searchView;
         ImageButton backButton;
+        View viewLayout;
+        LinearLayout customSearchBar;
+        EditText searchEditText;
     }
 
+    public void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,22 +86,19 @@ public class ListActivity extends AppCompatActivity implements Activity {
         vh.backButton = findViewById(R.id.btn_back);
         vh.emptyListText = findViewById(R.id.txt_emptyList);
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
-        vh.searchView = findViewById(R.id.inputText_search);
-        vh.searchView.clearFocus();
+        vh.customSearchBar = findViewById(R.id.customSearchBar);
 
-        vh.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                listViewModel.filterList(s);
-                return false;
-            }
+        vh.searchEditText = findViewById(R.id.searchEditText);
 
+        vh.viewLayout= findViewById(R.id.layout_list);
+        vh.viewLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onQueryTextChange(String s) {
-                listViewModel.filterList(s);
+            public boolean onTouch(View v, MotionEvent event) {
+                closeKeyboard();
                 return false;
             }
         });
+
 
         // Bind RestaurantAdapter
         adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, listViewModel.getAllCategoryNameOptions());
@@ -89,12 +107,17 @@ public class ListActivity extends AppCompatActivity implements Activity {
         // Bind RestaurantRecyclerAdapter
         restaurantAdapter = new RestaurantRecyclerAdapter(this);
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
-
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
         listViewModel.setFavourite(false);
+        listViewModel.loadFavouriteList();
         listViewModel.setAllCategories();
+
+        listViewModel.getFavouritesList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setFavouriteRestaurants(restaurants);
+        });
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -104,22 +127,36 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 vh.autoCompleteTextView.setText(category.getCategoryType(), false);
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
 
-            }
-            if (intent.hasExtra("FAVOURITES")) {
+            } else if (intent.hasExtra("FAVOURITES")) {
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
-
-                listViewModel.setAllCategories();
                 listViewModel.setFavourite(true);
-
                 restaurantAdapter.setRestaurants(listViewModel.getFavouriteRestaurants());
-            }
-            if (intent.hasExtra("SEARCH")) {
-                String searchQuery = intent.getStringExtra("SEARCH");
+
+            } else if (intent.hasExtra("SEARCH")) {
+                Boolean isFavourite = intent.getBooleanExtra("SEARCH", false);
+                vh.searchEditText.requestFocus();
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
-                vh.searchView.setQuery(searchQuery, false);
+
+            }else {
+                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
             }
         }
 
+        vh.searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                String query = charSequence.toString();
+                listViewModel.filterList(query);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
         vh.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +170,10 @@ public class ListActivity extends AppCompatActivity implements Activity {
             restaurantAdapter.setRestaurants(restaurants);
         });
 
+        listViewModel.getFavouritesList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setFavouriteRestaurants(restaurants);
+        });
         listViewModel.getEmptyMessageVisibility().observe(this, visibility -> {
             vh.emptyListText.setVisibility(visibility);
         });
@@ -144,7 +185,11 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 vh.autoCompleteTextView.setText(selectedCategory, false);
                 // Set selected category
                 listViewModel.setCategory(selectedCategory);
-                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
+                if(listViewModel.getFavourite()){
+                    listViewModel.listFavouritesByCategory();
+                } else {
+                    restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
+                }
             }
         });
     }
@@ -152,11 +197,21 @@ public class ListActivity extends AppCompatActivity implements Activity {
         @Override
         protected void onResume() {
             super.onResume();
+            listViewModel.loadFavouriteList();
             if (listViewModel.getFavourite()) {
                 listViewModel.getFavouriteRestaurants();
             } else {
                 listViewModel.getRestaurantsTest();
             }
+            listViewModel.getRestaurantList().observe(this, restaurants -> {
+                // Update the adapter with the new list of items
+                restaurantAdapter.setRestaurants(restaurants);
+            });
+
+            listViewModel.getFavouritesList().observe(this, restaurants -> {
+                // Update the adapter with the new list of items
+                restaurantAdapter.setFavouriteRestaurants(restaurants);
+            });
 
 
         }
