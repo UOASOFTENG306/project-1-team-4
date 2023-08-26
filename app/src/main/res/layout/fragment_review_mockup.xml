@@ -43,8 +43,20 @@
                         android:rating="1"
                         >
                     </RatingBar>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:id="@+id/txt_review_comment_preview"
+                        android:layout_margin="10dp"
+                        />
                     <Button
                         android:id="@+id/btn_submit_review"
+                        android:backgroundTint="@color/category_btn"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/montserrat_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Submit"/>
@@ -147,3 +159,4 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
+

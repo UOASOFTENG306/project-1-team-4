@@ -47,6 +47,8 @@ public class ReviewFragment extends Fragment {
         LinearLayout linearLayoutAddReview, linearLayoutRatingPanel, linearLayoutOverallRating, averageScoreLayout;
         RatingBar ratingBar;
 
+        TextView reviewCommentPreview;
+
     }
 
     public ReviewFragment() {
@@ -69,6 +71,8 @@ public class ReviewFragment extends Fragment {
         vh.linearLayoutOverallRating = view.findViewById(R.id.linearLayout_overall_rating);
         vh.averageScoreLayout = view.findViewById(R.id.averageScoreLayout);
         vh.submitReviewButton = view.findViewById(R.id.btn_submit_review);
+        vh.reviewCommentPreview = view.findViewById(R.id.txt_review_comment_preview);
+
         detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
 
         reviewRecyclerAdapter = new ReviewRecyclerAdapter(getContext());
@@ -135,6 +139,8 @@ public class ReviewFragment extends Fragment {
 
             // Save comment
             reviewComment = String.valueOf(vh.addReviewInput.getText());
+            vh.reviewCommentPreview.setText("\"" + reviewComment + "\"");
+
 
             // Hide keyboard
             InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
@@ -161,3 +167,4 @@ public class ReviewFragment extends Fragment {
         });
     }
 }
+
