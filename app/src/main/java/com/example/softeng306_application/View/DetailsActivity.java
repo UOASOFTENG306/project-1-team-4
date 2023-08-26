@@ -85,20 +85,10 @@ public class DetailsActivity extends AppCompatActivity implements Activity {
             vh.favouriteButton.setImageResource(heartType);
         });
 
-        vh.favouriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detailsViewModel.setOppositeFavourite();
-            }
-        });
+        vh.favouriteButton.setOnClickListener(v -> detailsViewModel.setOppositeFavourite());
 
 
-        vh.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        vh.backButton.setOnClickListener(v -> finish());
         Intent intent = getIntent();
         if (intent != null) {
             if(intent.hasExtra("RESTAURANT")){

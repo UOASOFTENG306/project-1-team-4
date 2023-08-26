@@ -25,6 +25,14 @@ import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.Adaptor.RandomRecylerAdapter;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.ViewModel.MainViewModel;
+import com.example.softeng306_application.dataprovider.UserFirestoreDataProvider;
+
+import org.checkerframework.checker.units.qual.A;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
