@@ -33,19 +33,19 @@
     <include layout="@layout/activity_search2"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/DropDownLayout">
-
+        style="@style/DropDownLayout"
+        >
         <AutoCompleteTextView
             android:id="@+id/dropdown_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:inputType="none"
             android:text="CATEGORY"
             android:layout_gravity="start"
             style="@style/DropDownMenuText"
             android:backgroundTint="@color/transparent"
             />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout

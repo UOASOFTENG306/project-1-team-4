@@ -6,8 +6,8 @@ public class Cafe extends Category {
 
     // Non-argument constructor to enable auto conversion of the Firebase documents to Asian objects
     public Cafe() {
-        this.borderColour = "#C4A484";//TODO ADD PROPER BORDER COLOUR
-        this.audioFileName = "test_audio";//TODO ADD PROPER AUDIO FILE
+        this.borderColour = "#CFAF89";
+        this.audioFileName = "cafe";
         this.categoryType =  "CAFE";
     }
     @Override
