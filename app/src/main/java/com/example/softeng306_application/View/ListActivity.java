@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity {
-
     private ListViewModel listViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
     private ArrayAdapter<String> adapterItems;
@@ -59,6 +58,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         ImageButton backButton;
         View viewLayout;
         LinearLayout customSearchBar;
+        RelativeLayout header;
         EditText searchEditText;
     }
 
@@ -75,7 +75,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
         setContentView(R.layout.activity_list);
 
         ViewHolder vh = new ViewHolder();
-
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
 
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
@@ -85,6 +84,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.customSearchBar = findViewById(R.id.customSearchBar);
         vh.searchEditText = findViewById(R.id.searchEditText);
+        vh.header = findViewById(R.id.smallLogoHeader);
 
         vh.viewLayout= findViewById(R.id.layout_list);
         vh.viewLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -95,7 +95,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
             }
         });
 
-
         // Bind RestaurantAdapter
         adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, listViewModel.getAllCategoryNameOptions());
         vh.autoCompleteTextView.setAdapter(adapterItems);
@@ -103,6 +102,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         // Bind RestaurantRecyclerAdapter
         restaurantAdapter = new RestaurantRecyclerAdapter(this);
         vh.restaurantRecyclerView.setAdapter(restaurantAdapter);
+
         // Set Vertical Layout Manager for categoryRecyclerView
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
@@ -122,6 +122,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 Category category = intent.getParcelableExtra("CATEGORY");
                 listViewModel.setCategory(category);
                 vh.autoCompleteTextView.setText(category.getCategoryType(), false);
+                vh.header.setBackgroundColor(Color.parseColor(category.getBorderColour()));
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
 
             } else if (intent.hasExtra("FAVOURITES")) {
@@ -134,9 +135,10 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 vh.searchEditText.requestFocus();
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
 
-            }else {
+            } else {
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
             }
+
         }
 
         vh.searchEditText.addTextChangedListener(new TextWatcher() {
@@ -182,6 +184,12 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 vh.autoCompleteTextView.setText(selectedCategory, false);
                 // Set selected category
                 listViewModel.setCategory(selectedCategory);
+
+                if (listViewModel.getCategory().size() != listViewModel.getAllCategories().size()) {
+                    vh.header.setBackgroundColor(Color.parseColor(listViewModel.getCategory().get(0).getBorderColour()));
+                } else {
+                    vh.header.setBackgroundColor(getResources().getColor(R.color.btn));
+                }
                 restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
             }
         });
@@ -190,6 +198,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         @Override
         protected void onResume() {
             super.onResume();
+
             listViewModel.loadFavouriteList();
             if (listViewModel.getFavourite()) {
                 listViewModel.getFavouriteRestaurants();

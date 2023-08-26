@@ -44,17 +44,14 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
         this.favouriteList = restaurants;
         notifyDataSetChanged();
     }
-
     public RestaurantRecyclerAdapter(Context context) {
         this.context = context;
-
     }
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new RestaurantViewHolder(LayoutInflater.from(context).inflate(R.layout.restaurant_list_item, parent, false));
     }
-
     @Override
     public void onBindViewHolder(RestaurantRecyclerAdapter.RestaurantViewHolder holder, int position) {
         Restaurant restaurant = restaurants.get(position);
@@ -67,9 +64,7 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
         String colourHex = restaurant.getCategory().getBorderColour();
         holder.logoImageCardView.setStrokeColor(Color.parseColor(colourHex));
         holder.categoryLabelCard.setCardBackgroundColor(Color.parseColor(colourHex));
-
         holder.categoryLabelText.setText(restaurant.getCategory().getCategoryType());
-
 
         if (favouriteList.contains(restaurant)){
             holder.favouriteHeart.setVisibility(View.VISIBLE);
@@ -105,6 +100,7 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
         MaterialCardView logoImageCardView;
         TextView restaurantName, price, categoryLabelText;
         MaterialCardView categoryLabelCard;
+        RelativeLayout header;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
