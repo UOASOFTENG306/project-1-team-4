@@ -22,6 +22,7 @@ import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.FirestoreCallback;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.example.softeng306_application.UseCase.GetAllRestaurantsUseCase;
 import com.example.softeng306_application.UseCase.GetFavouritesByCategoryUseCase;
 import com.example.softeng306_application.UseCase.GetFavouritesUseCase;
 import com.example.softeng306_application.View.ListActivity;
@@ -42,8 +43,7 @@ import java.util.stream.Collectors;
 public class ListViewModel extends AndroidViewModel {
     private final GetFavouritesUseCase getFavouritesUseCase;
     private final GetFavouritesByCategoryUseCase getFavouritesByCategoryUseCase;
-
-
+    private GetAllRestaurantsUseCase getAllRestaurantsUseCase;
     private List<Category> categoryList;
     private List<Restaurant> searchList;
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
@@ -70,10 +70,7 @@ public class ListViewModel extends AndroidViewModel {
         categoryList = allCategories;
         getFavouritesUseCase = new GetFavouritesUseCase();
         getFavouritesByCategoryUseCase = new GetFavouritesByCategoryUseCase();
-    }
-
-    public MutableLiveData<List<Restaurant>> getRestaurantList() {
-        return restaurantList;
+        getAllRestaurantsUseCase = getAllRestaurantsUseCase.getInstance();
     }
 
     public List<Category> getAllCategories() {
@@ -228,8 +225,18 @@ public class ListViewModel extends AndroidViewModel {
         });
     }
 
-
-
+    public LiveData<List<Restaurant>> getRestaurantByCategoryList() {
+        LiveData<List<Restaurant>> restaurantList = getAllRestaurantsUseCase.getAllRestaurants();
+        setSearchList(restaurantList.getValue());
+        return restaurantList;
+//        return restaurantList;
+    }
+    public LiveData<List<Restaurant>> getRestaurantList() {
+        LiveData<List<Restaurant>> restaurantList = getAllRestaurantsUseCase.getAllRestaurants();
+        setSearchList(restaurantList.getValue());
+        return restaurantList;
+//        return restaurantList;
+    }
     public List<Restaurant> getRestaurantsTest() {
         List<Restaurant> restaurants = new ArrayList<>();
 
@@ -273,7 +280,7 @@ public class ListViewModel extends AndroidViewModel {
         return restaurants;
     }
 
-    public void filterList(String s) {
+    public List<Restaurant> filterList(String s) {
         if (this.getRestaurantList().getValue() == null) {
             this.restaurantList.observeForever(new Observer<List<Restaurant>>() {
                 @Override
@@ -284,7 +291,6 @@ public class ListViewModel extends AndroidViewModel {
                     restaurantList.removeObserver(this);
                 }
             });
-            return;
         }
 
         List<Restaurant> restaurants = this.getRestaurantList().getValue();
@@ -304,10 +310,8 @@ public class ListViewModel extends AndroidViewModel {
                 }
             }
         }
-        this.updateRestaurantList(filteredRestaurants);
-
-
         prev = s;
+        return filteredRestaurants;
     }
 
     private Restaurant restaurantBuilder(Map<String, Object> data) {

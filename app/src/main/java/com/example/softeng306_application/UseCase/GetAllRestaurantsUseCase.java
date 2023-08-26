@@ -12,6 +12,7 @@ import com.example.softeng306_application.Entity.European;
 import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.Repository.RestaurantRepository;
+import com.example.softeng306_application.Repository.ReviewRepository;
 import com.example.softeng306_application.Repository.UserRepository;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -20,14 +21,23 @@ import java.util.List;
 import java.util.Map;
 
 public class GetAllRestaurantsUseCase {
-    private RestaurantRepository restaurantRepository;
 
-    public GetAllRestaurantsUseCase(){
+    private static GetAllRestaurantsUseCase instance;
+    private RestaurantRepository restaurantRepository;
+    private MutableLiveData<List<Restaurant>> allRestaurantList = new MutableLiveData<>();;
+
+    private GetAllRestaurantsUseCase(){
         restaurantRepository = restaurantRepository.getInstance();
+    }
+    public static GetAllRestaurantsUseCase getInstance() {
+        if (instance == null){
+            instance = new GetAllRestaurantsUseCase();
+        }
+        return instance;
     }
 
     public LiveData<List<Restaurant>> getAllRestaurants() {
-        MutableLiveData<List<Restaurant>> restautanLiveData = new MutableLiveData<>();
+        if (allRestaurantList.getValue() == null){
             restaurantRepository.getRestaurants().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     List<Restaurant> restaurants = new ArrayList<>();
@@ -37,15 +47,17 @@ public class GetAllRestaurantsUseCase {
                         Map<String, Object> data = document.getData();
                         restaurants.add(restaurantBuilder(data));
                     }
-                    restautanLiveData.setValue(restaurants);
+                    allRestaurantList.setValue(restaurants);
 
                 } else {
                     Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
                 }
             });
-        return restautanLiveData;
-
         }
+
+        return allRestaurantList;
+
+    }
     private Restaurant restaurantBuilder(Map<String, Object> data) {
 
         Category category;
