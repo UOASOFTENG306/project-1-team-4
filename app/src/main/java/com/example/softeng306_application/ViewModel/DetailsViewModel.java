@@ -78,10 +78,6 @@ public class DetailsViewModel extends AndroidViewModel {
         calculateAverageReviewScoreFromList(currentReviews);
     }
 
-    public void updateFavouriteList(List<Restaurant> restaurantList) {
-        //TODO IDENTICAL CODE WITH LISTVIEWMODEL
-        this.favouritesList.setValue(restaurantList);
-    }
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
