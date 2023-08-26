@@ -247,6 +247,7 @@ public class DetailsViewModel extends AndroidViewModel {
         String resId = String.valueOf(restaurantId);
 
         return resId;
+
     }
 
     public LiveData<Integer> getAverageReviewScore() {
@@ -320,5 +321,6 @@ public class DetailsViewModel extends AndroidViewModel {
             }
 
         });
+
     }
 }

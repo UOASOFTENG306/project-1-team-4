@@ -36,6 +36,7 @@ public class ReviewFragment extends Fragment {
     private RecyclerView reviewRecyclerView;
     private ReviewRecyclerAdapter reviewRecyclerAdapter;
     private DetailsViewModel detailsViewModel;
+
     private String reviewComment, restaurantID;
     private float reviewScore;
     private Review reviewToAdd;
@@ -50,6 +51,7 @@ public class ReviewFragment extends Fragment {
         TextView reviewCommentPreview;
 
     }
+
 
     public ReviewFragment() {
         // Required empty public constructor

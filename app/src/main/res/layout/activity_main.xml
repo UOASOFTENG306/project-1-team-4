@@ -1,98 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context=".View.MainActivity">
+    tools:context=".View.MainActivity"
+    android:id="@+id/relativeLayout_mainActivity">
 
-    <TextView
-        style="@style/SmallLogoHeader"
-        android:layout_height="wrap_content" />
-    <include layout="@layout/activity_search2"/>
+    <RelativeLayout
+        android:id="@+id/smallLogoHeader"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:background="@color/btn">
+        <TextView
+            android:id="@+id/txt_logo"
+            style="@style/SmallLogoHeader"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+    <include layout="@layout/activity_search2"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/smallLogoHeader"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/layout_searchbar"/>
+
 
     <ScrollView
+        android:layout_below="@id/layout_searchbar"
+        android:id="@+id/scrollview_contents"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_height="wrap_content"
-                android:text="Discover new"
+                android:text="Discover"
                 style="@style/HeaderText"
+                android:layout_margin="10dp"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recview_random"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
                 android:layout_gravity="center"
                 android:scrollbars="horizontal"
                 android:layoutAnimation="@anim/main_recview_anim"
                 />
 
-            <TextView
-                android:layout_height="wrap_content"
-                android:text="Categories"
-                style="@style/HeaderText"
-                />
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    app:cardCornerRadius="10dp"
-                    android:id="@+id/cardview_favourites"
-                    style="@style/CategoryCard"
-                    android:backgroundTint="#EA4961"
-                    app:cardElevation="5dp"
-                    android:stateListAnimator="@anim/scale_up"
-                    >
-                    <TextView
-                        style="@style/CategoryText"
-                        android:text="Favourites"
-                        />
-                </androidx.cardview.widget.CardView>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recview_categories"
-                    android:layout_below="@id/cardview_favourites"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:scrollbars="vertical"
                     android:scrollbarStyle="outsideOverlay"
                     android:layoutAnimation="@anim/main_recview_anim"
                     />
-            </RelativeLayout>
-
-
-            <ImageButton
-                android:layout_marginTop="30dp"
-                android:backgroundTint="@color/transparent"
-                android:layout_gravity="center"
-                android:id="@+id/btn_logout"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/logout"/>
 
         </LinearLayout>
 
     </ScrollView>
 
+<!--    <TextView-->
+<!--        android:id="@+id/txt_username"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Loading..." />-->
 
-
-    <TextView
-        android:id="@+id/txt_username"
+    <include layout="@layout/navbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Loading..." />
+        android:layout_alignParentBottom="true"/>
 
-</LinearLayout>
+</RelativeLayout>
+

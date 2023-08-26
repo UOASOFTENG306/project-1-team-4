@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity {
+    private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;
     private ArrayAdapter<String> adapterItems;
@@ -75,7 +76,11 @@ public class ListActivity extends AppCompatActivity implements Activity {
         setContentView(R.layout.activity_list);
 
         ViewHolder vh = new ViewHolder();
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
+
+        NavbarViewHolder navbarViewHolder = new NavbarViewHolder(findViewById(R.id.layout_list), mainViewModel);
+        Navbar.setUpNavbar(navbarViewHolder, this);
 
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.restaurantRecyclerView = findViewById(R.id.recview_restaurant_list);
