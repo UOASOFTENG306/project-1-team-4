@@ -42,7 +42,6 @@ import java.util.stream.Collectors;
 
 public class ListViewModel extends AndroidViewModel {
     private GetFavouritesUseCase getFavouritesUseCase;
-    private GetFavouritesByCategoryUseCase getFavouritesByCategoryUseCase;
     private GetAllRestaurantsUseCase getAllRestaurantsUseCase;
     private List<Category> categoryList;
     private List<Restaurant> searchList;
@@ -56,7 +55,6 @@ public class ListViewModel extends AndroidViewModel {
             add(new Cafe());
         }
     };
-    private Boolean isAll;
     private Boolean isFavourite;
     private RestaurantRepository restaurantRepository;
     private UserRepository userRepository;
@@ -67,9 +65,8 @@ public class ListViewModel extends AndroidViewModel {
         super(application);
         userRepository = userRepository.getInstance();
         restaurantRepository = restaurantRepository.getInstance();
-        categoryList = allCategories;
+        categoryList = getAllCategories();
         getFavouritesUseCase = getFavouritesUseCase.getInstance();
-        getFavouritesByCategoryUseCase = getFavouritesByCategoryUseCase.getInstance();
         getAllRestaurantsUseCase = getAllRestaurantsUseCase.getInstance();
     }
 
@@ -80,16 +77,11 @@ public class ListViewModel extends AndroidViewModel {
     public List<String> getAllCategoryNameOptions() {
         List<String> allCategoryNames = new ArrayList<String>();
         allCategoryNames.add("ALL");
-        for(Category category: this.allCategories){
+        for(Category category: getAllCategories()){
             allCategoryNames.add(category.getCategoryType());
         }
         return allCategoryNames;
     }
-
-    public void updateRestaurantList(List<Restaurant> restaurantList) {
-        this.restaurantList.setValue(restaurantList);
-    }
-
     public List<Restaurant> getSearchList() {
         return searchList;
     }
@@ -120,11 +112,10 @@ public class ListViewModel extends AndroidViewModel {
     }
 
     public void setCategory(String categoryName) {
-        Category category;
         List<Category> categoryList = new ArrayList<Category>();
         switch (categoryName){
             case "ALL":
-                this.categoryList = allCategories;
+                setAllCategories();
                 break;
             case "FAST FOOD":
                 categoryList.clear();
@@ -149,44 +140,8 @@ public class ListViewModel extends AndroidViewModel {
 
         }
     }
-    public LiveData<Integer> getEmptyMessageVisibility() {
-        return Transformations.map(restaurantList, restaurant -> restaurant.isEmpty() ? View.VISIBLE : View.GONE);
-    }
     public void setAllCategories() {
-        this.categoryList = allCategories;
-    }
-
-    public List<Restaurant> getFavouriteRestaurants() {
-        List<Restaurant> restaurants = new ArrayList<>();
-        Task<DocumentSnapshot> task1 = userRepository.getFavourites();
-        Task<DocumentSnapshot> documentSnapshotTask = task1.addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                Map<String, Object> map = documentSnapshot.getData();
-                if (map != null && map.containsKey("favourites")) {
-                    Map<String, Object> innerMap = (Map<String, Object>) map.get("favourites");
-                    if (innerMap != null && innerMap.containsKey("favouriteRestaurants")) {
-                        List<Map<String, Object>> array = (List<Map<String, Object>>) innerMap.get("favouriteRestaurants");
-
-                        // Now 'array' contains your list of maps
-                        for (Map<String, Object> itemMap : array) {
-                            restaurants.add(restaurantBuilder(itemMap));
-                        }
-                        setSearchList(restaurants);
-                        updateRestaurantList(restaurants);
-                        updateFavouriteList(restaurants);
-
-                    }
-                }
-            }
-            else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task1.getException());
-            }
-        });
-        return restaurants;
-    }
-
-    public void updateFavouriteList(List<Restaurant> restaurantList) {
-        this.favouritesList.setValue(restaurantList);
+        this.categoryList = getAllCategories();
     }
 
     public LiveData<List<Restaurant>> getFavouritesByCategory() {
@@ -206,32 +161,6 @@ public class ListViewModel extends AndroidViewModel {
 //        return favouritesList;
     }
 
-    public void loadFavouriteList(){
-        //TODO DUPLICATE CODE NEEDS REFACTOR
-        List<Restaurant> restaurants = new ArrayList<>();
-        Task<DocumentSnapshot> task1 = userRepository.getFavourites();
-        Task<DocumentSnapshot> documentSnapshotTask = task1.addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                Map<String, Object> map = documentSnapshot.getData();
-                if (map != null && map.containsKey("favourites")) {
-                    Map<String, Object> innerMap = (Map<String, Object>) map.get("favourites");
-                    if (innerMap != null && innerMap.containsKey("favouriteRestaurants")) {
-                        List<Map<String, Object>> array = (List<Map<String, Object>>) innerMap.get("favouriteRestaurants");
-
-                        // Now 'array' contains your list of maps
-                        for (Map<String, Object> itemMap : array) {
-                            restaurants.add(restaurantBuilder(itemMap));
-                        }
-                        updateFavouriteList(restaurants);
-
-                    }
-                }
-            }
-            else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task1.getException());
-            }
-        });
-    }
 
     public LiveData<List<Restaurant>> getRestaurantByCategoryList() {
         LiveData<List<Restaurant>> filteredLiveData = Transformations.map(getAllRestaurantsUseCase.getAllRestaurants(), restaurantList -> {
@@ -250,48 +179,7 @@ public class ListViewModel extends AndroidViewModel {
         setSearchList(restaurantList.getValue());
         return restaurantList;
     }
-    public List<Restaurant> getRestaurantsTest() {
-        List<Restaurant> restaurants = new ArrayList<>();
 
-        if(this.categoryList.containsAll(this.allCategories)) {
-            restaurantRepository.getRestaurants().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    List<Restaurant> restaurants12 = new ArrayList<>();
-
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("FirestoreActivity", document.getId() + " => " + document.getData());
-                        Map<String, Object> data = document.getData();
-                        restaurants12.add(restaurantBuilder(data));
-                    }
-                    setSearchList(restaurants12);
-                    updateRestaurantList(restaurants12);
-                } else {
-                    Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
-                }
-            });
-        } else {
-
-            for (Category category : getCategory()) {
-                restaurantRepository.getRestaurantsByCategory(category.getCategoryType()).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<Restaurant> restaurants1 = new ArrayList<>();
-
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d("FirestoreActivity", document.getId() + " => " + document.getData());
-                            Map<String, Object> data = document.getData();
-                            restaurants1.add(restaurantBuilder(data));
-                        }
-                        setSearchList(restaurants1);
-                        updateRestaurantList(restaurants1);
-
-                    } else {
-                        Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
-                    }
-                });
-            }
-        }
-        return restaurants;
-    }
 
     public List<Restaurant> filterList(String s) {
         if (this.getRestaurantList().getValue() == null) {
@@ -311,7 +199,7 @@ public class ListViewModel extends AndroidViewModel {
         List<Restaurant> filteredRestaurants = new ArrayList<>();
 
         if(prev.length() >= s.length()) {
-            for(Restaurant r: this.searchList) {
+            for(Restaurant r: getSearchList()) {
                 if (r.getName().toLowerCase().contains(s)) {
                     filteredRestaurants.add(r);
                 }
