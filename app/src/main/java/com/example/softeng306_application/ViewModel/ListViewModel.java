@@ -179,8 +179,7 @@ public class ListViewModel extends AndroidViewModel {
         setSearchList(restaurantList.getValue());
         return restaurantList;
     }
-
-
+    
     public List<Restaurant> filterList(String s) {
         if (this.getRestaurantList().getValue() == null) {
             this.getRestaurantList().observeForever(new Observer<List<Restaurant>>() {
@@ -213,41 +212,5 @@ public class ListViewModel extends AndroidViewModel {
         }
         prev = s;
         return filteredRestaurants;
-    }
-
-    private Restaurant restaurantBuilder(Map<String, Object> data) {
-
-        Category category;
-
-        String restaurantID = (String) data.get("restaurantID");
-        String name = (String) data.get("name");
-        String description = (String) data.get("description");
-        String location = (String) data.get("location");
-
-        Map<String, Object> nestedField = (Map<String, Object>) data.get("category");
-
-        String categoryType = (String) nestedField.get("categoryType");
-        String logoImage = (String) data.get("logoImage");
-        String price = (String) data.get("price");
-
-
-        switch (categoryType){
-            case "FAST FOOD":
-                category = new FastFood();
-                break;
-            case "EUROPEAN":
-                category = new European();
-                break;
-            case "ASIAN":
-                category = new Asian();
-                break;
-            case "CAFE":
-                category = new Cafe();
-                break;
-            default:
-                category = new FastFood();
-        }
-
-        return new Restaurant(restaurantID, name, description, location, category, logoImage, price);
     }
 }
