@@ -7,23 +7,24 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.softeng306_application.Entity.User;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.example.softeng306_application.UseCase.RegisterUserUseCase;
+import com.example.softeng306_application.UseCase.SignInUseCase;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
 public class RegisterViewModel extends AndroidViewModel {
+    private RegisterUserUseCase registerUserUseCase;
 
-    private UserRepository userRepository;
-    private User user;
     public RegisterViewModel(@NonNull Application application) {
         super(application);
-        userRepository = userRepository.getInstance();
+        registerUserUseCase = registerUserUseCase.getInstance();
     }
 
     public Task<AuthResult> register(String email, String password, String username){
-        return userRepository.register(email, password, username);
+        return registerUserUseCase.register(email, password, username);
     }
 
-    public void addToDb(String email, String password, String username) {
-        userRepository.addUserToDb(email, password, username);
+    public void addUserToDb(String email, String password, String username) {
+        registerUserUseCase.addUserToDb(email, password, username);
     }
 }
