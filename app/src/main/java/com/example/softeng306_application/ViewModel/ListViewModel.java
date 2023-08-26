@@ -22,6 +22,8 @@ import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.FirestoreCallback;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.example.softeng306_application.UseCase.GetFavouritesByCategoryUseCase;
+import com.example.softeng306_application.UseCase.GetFavouritesUseCase;
 import com.example.softeng306_application.View.ListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +40,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ListViewModel extends AndroidViewModel {
+    private final GetFavouritesUseCase getFavouritesUseCase;
+    private final GetFavouritesByCategoryUseCase getFavouritesByCategoryUseCase;
+
+
     private List<Category> categoryList;
     private List<Restaurant> searchList;
     private MutableLiveData<List<Restaurant>> favouritesList =  new MutableLiveData<>();
@@ -62,6 +68,8 @@ public class ListViewModel extends AndroidViewModel {
         userRepository = userRepository.getInstance();
         restaurantRepository = restaurantRepository.getInstance();
         categoryList = allCategories;
+        getFavouritesUseCase = new GetFavouritesUseCase();
+        getFavouritesByCategoryUseCase = new GetFavouritesByCategoryUseCase();
     }
 
     public MutableLiveData<List<Restaurant>> getRestaurantList() {
@@ -183,8 +191,14 @@ public class ListViewModel extends AndroidViewModel {
     public void updateFavouriteList(List<Restaurant> restaurantList) {
         this.favouritesList.setValue(restaurantList);
     }
-    public MutableLiveData<List<Restaurant>> getFavouritesList() {
-        return favouritesList;
+
+    public LiveData<List<Restaurant>> getFavouritesByCategory() {
+        return getFavouritesByCategoryUseCase.getFavouritesByCategory(this.categoryList);
+//        return favouritesList;
+    }
+    public LiveData<List<Restaurant>> getFavouritesList() {
+        return getFavouritesUseCase.getFavouriteRestaurants();
+//        return favouritesList;
     }
 
     public void loadFavouriteList(){
@@ -214,12 +228,7 @@ public class ListViewModel extends AndroidViewModel {
         });
     }
 
-    public void listFavouritesByCategory(){
-        List<Restaurant> filteredItems = this.getFavouritesList().getValue().stream()
-                .filter(item -> this.categoryList.contains(item.getCategory()))
-                .collect(Collectors.toList());
-        updateRestaurantList(filteredItems);
-    }
+
 
     public List<Restaurant> getRestaurantsTest() {
         List<Restaurant> restaurants = new ArrayList<>();

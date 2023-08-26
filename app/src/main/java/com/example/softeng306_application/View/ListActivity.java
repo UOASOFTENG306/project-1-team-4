@@ -111,13 +111,8 @@ public class ListActivity extends AppCompatActivity implements Activity {
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
         listViewModel.setFavourite(false);
-        listViewModel.loadFavouriteList();
+//        listViewModel.loadFavouriteList();
         listViewModel.setAllCategories();
-
-        listViewModel.getFavouritesList().observe(this, restaurants -> {
-            // Update the adapter with the new list of items
-            restaurantAdapter.setFavouriteRestaurants(restaurants);
-        });
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -130,15 +125,11 @@ public class ListActivity extends AppCompatActivity implements Activity {
             } else if (intent.hasExtra("FAVOURITES")) {
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
                 listViewModel.setFavourite(true);
-                listViewModel.getFavouriteRestaurants();
+//                listViewModel.getFavouriteRestaurants();
 
             } else if (intent.hasExtra("SEARCH")) {
                 Boolean isFavourite = intent.getBooleanExtra("SEARCH", false);
                 vh.searchEditText.requestFocus();
-                listViewModel.getRestaurantsTest();
-
-            } else {
-                listViewModel.getRestaurantsTest();
             }
         }
 
@@ -170,10 +161,8 @@ public class ListActivity extends AppCompatActivity implements Activity {
             restaurantAdapter.setRestaurants(restaurants);
         });
 
-        listViewModel.getFavouritesList().observe(this, restaurants -> {
-            // Update the adapter with the new list of items
-            restaurantAdapter.setFavouriteRestaurants(restaurants);
-        });
+
+
         listViewModel.getEmptyMessageVisibility().observe(this, visibility -> {
             vh.emptyListText.setVisibility(visibility);
         });
@@ -186,7 +175,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 // Set selected category
                 listViewModel.setCategory(selectedCategory);
                 if(listViewModel.getFavourite()){
-                    listViewModel.listFavouritesByCategory();
+                    loadFavouritesByCategory();
                 } else {
                     restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
                 }
@@ -194,26 +183,22 @@ public class ListActivity extends AppCompatActivity implements Activity {
         });
     }
 
+    private void loadFavouritesByCategory(){
+        listViewModel.getFavouritesByCategory().observe(this, restaurants -> {
+            restaurantAdapter.setRestaurants(restaurants);
+        });
+    }
         @Override
         protected void onResume() {
             super.onResume();
-            listViewModel.loadFavouriteList();
             if (listViewModel.getFavourite()) {
-                listViewModel.getFavouriteRestaurants();
-            } else {
-                listViewModel.getRestaurantsTest();
+                listViewModel.getFavouritesList().observe(this, restaurants -> {
+                    restaurantAdapter.setFavouriteRestaurants(restaurants);
+                    restaurantAdapter.setRestaurants(restaurants);
+                });
+
+
             }
-            listViewModel.getRestaurantList().observe(this, restaurants -> {
-                // Update the adapter with the new list of items
-                restaurantAdapter.setRestaurants(restaurants);
-            });
-
-            listViewModel.getFavouritesList().observe(this, restaurants -> {
-                // Update the adapter with the new list of items
-                restaurantAdapter.setFavouriteRestaurants(restaurants);
-            });
-
-
         }
 
         private void showMainActivity(View v){
