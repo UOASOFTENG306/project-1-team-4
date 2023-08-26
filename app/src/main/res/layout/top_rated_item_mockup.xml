@@ -25,13 +25,19 @@
             android:orientation="horizontal"
             android:layout_below="@id/img_bg"
             android:gravity="center">
-            <ImageView
-                android:id="@+id/imgview_main_logo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@color/white"
-                android:layout_margin="2dp"
-                />
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                android:layout_margin="6dp">
+                <ImageView
+                    android:id="@+id/imgview_main_logo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    />
+            </androidx.cardview.widget.CardView>
+
             <TextView
                 android:id="@+id/textview_top_rated"
                 android:layout_width="match_parent"

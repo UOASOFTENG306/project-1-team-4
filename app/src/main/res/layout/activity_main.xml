@@ -42,7 +42,7 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:text="Top Rated"
+                android:text="Discover"
                 style="@style/HeaderText"
                 android:layout_margin="10dp"
                 />
