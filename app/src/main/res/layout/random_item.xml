@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="140dp"
     android:layout_height="170dp"
-    android:id="@+id/mtrlcardview_toprated"
+    android:id="@+id/mtrlcardview_random"
     android:layout_marginHorizontal="10dp"
     android:layout_marginBottom="10dp"
     app:strokeWidth="3dp">
@@ -39,7 +39,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/textview_top_rated"
+                android:id="@+id/textview_random"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -47,7 +47,6 @@
                 android:fontFamily="@font/inter_black"
                 />
         </LinearLayout>
-
 
     </RelativeLayout>
 

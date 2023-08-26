@@ -15,7 +15,7 @@ public class Restaurant implements Parcelable {
     private Category category;
     private List<Integer> backgroundImageUrls;
     private String logoImage;
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
     private String description;
     private String location;
 
