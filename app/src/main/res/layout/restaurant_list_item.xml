@@ -6,7 +6,8 @@
     android:layout_gravity="center_horizontal"
     android:id="@+id/mtrlcardview_restaurant"
     app:cardCornerRadius="0dp"
-    app:strokeWidth="0dp"
+    app:strokeWidth="0.5dp"
+    app:strokeColor="@color/grey_font"
    >
 
     <LinearLayout
