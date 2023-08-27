@@ -85,6 +85,11 @@ public class ListViewModel extends AndroidViewModel {
         this.categoryList = categoryList;
     }
 
+    /**
+     * This method sets the category of the list activity.
+     * This is reliant on the category name String value which it gets from either the user clicking on a category on Main activity or he dropdown menu
+     * @param categoryName
+     */
     public void setCategory(String categoryName) {
         List<Category> categoryList = new ArrayList<Category>();
         switch (categoryName){
@@ -114,10 +119,18 @@ public class ListViewModel extends AndroidViewModel {
 
         }
     }
+
+    /**
+     * This method sets all the categories to be filtered to ALL
+     */
     public void setAllCategories() {
         this.categoryList = getAllCategories();
     }
 
+    /**
+     * This method gets the user's favourite restaurants by the current selected category
+     * @return User's favourite restaurants filtered by category
+     */
     public LiveData<List<Restaurant>> getFavouritesByCategory() {
         LiveData<List<Restaurant>> filteredLiveData = Transformations.map(getFavouritesUseCase.getFavouriteRestaurants(), restaurantList -> {
             // Filter condition
@@ -135,6 +148,10 @@ public class ListViewModel extends AndroidViewModel {
     }
 
 
+    /**
+     * This method gets the  restaurants by the current selected category
+     * @return Restaurants filtered by category
+     */
     public LiveData<List<Restaurant>> getRestaurantByCategoryList() {
         LiveData<List<Restaurant>> filteredLiveData = Transformations.map(getAllRestaurantsUseCase.getAllRestaurants(), restaurantList -> {
             // Filter condition
@@ -148,25 +165,30 @@ public class ListViewModel extends AndroidViewModel {
         return filteredLiveData;
     }
 
-    public LiveData<List<Restaurant>> filterList(String s) {
+    /**
+     * This method filters the current restaurant list on the List activity by the search term in the search bar
+     * @param query The search query term
+     * @return The filtered restaurant list
+     */
+    public LiveData<List<Restaurant>> filterList(String query) {
         LiveData<List<Restaurant>> filteredLiveData = Transformations.map(getRestaurantByCategoryList(), restaurantList -> {
             // Filter condition
             List<Restaurant> filteredRestaurants = new ArrayList<>();
 
-            if(prev.length() >= s.length()) {
+            if(prev.length() >= query.length()) {
                 for(Restaurant r: getSearchList()) {
-                    if (r.getName().toLowerCase().contains(s)) {
+                    if (r.getName().toLowerCase().contains(query)) {
                         filteredRestaurants.add(r);
                     }
                 }
             } else {
                 for(Restaurant r: restaurantList) {
-                    if (r.getName().toLowerCase().contains(s)) {
+                    if (r.getName().toLowerCase().contains(query)) {
                         filteredRestaurants.add(r);
                     }
                 }
             }
-            prev = s;
+            prev = query;
             return filteredRestaurants;
         });
         return filteredLiveData;
