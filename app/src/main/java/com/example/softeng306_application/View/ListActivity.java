@@ -1,7 +1,6 @@
 package com.example.softeng306_application.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,41 +9,26 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.softeng306_application.Adaptor.CategoryDropdownAdapter;
-import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
 import com.example.softeng306_application.Adaptor.RestaurantRecyclerAdapter;
-import com.example.softeng306_application.Entity.Asian;
-import com.example.softeng306_application.Entity.Cafe;
 import com.example.softeng306_application.Entity.Category;
-import com.example.softeng306_application.Entity.European;
-import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
-import com.example.softeng306_application.ViewModel.DetailsViewModel;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity {
@@ -89,6 +73,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
         vh.autoCompleteTextView = findViewById(R.id.dropdown_category);
         vh.customSearchBar = findViewById(R.id.customSearchBar);
         vh.searchEditText = findViewById(R.id.searchEditText);
+
         vh.header = findViewById(R.id.smallLogoHeader);
 
         vh.viewLayout= findViewById(R.id.layout_list);
@@ -112,13 +97,8 @@ public class ListActivity extends AppCompatActivity implements Activity {
         LinearLayoutManager verticalLayout = new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false);
         vh.restaurantRecyclerView.setLayoutManager(verticalLayout);
         listViewModel.setFavourite(false);
-        listViewModel.loadFavouriteList();
+//        listViewModel.loadFavouriteList();
         listViewModel.setAllCategories();
-
-        listViewModel.getFavouritesList().observe(this, restaurants -> {
-            // Update the adapter with the new list of items
-            restaurantAdapter.setFavouriteRestaurants(restaurants);
-        });
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -127,22 +107,14 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 listViewModel.setCategory(category);
                 vh.autoCompleteTextView.setText(category.getCategoryType(), false);
                 vh.header.setBackgroundColor(Color.parseColor(category.getBorderColour()));
-                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
-
             } else if (intent.hasExtra("FAVOURITES")) {
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
                 listViewModel.setFavourite(true);
-                restaurantAdapter.setRestaurants(listViewModel.getFavouriteRestaurants());
 
             } else if (intent.hasExtra("SEARCH")) {
                 Boolean isFavourite = intent.getBooleanExtra("SEARCH", false);
                 vh.searchEditText.requestFocus();
-                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
-
-            } else {
-                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
             }
-
         }
 
         vh.searchEditText.addTextChangedListener(new TextWatcher() {
@@ -153,7 +125,7 @@ public class ListActivity extends AppCompatActivity implements Activity {
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 String query = charSequence.toString();
-                listViewModel.filterList(query);
+                loadFilteredRestaurants(query, vh.emptyListText);
             }
 
             @Override
@@ -168,18 +140,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
             }
         });
 
-        listViewModel.getRestaurantList().observe(this, restaurants -> {
-            // Update the adapter with the new list of items
-            restaurantAdapter.setRestaurants(restaurants);
-        });
-
-        listViewModel.getFavouritesList().observe(this, restaurants -> {
-            // Update the adapter with the new list of items
-            restaurantAdapter.setFavouriteRestaurants(restaurants);
-        });
-        listViewModel.getEmptyMessageVisibility().observe(this, visibility -> {
-            vh.emptyListText.setVisibility(visibility);
-        });
 
         vh.autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -189,38 +149,62 @@ public class ListActivity extends AppCompatActivity implements Activity {
                 // Set selected category
                 listViewModel.setCategory(selectedCategory);
 
-                if (listViewModel.getCategory().size() != listViewModel.getAllCategories().size()) {
+                if(listViewModel.getFavourite()){
+                    loadFavouritesByCategory(vh.emptyListText);
+                } else {
+                    loadRestaurantsByCategory(vh.emptyListText);
+                }
+                if (!selectedCategory.equals("ALL")) {
                     vh.header.setBackgroundColor(Color.parseColor(listViewModel.getCategory().get(0).getBorderColour()));
                 } else {
                     vh.header.setBackgroundColor(getResources().getColor(R.color.btn));
                 }
-                restaurantAdapter.setRestaurants(listViewModel.getRestaurantsTest());
 
             }
         });
     }
 
+    private void checkIfEmpty(List<Restaurant> restaurants, TextView empty){
+        if(restaurants.isEmpty()){
+            empty.setVisibility(View.VISIBLE);
+        } else {
+            empty.setVisibility(View.GONE);
+        }
+    }
+    private void loadFilteredRestaurants(String query, TextView emptyListText){
+        listViewModel.filterList(query).observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setRestaurants(restaurants);
+            checkIfEmpty(restaurants, emptyListText);
+        });
+    }
+    private void loadFavouritesByCategory(TextView emptyListText){
+        listViewModel.getFavouritesByCategory().observe(this, restaurants -> {
+            restaurantAdapter.setRestaurants(restaurants);
+            checkIfEmpty(restaurants, emptyListText);
+
+        });
+    }
+    private void loadRestaurantsByCategory(TextView emptyListText){
+        listViewModel.getRestaurantByCategoryList().observe(this, restaurants -> {
+            // Update the adapter with the new list of items
+            restaurantAdapter.setRestaurants(restaurants);
+            checkIfEmpty(restaurants, emptyListText);
+        });
+    }
         @Override
         protected void onResume() {
             super.onResume();
-
-            listViewModel.loadFavouriteList();
-            if (listViewModel.getFavourite()) {
-                listViewModel.getFavouriteRestaurants();
-            } else {
-                listViewModel.getRestaurantsTest();
-            }
-            listViewModel.getRestaurantList().observe(this, restaurants -> {
-                // Update the adapter with the new list of items
-                restaurantAdapter.setRestaurants(restaurants);
-            });
+            TextView emptyListText = findViewById(R.id.txt_emptyList);
 
             listViewModel.getFavouritesList().observe(this, restaurants -> {
-                // Update the adapter with the new list of items
                 restaurantAdapter.setFavouriteRestaurants(restaurants);
             });
-
-
+            if (listViewModel.getFavourite()) {
+                loadFavouritesByCategory(emptyListText);
+            } else {
+                loadRestaurantsByCategory(emptyListText);
+            }
         }
 
         private void showMainActivity(View v){
