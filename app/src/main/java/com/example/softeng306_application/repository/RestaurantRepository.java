@@ -63,7 +63,7 @@ public class RestaurantRepository implements IRestaurantRepository {
 
     /**
      * This method would get the restaurant that is being searched
-     * @param text
+     * @param text The search query term
      * @return QuerySnapshot of restaurant document based on the text that is being searched
      */
 

@@ -33,10 +33,7 @@ public class MainViewModel extends AndroidViewModel {
         return getRandomRestaurantsUseCase.getRandomRestaurants();
     }
 
-
     public List<Category> getCategories(){
-        // TODO: RETRIEVE DATA FROM REPOSITORY(?)
-
         ArrayList<Category> categoryList = new ArrayList<Category>();
         Category cafeCategory = new Cafe();
         Category asianCategory = new Asian();
