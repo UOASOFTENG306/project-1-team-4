@@ -7,27 +7,6 @@ import androidx.annotation.NonNull;
 
 import java.util.Objects;
 
-//public class Category {
-//
-//    public Category() {
-//
-//    }
-//
-//    public Category(CategoryType categoryType) {
-//        this.categoryType = categoryType;
-//    }
-//
-//    private CategoryType categoryType;
-//
-//    public CategoryType getCategoryType() {
-//        return categoryType;
-//    }
-//
-//    // TODO DELETE THIS METHOD! For testing purposes
-//    public void setCategoryType(CategoryType categoryType) { this.categoryType = categoryType; }
-//
-//}
-
 public abstract class Category implements ICategory, Parcelable {
     String borderColour;
     String audioFileName;
