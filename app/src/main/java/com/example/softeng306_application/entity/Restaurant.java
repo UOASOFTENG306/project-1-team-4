@@ -24,35 +24,7 @@ public class Restaurant implements Parcelable {
     public Restaurant() {
     }
 
-    //TODO TEST CONSTRUCTOR - FOR KAI TO DELETE
-    public Restaurant(String name, String logoImage, Category category) {
-        this.name = name;
-        this.logoImage = logoImage;
-        this.category = category;
-    }
-    public Restaurant(String restaurantID, String name, String description, String location, String logoImage, String price) {
-        this.restaurantID = restaurantID;
-        this.name = name;
-        this.description = description;
-        this.location = location;
-        this.logoImage = logoImage;
-        this.price = price;
-    }
-
-    public Restaurant(String restaurantID, String name, String description, String location, Category category, String logoImage, String price) {
-        //TODO ADD REVIEWS
-        this.restaurantID = restaurantID;
-        this.name = name;
-        this.description = description;
-        this.location = location;
-        this.category = category;
-        this.logoImage = logoImage;
-        this.price = price;
-        this.reviews = new ArrayList<>();
-    }
-
     public Restaurant(String restaurantID, List<String> backgroundImageUrls, String name, String description, String location, Category category, String logoImage, String price) {
-        //TODO ADD REVIEWS
         this.restaurantID = restaurantID;
         this.backgroundImageUrls = backgroundImageUrls;
         this.name = name;
