@@ -79,6 +79,7 @@ public class DetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         clickFavourite(vh,!detailsViewModel.isFavourite());
+                        detailsViewModel.setIsFavourite(!detailsViewModel.isFavourite());
                     }
                 });
                 vh.nameText.setText(restaurant.getName());
