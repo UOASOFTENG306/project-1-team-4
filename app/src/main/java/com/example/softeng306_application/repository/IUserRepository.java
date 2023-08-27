@@ -19,7 +19,6 @@ public interface IUserRepository {
 
     void logout();
     Task<DocumentSnapshot> getFavourites();
-    Favourites checkFavourite(String userID, String restaurantID);
 
     void addFavourite(Restaurant restaurant);
 
