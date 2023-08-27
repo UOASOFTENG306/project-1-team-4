@@ -12,6 +12,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * This class will be a singleton that is responsible for all fields within the user's database and authentication
+ */
+
 public class UserRepository implements IUserRepository {
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
