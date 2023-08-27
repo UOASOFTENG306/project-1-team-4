@@ -79,6 +79,12 @@ public class DetailsViewModel extends AndroidViewModel {
         updateCurrentList(currentReviews);
         calculateAverageReviewScoreFromList(currentReviews);
     }
+
+    /**
+     * This method would locally get the three background images for each restaurant
+     * @param context
+     * @return an array of background images
+     */
     public int[] getBackgroundImages(Context context) {
         Restaurant currentRestaurant = restaurant;
         String id = currentRestaurant.getRestaurantID();
@@ -103,6 +109,11 @@ public class DetailsViewModel extends AndroidViewModel {
         removeFavouriteUseCase.removeFavourite(this.restaurant);
     }
 
+    /**
+     * This method would return the corresponding id of every restaurant image which is one
+     * less than the  id
+     * @return The background image or logo image id that corresponds to the restaurant
+     */
     public String getRestaurantIDMinusOne() {
         Restaurant currentRestaurant = this.restaurant;
         String id = currentRestaurant.getRestaurantID();
@@ -129,24 +140,6 @@ public class DetailsViewModel extends AndroidViewModel {
         this.averageScore.setValue(Math.round(average));
     }
 
-    public void calculateAverageReviewScore(String restaurantId) {
-        float sum = 0;
-        int itemCount = 0;
-
-        for (Review review : restaurant.getReviews()) {
-            float score = review.getReviewScore();
-            sum += score;
-            itemCount++;
-        }
-        if (itemCount > 0) {
-            float average = sum / itemCount;
-            Integer integerValue = (int) Math.round(average);
-            this.averageScore.setValue(integerValue);
-        } else {
-            this.averageScore.setValue(0);
-        }
-
-    }
     public void addReviews(String restaurantID, String reviewComment, float reviewScore) {
          addReviewUseCase.addReviewUse(restaurantID,reviewComment, reviewScore);
     }
