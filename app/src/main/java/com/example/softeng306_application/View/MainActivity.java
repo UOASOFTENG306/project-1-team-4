@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         vh.randomRecyclerView.setAdapter(randomRecylerAdapter);
         vh.categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
 
-        mainViewModel.getRandomRestaurantList().observe(this, restaurants -> {
+        mainViewModel.getRandomRestaurants().observe(this, restaurants -> {
             // Update the adapter with the new list of items
             randomRecylerAdapter.setRandmoList(restaurants);
         });

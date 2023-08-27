@@ -21,6 +21,8 @@ import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
 import com.example.softeng306_application.Repository.RestaurantRepository;
 import com.example.softeng306_application.Repository.UserRepository;
+import com.example.softeng306_application.UseCase.GetCurrentUserUseCase;
+import com.example.softeng306_application.UseCase.GetRandomRestaurantsUseCase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -35,27 +37,20 @@ import java.util.Map;
 import java.util.Random;
 
 public class MainViewModel extends AndroidViewModel {
-    private MutableLiveData<List<Restaurant>> randomRestaurantList = new MutableLiveData<>();
-    private RestaurantRepository restaurantRepository;
-    private UserRepository userRepository;
+    private GetRandomRestaurantsUseCase getRandomRestaurantsUseCase;
+
+    private GetCurrentUserUseCase getCurrentUserUseCase;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        userRepository = userRepository.getInstance();
-        restaurantRepository = restaurantRepository.getInstance();
+        getRandomRestaurantsUseCase = GetRandomRestaurantsUseCase.getInstance();
+        getCurrentUserUseCase = GetCurrentUserUseCase.getInstance();
     }
 
-    public LiveData<List<Restaurant>> getRandomRestaurantList() {
-        return randomRestaurantList;
+    public LiveData<List<Restaurant>> getRandomRestaurants() {
+        return getRandomRestaurantsUseCase.getRandomRestaurants();
     }
 
-    public void updateRandomRestaurantList(List<Restaurant> randomList) {
-        this.randomRestaurantList.setValue(randomList);
-    }
-
-    public Task<DocumentSnapshot> getUserInfo() {
-        return userRepository.getAllUserInformation();
-    }
 
     public List<Category> getCategories(){
         // TODO: RETRIEVE DATA FROM REPOSITORY(?)
@@ -70,76 +65,10 @@ public class MainViewModel extends AndroidViewModel {
         categoryList.add(asianCategory);
         categoryList.add(europeanCategory);
         categoryList.add(fastFoodCategory);
-
-
         return categoryList;
     }
 
     public void logout(){
-        userRepository.logout();
-    }
-
-    private Restaurant restaurantBuilder(Map<String, Object> data) {
-        String restaurantID = (String) data.get("restaurantID");
-        String name = (String) data.get("name");
-        String description = (String) data.get("description");
-        String location = (String) data.get("location");
-
-        Map<String, Object> nestedField = (Map<String, Object>) data.get("category");
-
-        String categoryType = (String) nestedField.get("categoryType");
-        String logoImage = (String) data.get("logoImage");
-        String price = (String) data.get("price");
-
-        Restaurant restaurant = new Restaurant(restaurantID,  name,  description,  location, logoImage, price);;
-
-        switch (categoryType){
-            case "EUROPEAN":
-                restaurant.setCategory(new European());
-                break;
-            case "ASIAN":
-                restaurant.setCategory(new Asian());
-                break;
-            case "FAST FOOD":
-                restaurant.setCategory(new FastFood());
-                break;
-            case "CAFE":
-                restaurant.setCategory(new Cafe());
-                break;
-        }
-
-        return restaurant;
-    }
-
-
-    public void getRandomRestaurants() {
-        List<Restaurant> rando = new ArrayList<>();
-        List<Restaurant> randomRestaurant = new ArrayList<>();
-
-        restaurantRepository.getRestaurants().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Map<String, Object> data = document.getData();
-                    randomRestaurant.add(restaurantBuilder(data));
-                }
-
-                Random random = new Random();
-                while (rando.size() < 6) {
-                    Restaurant randomCollectionName = randomRestaurant.get(random.nextInt(randomRestaurant.size()));
-                    if (!rando.contains(randomCollectionName)) {
-                        rando.add(randomCollectionName);
-                    }
-                }
-
-                updateRandomRestaurantList(rando);
-
-                for(Restaurant r : rando) {
-                    Log.d("FirestoreActivity", r.getName());
-                }
-
-            } else {
-                Log.d("FirestoreActivity", "Error getting documents: ", task.getException());
-            }
-        });
+        getCurrentUserUseCase.logout();
     }
 }

@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    registerViewModel.addToDb(email,password,username);
+                    registerViewModel.addUserToDb(email,password,username);
                     Toast.makeText(RegisterActivity.this, "Account successfully created.", Toast.LENGTH_SHORT).show();
                     showMainActivity(v);
                 } else {
