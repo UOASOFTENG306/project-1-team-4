@@ -4,14 +4,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.softeng306_application.Entity.Asian;
-import com.example.softeng306_application.Entity.Cafe;
-import com.example.softeng306_application.Entity.Category;
-import com.example.softeng306_application.Entity.CategoryType;
-import com.example.softeng306_application.Entity.European;
-import com.example.softeng306_application.Entity.FastFood;
-import com.example.softeng306_application.Entity.Restaurant;
-import com.example.softeng306_application.Entity.Review;
+import com.example.softeng306_application.entity.Asian;
+import com.example.softeng306_application.entity.Cafe;
+import com.example.softeng306_application.entity.European;
+import com.example.softeng306_application.entity.FastFood;
+import com.example.softeng306_application.entity.Restaurant;
+import com.example.softeng306_application.entity.Review;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;

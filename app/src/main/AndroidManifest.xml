@@ -14,14 +14,14 @@
         android:theme="@style/Base.Theme.HungryRadar"
         tools:targetApi="31">
         <activity
-            android:name=".View.RegisterActivity"
+            android:name=".view.RegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".View.SearchActivity"
+            android:name=".view.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".View.LoginActivity"
+            android:name=".view.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
 
@@ -33,17 +33,17 @@
 
         </activity>
         <activity
-            android:name=".View.ListActivity"
+            android:name=".view.ListActivity"
             android:exported="false" />
         <activity
-            android:name=".View.DetailsActivity"
+            android:name=".view.DetailsActivity"
             android:theme="@style/DetailsActivityTheme"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
 
         </activity>
         <activity
-            android:name=".View.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
         </activity>
     </application>

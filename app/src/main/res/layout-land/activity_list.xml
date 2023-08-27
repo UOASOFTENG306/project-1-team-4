@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.ListActivity"
+    tools:context=".view.ListActivity"
     android:id="@+id/layout_list"
     >
     <include layout="@layout/action_bar" android:id="@+id/smallLogoHeader" android:visibility="gone"/>
