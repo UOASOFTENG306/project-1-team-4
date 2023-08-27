@@ -15,6 +15,12 @@ import java.util.Map;
 public class RestaurantBuilderUtils {
     private RestaurantBuilderUtils(){}
 
+    /**
+     * This method returns Restaurant object based on the data object it receives in its parameter.
+     * This method is utilised mainly in the UseCase classes to build a Restaurant object from the data it gets from the database
+     * @param data Data form the database
+     * @return A Restaurant object
+     */
     public static Restaurant restaurantBuilder(Map<String, Object> data) {
 
         Category category;
