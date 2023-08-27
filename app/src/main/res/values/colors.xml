@@ -7,4 +7,5 @@
     <color name="category_btn">#51AF5B</color>
     <color name="restaurant_card">#FCFAEF</color>
     <color name="transparent">@android:color/transparent</color>
+    <color name="stroke">#B7B7B7</color>
 </resources>
