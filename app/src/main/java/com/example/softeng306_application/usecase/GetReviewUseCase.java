@@ -43,7 +43,7 @@ public class GetReviewUseCase {
                         if (reviewsArray != null) {
                             for (Map<String, Object> review : reviewsArray) {
                                 Log.d("FirestoreActivity", (String) review.get("description"));
-                                String username = (String) review.get("userID");
+                                String username = (String) review.get("username");
                                 String comment =(String) review.get("description");
                                 Number reviewScore = (Number) review.get("reviewScore");
                                 reviews.add(new Review(username, comment, reviewScore.floatValue()));
