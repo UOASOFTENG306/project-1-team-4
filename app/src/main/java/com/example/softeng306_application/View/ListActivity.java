@@ -1,7 +1,6 @@
 package com.example.softeng306_application.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,41 +9,26 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.softeng306_application.Adaptor.CategoryDropdownAdapter;
-import com.example.softeng306_application.Adaptor.CategoryRecyclerAdapter;
 import com.example.softeng306_application.Adaptor.RestaurantRecyclerAdapter;
-import com.example.softeng306_application.Entity.Asian;
-import com.example.softeng306_application.Entity.Cafe;
 import com.example.softeng306_application.Entity.Category;
-import com.example.softeng306_application.Entity.European;
-import com.example.softeng306_application.Entity.FastFood;
 import com.example.softeng306_application.Entity.Restaurant;
 import com.example.softeng306_application.R;
-import com.example.softeng306_application.ViewModel.DetailsViewModel;
 import com.example.softeng306_application.ViewModel.ListViewModel;
 import com.example.softeng306_application.ViewModel.MainViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements Activity {
@@ -126,7 +110,6 @@ public class ListActivity extends AppCompatActivity implements Activity {
             } else if (intent.hasExtra("FAVOURITES")) {
                 Boolean isFavourite = intent.getBooleanExtra("FAVOURITE", false);
                 listViewModel.setFavourite(true);
-//                listViewModel.getFavouriteRestaurants();
 
             } else if (intent.hasExtra("SEARCH")) {
                 Boolean isFavourite = intent.getBooleanExtra("SEARCH", false);
