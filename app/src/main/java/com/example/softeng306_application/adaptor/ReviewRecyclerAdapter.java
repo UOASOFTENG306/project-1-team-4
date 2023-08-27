@@ -43,7 +43,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
 
         // TODO: refactor to pull review data from database
         int score = (int) reviewList.get(position).getReviewScore();
-        holder.username.setText(reviewList.get(position).getUserID());
+        holder.username.setText(reviewList.get(position).getUsername());
         holder.comment.setText(reviewList.get(position).getDescription());
         holder.reviewScoreLayout.removeAllViews();
         for (int i = 0; i < score; i++) {

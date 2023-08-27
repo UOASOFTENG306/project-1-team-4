@@ -33,7 +33,7 @@ public class RestaurantBuilderUtils {
         List<Map<String, Object>> reviewsArray = (List<Map<String, Object>>) data.get("reviews");
         if (reviewsArray != null || !reviewsArray.isEmpty()) {
             for (Map<String, Object> review : reviewsArray) {
-                String username = (String) review.get("userID");
+                String username = (String) review.get("username");
                 String comment =(String) review.get("description");
                 Number reviewScore = (Number) review.get("reviewScore");
                 reviews.add(new Review(username, comment, reviewScore.floatValue()));
