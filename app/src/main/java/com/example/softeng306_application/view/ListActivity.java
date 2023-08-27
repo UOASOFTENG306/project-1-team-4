@@ -31,7 +31,7 @@ import com.example.softeng306_application.viewmodel.MainViewModel;
 
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity implements Activity {
+public class ListActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
     private ListViewModel listViewModel;
     private RestaurantRecyclerAdapter restaurantAdapter;

@@ -93,11 +93,4 @@ public class MainActivity extends AppCompatActivity {
             startActivity(listIntent);
         });
     }
-//    private void clickNavLogout(ViewHolder vh){
-//        vh.logoutNavButton.setOnClickListener(v -> {
-//            mainViewModel.logout();
-//            Intent loginIntent = new Intent(this, LoginActivity.class);
-//            startActivity(loginIntent);
-//        });
-
 }

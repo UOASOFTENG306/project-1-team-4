@@ -21,7 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 
-public class LoginActivity extends AppCompatActivity implements Activity  {
+public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
 
     private class ViewHolder{
@@ -126,6 +126,4 @@ public class LoginActivity extends AppCompatActivity implements Activity  {
             });
         }
     }
-
-
 }

@@ -23,7 +23,7 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
-public class DetailsActivity extends AppCompatActivity implements Activity {
+public class DetailsActivity extends AppCompatActivity {
 
     private DetailsViewModel detailsViewModel;
 
